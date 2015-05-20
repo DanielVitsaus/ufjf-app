@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">UFJF Appp</string>
+    <string name="news">Notícias</string>
+    <string name="surveys">Pesquisas</string>
+    <string name="settings">Preferências</string>
+
+</resources>

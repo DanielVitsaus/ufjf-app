@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#b01116</color>
+    <color name="primary_dark">#810d10</color>
+    <color name="accent">#ffffe95f</color>
+
+    <color name="gray_stroke">#dcdcdc</color>
+    <color name="drawer_icon">#FF757575</color>
+</resources>

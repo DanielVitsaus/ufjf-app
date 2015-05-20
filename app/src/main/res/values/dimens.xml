@@ -1,0 +1,8 @@
+<resources>
+    <dimen name="margin_screen">16dp</dimen>
+    <dimen name="margin_view">16dp</dimen>
+
+    <dimen name="touchable">48dp</dimen>
+
+    <dimen name="navigation_drawer_width">285dp</dimen>
+</resources>
