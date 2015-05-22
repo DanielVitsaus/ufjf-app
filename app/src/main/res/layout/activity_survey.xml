@@ -12,8 +12,13 @@
         android:id="@+id/survey_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="@dimen/margin_screen" />
+        android:layout_weight="1" />
+
+    <View
+        android:id="@+id/drawer_stroke"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_stroke" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,21 +26,21 @@
 
         <TextView
             android:id="@+id/survey_previous"
+            style="@style/ButtonText"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="previous"
-            android:text="ANTERIOR"
-            style="@style/ButtonText"/>
+            android:text="ANTERIOR"/>
 
         <TextView
             android:id="@+id/survey_next"
+            style="@style/ButtonText"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="next"
-            android:text="PRÓXIMA"
-            style="@style/ButtonText"/>
+            android:text="PRÓXIMA"/>
     </LinearLayout>
 
 </tools:LinearLayout>

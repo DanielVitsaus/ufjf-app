@@ -4,6 +4,8 @@ import android.os.AsyncTask;
 
 import org.json.JSONException;
 
+import java.io.IOException;
+
 import br.ufjf.app.model.survey.Survey;
 import br.ufjf.app.util.WebHelper;
 
@@ -14,10 +16,6 @@ public class GetSurveyTask extends AsyncTask<String, Void, Survey> {
 
     private final Callback mCallback;
 
-    public interface Callback {
-        void onFinish(Survey survey);
-    }
-
     public GetSurveyTask(Callback callback) {
         mCallback = callback;
     }
@@ -26,7 +24,7 @@ public class GetSurveyTask extends AsyncTask<String, Void, Survey> {
     protected Survey doInBackground(String... surveyIds) {
         try {
             return WebHelper.getSurvey(surveyIds[0]);
-        } catch (JSONException e) {
+        } catch (JSONException | IOException e) {
             e.printStackTrace();
             return null;
         }
@@ -35,5 +33,9 @@ public class GetSurveyTask extends AsyncTask<String, Void, Survey> {
     @Override
     protected void onPostExecute(Survey survey) {
         mCallback.onFinish(survey);
+    }
+
+    public interface Callback {
+        void onFinish(Survey survey);
     }
 }

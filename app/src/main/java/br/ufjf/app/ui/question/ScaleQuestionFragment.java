@@ -1,6 +1,6 @@
 package br.ufjf.app.ui.question;
 
-import android.os.Bundle;
+import android.app.Activity;
 
 import br.ufjf.app.model.survey.Question;
 import br.ufjf.app.model.survey.ScaleQuestion;
@@ -19,8 +19,8 @@ public class ScaleQuestionFragment extends QuestionFragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
         mQuestion = (ScaleQuestion) mListener.getQuestion(getQuestionIndex());
     }
 

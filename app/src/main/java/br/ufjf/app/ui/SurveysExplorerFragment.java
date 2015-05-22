@@ -26,7 +26,7 @@ public class SurveysExplorerFragment extends ToolbarFragment {
         view.findViewById(R.id.test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), SurveyActivity.class));
+                startActivity(new Intent(getActivity(), SurveyActivity.class).putExtra(SurveyActivity.ARG_SURVEY, "555f773aea2a33de5f0757e2"));
             }
         });
 

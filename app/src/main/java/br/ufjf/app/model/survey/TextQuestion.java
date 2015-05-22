@@ -10,7 +10,6 @@ import br.ufjf.app.model.ServerDB;
  */
 public class TextQuestion extends Question {
     private final boolean singleLine;
-    private String answer;
 
     public TextQuestion(JSONObject data) throws JSONException {
         super(data);
@@ -19,13 +18,5 @@ public class TextQuestion extends Question {
 
     public boolean isSingleLine() {
         return singleLine;
-    }
-
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
     }
 }

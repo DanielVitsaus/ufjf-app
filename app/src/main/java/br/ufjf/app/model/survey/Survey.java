@@ -36,17 +36,11 @@ public class Survey {
                 case ServerDB.QuestionTypes.SIMPLE:
                     questions.add(new TextQuestion(questionJson));
                     break;
-                case ServerDB.QuestionTypes.ALTERNATIVE_UNIQUE:
-                    questions.add(new SingleChoiceQuestion(questionJson));
+                case ServerDB.QuestionTypes.CHOICE:
+                    questions.add(new ChoiceQuestion(questionJson));
                     break;
-                case ServerDB.QuestionTypes.ALTERNATIVE_COMPOSITE:
-                    questions.add(new MultipleChoiceQuestion(questionJson));
-                    break;
-                case ServerDB.QuestionTypes.RATE:
+                case ServerDB.QuestionTypes.SCALE:
                     questions.add(new ScaleQuestion(questionJson));
-                    break;
-                case ServerDB.QuestionTypes.VARIATION:
-                    questions.add(new VariationQuestion(questionJson));
                     break;
             }
         }

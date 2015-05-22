@@ -6,10 +6,8 @@ package br.ufjf.app.model;
 public class ServerDB {
     public interface QuestionTypes {
         int SIMPLE = 0;
-        int ALTERNATIVE_UNIQUE = 1;
-        int ALTERNATIVE_COMPOSITE = 2;
-        int RATE = 3;
-        int VARIATION = 4;
+        int CHOICE = 1;
+        int SCALE = 2;
     }
 
     public interface Survey {
@@ -21,16 +19,14 @@ public class ServerDB {
             String TITLE = "title";
             String TYPE = "type";
 
-            String ANSWER = "answer";
-
             String SINGLE_LINE = "single_line";
 
-            String OPTIONS = "alternatives";
+            String OPTIONS = "options";
+
+            String SINGLE_CHOICE = "single_choice";
 
             String MIN = "min";
             String MAX = "max";
-
-            String RATE = "rate";
         }
     }
 }

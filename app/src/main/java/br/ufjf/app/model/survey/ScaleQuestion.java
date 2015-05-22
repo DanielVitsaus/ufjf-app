@@ -11,7 +11,6 @@ import br.ufjf.app.model.ServerDB;
 public class ScaleQuestion extends Question {
     private final int min;
     private final int max;
-    private int answer;
 
     public ScaleQuestion(JSONObject data) throws JSONException {
         super(data);
@@ -25,13 +24,5 @@ public class ScaleQuestion extends Question {
 
     public int getMax() {
         return max;
-    }
-
-    public int getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(int answer) {
-        this.answer = answer;
     }
 }

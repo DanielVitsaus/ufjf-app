@@ -6,14 +6,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
 
-import br.ufjf.app.model.survey.MultipleChoiceQuestion;
+import br.ufjf.app.model.survey.ChoiceQuestion;
 import br.ufjf.app.model.survey.Question;
 import br.ufjf.app.model.survey.ScaleQuestion;
-import br.ufjf.app.model.survey.SingleChoiceQuestion;
 import br.ufjf.app.model.survey.TextQuestion;
-import br.ufjf.app.ui.question.MultipleChoiceQuestionFragment;
+import br.ufjf.app.ui.question.ChoiceQuestionFragment;
 import br.ufjf.app.ui.question.ScaleQuestionFragment;
-import br.ufjf.app.ui.question.SingleChoiceQuestionFragment;
 import br.ufjf.app.ui.question.TextQuestionFragment;
 
 /**
@@ -36,10 +34,8 @@ public class SurveyAdapter extends FragmentPagerAdapter {
             return TextQuestionFragment.newInstance(position);
         else if (question instanceof ScaleQuestion)
             return ScaleQuestionFragment.newInstance(position);
-        else if (question instanceof SingleChoiceQuestion)
-            return SingleChoiceQuestionFragment.newInstance(position);
-        else if (question instanceof MultipleChoiceQuestion)
-            return MultipleChoiceQuestionFragment.newInstance(position);
+        else if (question instanceof ChoiceQuestion)
+            return ChoiceQuestionFragment.newInstance(position);
         else return null;
     }
 
