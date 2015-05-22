@@ -20,7 +20,7 @@ import br.ufjf.dcc.pesquisa.R;
 /**
  * Created by Jorge Augusto da Silva Moreira on 20/05/2015.
  */
-public class MainActivity extends AppCompatActivity implements NewsAdapter.OnArticleSelectedListener {
+public class MainActivity extends AppCompatActivity implements NewsAdapter.OnArticleClickListener {
 
     public static final int NEWS_FRAG = 0;
     public static final int SURVEYS_FRAG = 1;

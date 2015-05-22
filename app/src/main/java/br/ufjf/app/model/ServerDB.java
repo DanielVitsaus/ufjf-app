@@ -11,6 +11,7 @@ public class ServerDB {
     }
 
     public interface Survey {
+        String ID = "_id";
         String TITLE = "title";
         String DESCRIPTION = "description";
         String QUESTIONS = "questions";

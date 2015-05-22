@@ -4,8 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import java.util.List;
-
 import br.ufjf.app.model.survey.ChoiceQuestion;
 import br.ufjf.app.model.survey.Question;
 import br.ufjf.app.model.survey.ScaleQuestion;
@@ -19,16 +17,16 @@ import br.ufjf.app.ui.question.TextQuestionFragment;
  */
 public class SurveyAdapter extends FragmentPagerAdapter {
 
-    private List<Question> mQuestions;
+    private Question[] mQuestions;
 
-    public SurveyAdapter(FragmentManager fragmentManager, List<Question> questions) {
+    public SurveyAdapter(FragmentManager fragmentManager, Question[] questions) {
         super(fragmentManager);
         mQuestions = questions;
     }
 
     @Override
     public Fragment getItem(int position) {
-        Question question = mQuestions.get(position);
+        Question question = mQuestions[position];
 
         if (question instanceof TextQuestion)
             return TextQuestionFragment.newInstance(position);
@@ -41,10 +39,10 @@ public class SurveyAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return mQuestions.size();
+        return mQuestions.length;
     }
 
     public Question getQuestion(int position) {
-        return mQuestions.get(position);
+        return mQuestions[position];
     }
 }

@@ -4,46 +4,48 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 import br.ufjf.app.model.ServerDB;
 
 /**
  * Created by Jorge Augusto da Silva Moreira on 20/05/2015.
  */
 public class Survey {
+    private final String id;
     private final String title;
     private final String description;
-    private final ArrayList<Question> questions;
+    private final Question[] questions;
 
-    public Survey(String title, String description, ArrayList<Question> questions) {
-        this.title = title;
-        this.description = description;
-        this.questions = questions;
-    }
-
-    public Survey(JSONObject survey) throws JSONException {
+    public Survey(JSONObject data) throws JSONException {
         // Parse basic info
-        title = survey.getString(ServerDB.Survey.TITLE);
-        description = survey.getString(ServerDB.Survey.DESCRIPTION);
+        id = data.getString(ServerDB.Survey.ID);
+        title = data.getString(ServerDB.Survey.TITLE);
+        description = data.getString(ServerDB.Survey.DESCRIPTION);
 
         // Parse questions
-        questions = new ArrayList<>();
-        JSONArray questionsArray = survey.getJSONArray(ServerDB.Survey.QUESTIONS);
-        for (int i = 0; i < questionsArray.length(); i++) {
-            JSONObject questionJson = questionsArray.getJSONObject(i);
-            switch (questionJson.getInt(ServerDB.Survey.Question.TYPE)) {
-                case ServerDB.QuestionTypes.SIMPLE:
-                    questions.add(new TextQuestion(questionJson));
-                    break;
-                case ServerDB.QuestionTypes.CHOICE:
-                    questions.add(new ChoiceQuestion(questionJson));
-                    break;
-                case ServerDB.QuestionTypes.SCALE:
-                    questions.add(new ScaleQuestion(questionJson));
-                    break;
+        JSONArray questionsArray = data.getJSONArray(ServerDB.Survey.QUESTIONS);
+        if (questionsArray != null) {
+            int length = questionsArray.length();
+            questions = new Question[length];
+            for (int i = 0; i < length; i++) {
+                JSONObject questionJson = questionsArray.getJSONObject(i);
+                switch (questionJson.getInt(ServerDB.Survey.Question.TYPE)) {
+                    case ServerDB.QuestionTypes.SIMPLE:
+                        questions[i] = new TextQuestion(questionJson);
+                        break;
+                    case ServerDB.QuestionTypes.CHOICE:
+                        questions[i] = new ChoiceQuestion(questionJson);
+                        break;
+                    case ServerDB.QuestionTypes.SCALE:
+                        questions[i] = new ScaleQuestion(questionJson);
+                        break;
+                }
             }
-        }
+        } else
+            questions = null;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getTitle() {
@@ -54,7 +56,7 @@ public class Survey {
         return description;
     }
 
-    public ArrayList<Question> getQuestions() {
+    public Question[] getQuestions() {
         return questions;
     }
 }

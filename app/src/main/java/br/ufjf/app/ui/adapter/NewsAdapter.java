@@ -14,13 +14,13 @@ import br.ufjf.dcc.pesquisa.R;
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ItemHolder> {
 
     private final ArrayList<Article> mArticles;
-    private final OnArticleSelectedListener mListener;
+    private final OnArticleClickListener mListener;
 
-    public interface OnArticleSelectedListener {
+    public interface OnArticleClickListener {
         void onArticleSelected(Article article);
     }
 
-    public NewsAdapter(ArrayList<Article> articles, OnArticleSelectedListener listener){
+    public NewsAdapter(ArrayList<Article> articles, OnArticleClickListener listener){
         this.mArticles = articles;
         this.mListener = listener;
     }

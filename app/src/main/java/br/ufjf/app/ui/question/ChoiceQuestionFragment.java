@@ -39,7 +39,7 @@ public class ChoiceQuestionFragment extends QuestionFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.question_choices);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.list_choices);
 
         return view;
     }

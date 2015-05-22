@@ -27,12 +27,12 @@ public class NewsFragment extends ToolbarFragment {
 
     private RecyclerView recyclerView;
     private Feed feed;
-    private NewsAdapter.OnArticleSelectedListener mListener;
+    private NewsAdapter.OnArticleClickListener mListener;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mListener = (NewsAdapter.OnArticleSelectedListener) activity;
+        mListener = (NewsAdapter.OnArticleClickListener) activity;
     }
 
     @Override
