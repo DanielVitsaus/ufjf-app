@@ -18,7 +18,7 @@ import br.ufjf.dcc.pesquisa.R;
  * Created by Jorge Augusto da Silva Moreira on 22/05/2015.
  */
 public class ChoiceQuestionFragment extends QuestionFragment {
-    ChoiceQuestion mQuestion;
+    private ChoiceQuestion mQuestion;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
 

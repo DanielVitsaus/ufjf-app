@@ -6,5 +6,6 @@
     <string name="surveys">Pesquisas</string>
     <string name="settings">Preferências</string>
     <string name="answer_hint">Resposta</string>
+    <string name="question_scale_label">Resposta: %d</string>
 
 </resources>
