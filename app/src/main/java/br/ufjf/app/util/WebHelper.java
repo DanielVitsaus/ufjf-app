@@ -42,7 +42,7 @@ public class WebHelper {
     }
 
     public static Survey getSurvey(String id) throws JSONException {
-        return new Survey(new JSONObject("{\"title\":\"Test\",\"description\":\"Test\", \"questions\":[{\"title\":\"Test?\",\"type\":\"0\",\"answer\":\"test\"}]}"));
+        return new Survey(new JSONObject("{\"title\":\"Pesquisa do DCC\",\"description\":\"Uma simples pesquisa de exemplo\", \"questions\":[{\"title\":\"Descreva o DCC\",\"type\":\"0\",\"single_line\":\"false\",\"answer\":\"test\"}]}"));
     }
 
 }

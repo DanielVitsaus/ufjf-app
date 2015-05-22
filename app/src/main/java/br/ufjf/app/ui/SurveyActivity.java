@@ -10,6 +10,7 @@ import br.ufjf.app.async.GetSurveyTask;
 import br.ufjf.app.model.survey.Question;
 import br.ufjf.app.model.survey.Survey;
 import br.ufjf.app.ui.adapter.SurveyAdapter;
+import br.ufjf.app.ui.question.QuestionFragment;
 import br.ufjf.dcc.pesquisa.R;
 
 /**
@@ -18,8 +19,8 @@ import br.ufjf.dcc.pesquisa.R;
 public class SurveyActivity extends AppCompatActivity implements QuestionFragment.Listener{
     public static final String ARG_SURVEY = "survey";
 
-    private Survey mSurvey;
     private ViewPager mViewPager;
+    private SurveyAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +35,18 @@ public class SurveyActivity extends AppCompatActivity implements QuestionFragmen
             public void onFinish(Survey survey) {
                 if (survey != null) {
                     // Survey loaded
-                    mSurvey = survey;
-                    ((Toolbar) findViewById(R.id.toolbar)).setTitle(survey.getTitle());
-                    mViewPager.setAdapter(new SurveyAdapter(getSupportFragmentManager(), mSurvey.getQuestions().size()));
+                    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+                    toolbar.setTitle(survey.getTitle());
+                    toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+                    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            finish();
+                        }
+                    });
+
+                    mAdapter = new SurveyAdapter(getSupportFragmentManager(), survey.getQuestions());
+                    mViewPager.setAdapter(mAdapter);
                 }
             }
         }).execute(getIntent().getStringExtra(ARG_SURVEY));
@@ -44,7 +54,7 @@ public class SurveyActivity extends AppCompatActivity implements QuestionFragmen
 
     @Override
     public Question getQuestion(int index) {
-        return mSurvey.getQuestions().get(index);
+        return mAdapter.getQuestion(index);
     }
 
     public void previous(View view){

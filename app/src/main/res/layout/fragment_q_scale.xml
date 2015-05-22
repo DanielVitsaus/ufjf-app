@@ -3,12 +3,11 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/question_title"/>
 
-    <TextView
-        android:id="@+id/test"
+    <SeekBar
+        android:id="@+id/question_scale"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="teste"/>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

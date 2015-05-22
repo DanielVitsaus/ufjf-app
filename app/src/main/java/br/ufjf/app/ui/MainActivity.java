@@ -22,12 +22,11 @@ import br.ufjf.dcc.pesquisa.R;
  */
 public class MainActivity extends AppCompatActivity implements NewsAdapter.OnArticleSelectedListener {
 
+    public static final int NEWS_FRAG = 0;
+    public static final int SURVEYS_FRAG = 1;
     // Constants to identify the fragment currently being shown
     private static final int NO_FRAG = -1;
     private static final int SECONDARY_FRAG = -2;
-    public static final int NEWS_FRAG = 0;
-    public static final int SURVEYS_FRAG = 1;
-
     // Constants for fragment containers
     private static final String TAG_MAIN_FRAG = "main";
 
@@ -84,6 +83,10 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnArt
             textView.setTextColor(getResources().getColor(android.R.color.black));
             textView.setTypeface(Typeface.DEFAULT);
         }
+    }
+
+    public void openDrawer(){
+        mDrawerLayout.openDrawer(Gravity.START);
     }
 
     /**

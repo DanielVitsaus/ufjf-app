@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -23,7 +23,7 @@ import br.ufjf.app.ui.adapter.NewsAdapter;
 import br.ufjf.app.util.WebHelper;
 import br.ufjf.dcc.pesquisa.R;
 
-public class NewsFragment extends Fragment {
+public class NewsFragment extends ToolbarFragment {
 
     private RecyclerView recyclerView;
     private Feed feed;
@@ -39,10 +39,9 @@ public class NewsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news, container, false);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        initializeToolbar(view, R.string.news);
 
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        toolbar.setTitle(getString(R.string.news));
+        recyclerView = (RecyclerView) view.findViewById(R.id.list);
 
         return view;
     }
@@ -55,6 +54,16 @@ public class NewsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         new FeedTask().execute();
+    }
+
+    @Override
+    protected void inflateMenu(Toolbar toolbar) {
+
+    }
+
+    @Override
+    protected void onToolbarMenuItemClick(MenuItem menuItem) {
+
     }
 
     private class FeedTask extends AsyncTask<Void, Void, Void> {

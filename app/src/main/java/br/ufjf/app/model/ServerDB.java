@@ -23,7 +23,9 @@ public class ServerDB {
 
             String ANSWER = "answer";
 
-            String ALTERNATIVES = "alternatives";
+            String SINGLE_LINE = "single_line";
+
+            String OPTIONS = "alternatives";
 
             String MIN = "min";
             String MAX = "max";

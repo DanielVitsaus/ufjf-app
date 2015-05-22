@@ -9,23 +9,23 @@ import br.ufjf.app.model.ServerDB;
 /**
  * Created by Jorge Augusto da Silva Moreira on 20/05/2015.
  */
-public class AlternativeCompositeQuestion extends AlternativeQuestion {
-    private int[] answer;
+public class MultipleChoiceQuestion extends ChoiceQuestion {
+    private boolean[] answer;
 
-    public AlternativeCompositeQuestion(JSONObject data) throws JSONException {
+    public MultipleChoiceQuestion(JSONObject data) throws JSONException {
         super(data);
 
         JSONArray answerArray = data.getJSONArray(ServerDB.Survey.Question.ANSWER);
-        this.answer = new int[answerArray.length()];
+        this.answer = new boolean[answerArray.length()];
         for (int i = 0; i < answerArray.length(); i++)
-            answer[i] = answerArray.getInt(i);
+            answer[i] = answerArray.getBoolean(i);
     }
 
-    public int[] getAnswer() {
+    public boolean[] getAnswer() {
         return answer;
     }
 
-    public void setAnswer(int[] answer) {
+    public void setAnswer(boolean[] answer) {
         this.answer = answer;
     }
 }

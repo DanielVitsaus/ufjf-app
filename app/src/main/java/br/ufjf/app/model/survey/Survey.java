@@ -34,16 +34,16 @@ public class Survey {
             JSONObject questionJson = questionsArray.getJSONObject(i);
             switch (questionJson.getInt(ServerDB.Survey.Question.TYPE)) {
                 case ServerDB.QuestionTypes.SIMPLE:
-                    questions.add(new SimpleQuestion(questionJson));
+                    questions.add(new TextQuestion(questionJson));
                     break;
                 case ServerDB.QuestionTypes.ALTERNATIVE_UNIQUE:
-                    questions.add(new AlternativeUniqueQuestion(questionJson));
+                    questions.add(new SingleChoiceQuestion(questionJson));
                     break;
                 case ServerDB.QuestionTypes.ALTERNATIVE_COMPOSITE:
-                    questions.add(new AlternativeCompositeQuestion(questionJson));
+                    questions.add(new MultipleChoiceQuestion(questionJson));
                     break;
                 case ServerDB.QuestionTypes.RATE:
-                    questions.add(new RateQuestion(questionJson));
+                    questions.add(new ScaleQuestion(questionJson));
                     break;
                 case ServerDB.QuestionTypes.VARIATION:
                     questions.add(new VariationQuestion(questionJson));

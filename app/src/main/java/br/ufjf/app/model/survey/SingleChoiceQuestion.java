@@ -8,10 +8,10 @@ import br.ufjf.app.model.ServerDB;
 /**
  * Created by Jorge Augusto da Silva Moreira on 20/05/2015.
  */
-public class AlternativeUniqueQuestion extends AlternativeQuestion {
+public class SingleChoiceQuestion extends ChoiceQuestion {
     private int answer;
 
-    public AlternativeUniqueQuestion(JSONObject data) throws JSONException {
+    public SingleChoiceQuestion(JSONObject data) throws JSONException {
         super(data);
 
         answer = data.getInt(ServerDB.Survey.Question.ANSWER);
