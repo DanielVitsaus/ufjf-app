@@ -55,7 +55,7 @@ public class WebHelper {
         while ((read = reader.read(chars)) != -1)
             buffer.append(chars, 0, read);
 
-        return new Survey(new JSONObject(buffer.toString()));
+        return new Survey(new JSONObject(buffer.toString()).getJSONObject("survey"));
     }
 
     public static Survey[] getSurveys() throws JSONException, IOException {
