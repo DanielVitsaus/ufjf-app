@@ -7,5 +7,7 @@
     <string name="settings">Preferências</string>
     <string name="answer_hint">Resposta</string>
     <string name="question_scale_label">Resposta: %d</string>
+    <string name="open_content_drawer">Abrir menu de navegação</string>
+    <string name="close_content_drawer">Fechar menu de navegação</string>
 
 </resources>

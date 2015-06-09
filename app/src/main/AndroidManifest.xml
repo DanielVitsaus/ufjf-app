@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="br.ufjf.app.ui.MainActivity" >
+            android:name="br.ufjf.app.ui.NewsActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="br.ufjf.app.ui.FeedActivity" />
+            android:name="br.ufjf.app.ui.SurveysExplorerActivity" />
         <activity
             android:name="br.ufjf.app.ui.SurveyActivity" />
     </application>

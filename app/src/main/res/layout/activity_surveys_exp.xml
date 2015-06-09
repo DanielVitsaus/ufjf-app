@@ -16,8 +16,8 @@
             android:id="@+id/toolbar"
             layout="@layout/include_toolbar" />
 
-        <FrameLayout
-            android:id="@+id/container"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_surveys"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
