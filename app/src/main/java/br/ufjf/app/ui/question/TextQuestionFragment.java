@@ -1,6 +1,5 @@
 package br.ufjf.app.ui.question;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -17,6 +16,7 @@ import br.ufjf.dcc.pesquisa.R;
  */
 public class TextQuestionFragment extends QuestionFragment {
     private TextQuestion mQuestion;
+    private EditText mAnswerEditText;
 
     public static TextQuestionFragment newInstance(int questionIndex) {
         TextQuestionFragment fragment = new TextQuestionFragment();
@@ -25,8 +25,8 @@ public class TextQuestionFragment extends QuestionFragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mQuestion = (TextQuestion) mListener.getQuestion(getQuestionIndex());
     }
 
@@ -35,14 +35,14 @@ public class TextQuestionFragment extends QuestionFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        EditText answerEditText = (EditText) view.findViewById(R.id.question_answer);
+        mAnswerEditText = (EditText) view.findViewById(R.id.question_answer);
         if (mQuestion.isSingleLine())
-            answerEditText.setSingleLine();
+            mAnswerEditText.setSingleLine();
         else {
-            answerEditText.setHorizontalScrollBarEnabled(false);
-            answerEditText.setLines(7);
-            answerEditText.setMaxLines(7);
-            answerEditText.setEms(10);
+            mAnswerEditText.setHorizontalScrollBarEnabled(false);
+            mAnswerEditText.setLines(7);
+            mAnswerEditText.setMaxLines(7);
+            mAnswerEditText.setEms(10);
         }
 
         return view;
@@ -61,5 +61,14 @@ public class TextQuestionFragment extends QuestionFragment {
     @Override
     protected Question getQuestion() {
         return mQuestion;
+    }
+
+    @Override
+    protected void reportAnswer() {
+        ((Listener) mListener).registerAnswer(mAnswerEditText.getText().toString(), getQuestionIndex());
+    }
+
+    public interface Listener extends QuestionFragment.Listener {
+        void registerAnswer(String answer, int questionIndex);
     }
 }

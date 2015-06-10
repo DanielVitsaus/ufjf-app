@@ -21,11 +21,22 @@ public abstract class QuestionFragment extends Fragment {
     private static final String TAG = "QuestionFragment";
 
     protected Listener mListener;
+    private int mQuestionIndex;
 
-    protected static void setupNewInstance(QuestionFragment questionFragment, int questionIndex){
+    public QuestionFragment(){
+        mQuestionIndex = -1;
+    }
+
+    protected static void setupNewInstance(QuestionFragment questionFragment, int questionIndex) {
         Bundle args = new Bundle();
         args.putInt(ARG_QUESTION_INDEX, questionIndex);
         questionFragment.setArguments(args);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(ARG_QUESTION_INDEX, mQuestionIndex);
     }
 
     @Override
@@ -36,6 +47,15 @@ public abstract class QuestionFragment extends Fragment {
         } catch (ClassCastException e) {
             Log.v(TAG, "Activity must implement QuestionFragment.Listener");
         }
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState != null)
+            mQuestionIndex = savedInstanceState.getInt(ARG_QUESTION_INDEX);
+        else
+            mQuestionIndex = getQuestionIndex();
     }
 
     @Nullable
@@ -49,18 +69,28 @@ public abstract class QuestionFragment extends Fragment {
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        reportAnswer();
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
 
-    protected int getQuestionIndex(){
-        return getArguments().getInt(ARG_QUESTION_INDEX);
+    protected int getQuestionIndex() {
+        if (mQuestionIndex == -1)
+            mQuestionIndex = getArguments().getInt(ARG_QUESTION_INDEX);
+        return mQuestionIndex;
     }
 
     protected abstract int getLayoutRes();
 
     protected abstract Question getQuestion();
+
+    protected abstract void reportAnswer();
 
     public interface Listener {
         Question getQuestion(int index);

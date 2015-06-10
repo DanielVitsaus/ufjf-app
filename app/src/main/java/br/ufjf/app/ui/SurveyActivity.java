@@ -4,19 +4,22 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.SparseBooleanArray;
 import android.view.View;
 
 import br.ufjf.app.async.GetSurveyTask;
 import br.ufjf.app.model.survey.Question;
 import br.ufjf.app.model.survey.Survey;
 import br.ufjf.app.ui.adapter.SurveyAdapter;
-import br.ufjf.app.ui.question.QuestionFragment;
+import br.ufjf.app.ui.question.ChoiceQuestionFragment;
+import br.ufjf.app.ui.question.ScaleQuestionFragment;
+import br.ufjf.app.ui.question.TextQuestionFragment;
 import br.ufjf.dcc.pesquisa.R;
 
 /**
  * Created by Jorge Augusto da Silva Moreira on 20/05/2015.
  */
-public class SurveyActivity extends AppCompatActivity implements QuestionFragment.Listener{
+public class SurveyActivity extends AppCompatActivity implements ChoiceQuestionFragment.Listener, ScaleQuestionFragment.Listener, TextQuestionFragment.Listener{
     public static final String ARG_SURVEY = "survey";
 
     private ViewPager mViewPager;
@@ -63,5 +66,20 @@ public class SurveyActivity extends AppCompatActivity implements QuestionFragmen
 
     public void next(View view){
         mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
+    }
+
+    @Override
+    public void registerAnswer(int answer, int questionIndex) {
+
+    }
+
+    @Override
+    public void registerAnswer(String answer, int questionIndex) {
+
+    }
+
+    @Override
+    public void registerAnswer(SparseBooleanArray choices, int questionIndex) {
+
     }
 }

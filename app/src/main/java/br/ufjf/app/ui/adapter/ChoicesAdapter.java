@@ -1,6 +1,7 @@
 package br.ufjf.app.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,16 @@ public class ChoicesAdapter extends RecyclerView.Adapter<ChoicesAdapter.ChoiceHo
     private final boolean mSingleChoice;
     private final String[] mOptions;
     private int mSelectedOption;
+    private SparseBooleanArray mSelected;
 
     public ChoicesAdapter(boolean singleChoice, String[] options) {
-        this.mSingleChoice = singleChoice;
-        this.mOptions = options;
+        mSingleChoice = singleChoice;
+        mOptions = options;
+        mSelected = new SparseBooleanArray();
+    }
+
+    public SparseBooleanArray getSelected() {
+        return mSelected;
     }
 
     @Override
@@ -64,21 +71,22 @@ public class ChoicesAdapter extends RecyclerView.Adapter<ChoicesAdapter.ChoiceHo
             super(itemView);
             choice = (CompoundButton) itemView.findViewById(R.id.choice);
 
-            if (mSingleChoice)
-                choice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                        if (checked) {
+            choice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                    mSelected.put(getAdapterPosition(), checked);
+                    if (checked)
+                        if (mSingleChoice) {
                             int oldSelectedOption = mSelectedOption;
                             mSelectedOption = position;
                             try {
                                 notifyItemChanged(oldSelectedOption);
-                            } catch (IllegalStateException e) {
+                            } catch (IllegalStateException ignored) {
 
                             }
                         }
-                    }
-                });
+                }
+            });
         }
     }
 

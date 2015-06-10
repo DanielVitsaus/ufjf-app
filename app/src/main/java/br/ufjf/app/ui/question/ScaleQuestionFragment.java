@@ -1,13 +1,13 @@
 package br.ufjf.app.ui.question;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SeekBar;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 import br.ufjf.app.model.survey.Question;
 import br.ufjf.app.model.survey.ScaleQuestion;
@@ -18,25 +18,7 @@ import br.ufjf.dcc.pesquisa.R;
  */
 public class ScaleQuestionFragment extends QuestionFragment {
     private ScaleQuestion mQuestion;
-
-    private TextView mLabelTextView;
-
-    private SeekBar.OnSeekBarChangeListener mOnSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
-        @Override
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean user) {
-            mLabelTextView.setText(getString(R.string.question_scale_label, progress));
-        }
-
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
-
-        }
-
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
-
-        }
-    };
+    private Spinner mSpinner;
 
     public static ScaleQuestionFragment newInstance(int questionIndex) {
         ScaleQuestionFragment fragment = new ScaleQuestionFragment();
@@ -45,8 +27,8 @@ public class ScaleQuestionFragment extends QuestionFragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mQuestion = (ScaleQuestion) mListener.getQuestion(getQuestionIndex());
     }
 
@@ -55,9 +37,14 @@ public class ScaleQuestionFragment extends QuestionFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        ((SeekBar) view.findViewById(R.id.question_scale)).setOnSeekBarChangeListener(mOnSeekBarChangeListener);
-        mLabelTextView = (TextView) view.findViewById(R.id.question_label);
-        mLabelTextView.setText(getString(R.string.question_scale_label, mQuestion.getMin()));
+        mSpinner = (Spinner) view.findViewById(R.id.question_scale);
+
+        Integer[] values = new Integer[mQuestion.getMax() - mQuestion.getMin()];
+        for (int i = 0; i < values.length; i++)
+            values[i] = i + mQuestion.getMin();
+
+        SpinnerAdapter spinnerAdapter = new ArrayAdapter<>(mSpinner.getContext(), android.R.layout.simple_spinner_dropdown_item, values);
+        mSpinner.setAdapter(spinnerAdapter);
 
         return view;
     }
@@ -70,5 +57,14 @@ public class ScaleQuestionFragment extends QuestionFragment {
     @Override
     protected Question getQuestion() {
         return mQuestion;
+    }
+
+    @Override
+    protected void reportAnswer() {
+        ((Listener) mListener).registerAnswer(mSpinner.getSelectedItemPosition(), getQuestionIndex());
+    }
+
+    public interface Listener extends QuestionFragment.Listener {
+        void registerAnswer(int answer, int questionIndex);
     }
 }

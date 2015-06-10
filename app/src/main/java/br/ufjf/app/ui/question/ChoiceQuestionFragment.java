@@ -1,10 +1,10 @@
 package br.ufjf.app.ui.question;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,17 +20,17 @@ import br.ufjf.dcc.pesquisa.R;
 public class ChoiceQuestionFragment extends QuestionFragment {
     private ChoiceQuestion mQuestion;
     private RecyclerView mRecyclerView;
-    private LinearLayoutManager mLayoutManager;
+    private ChoicesAdapter mAdapter;
 
-    public static ChoiceQuestionFragment newInstance(int questionIndex){
+    public static ChoiceQuestionFragment newInstance(int questionIndex) {
         ChoiceQuestionFragment fragment = new ChoiceQuestionFragment();
         setupNewInstance(fragment, questionIndex);
         return fragment;
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mQuestion = (ChoiceQuestion) mListener.getQuestion(getQuestionIndex());
     }
 
@@ -38,9 +38,7 @@ public class ChoiceQuestionFragment extends QuestionFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-
         mRecyclerView = (RecyclerView) view.findViewById(R.id.list_choices);
-
         return view;
     }
 
@@ -48,11 +46,11 @@ public class ChoiceQuestionFragment extends QuestionFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        mAdapter = new ChoicesAdapter(mQuestion.isSingleChoice(), mQuestion.getOptions());
 
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(new ChoicesAdapter(mQuestion.isSingleChoice(), mQuestion.getOptions()));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -63,5 +61,14 @@ public class ChoiceQuestionFragment extends QuestionFragment {
     @Override
     protected Question getQuestion() {
         return mQuestion;
+    }
+
+    @Override
+    protected void reportAnswer() {
+        ((Listener) mListener).registerAnswer(mAdapter.getSelected(), getQuestionIndex());
+    }
+
+    public interface Listener extends QuestionFragment.Listener {
+        void registerAnswer(SparseBooleanArray choices, int questionIndex);
     }
 }
