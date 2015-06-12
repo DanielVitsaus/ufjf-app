@@ -18,6 +18,13 @@ public class ServerDB {
         int PUBLIC = 4;
     }
 
+    public interface Student {
+        String NAME = "name";
+        String EMAIL = "email";
+        String PASSWORD = "password";
+        String COURSE = "course";
+    }
+
     public interface Survey {
         String ID = "_id";
         String TITLE = "title";

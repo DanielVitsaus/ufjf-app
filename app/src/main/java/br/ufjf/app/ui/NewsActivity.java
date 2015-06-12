@@ -10,7 +10,7 @@ import br.ufjf.dcc.pesquisa.R;
 /**
  * Created by Jorge Augusto da Silva Moreira on 20/05/2015.
  */
-public class NewsActivity extends BaseActivity implements NewsAdapter.OnArticleClickListener {
+public class NewsActivity extends DrawerActivity implements NewsAdapter.OnArticleClickListener {
 
     private static final String TAG_FRAG = "main";
 

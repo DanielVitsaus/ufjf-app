@@ -24,34 +24,18 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
 
 import br.ufjf.dcc.pesquisa.R;
 
-/**
- * Abstract activity with toolbar, navigation drawer and cast support. Needs to be extended by
- * any activity that wants to be shown as a top level activity.
- * <p/>
- * The requirements for a subclass is to call {@link #initializeToolbar()} on onCreate, after
- * setContentView() is called and have three mandatory layout elements:
- * a {@link android.support.v7.widget.Toolbar} with id 'toolbar',
- * a {@link android.support.v4.widget.DrawerLayout} with id 'drawerLayout' and
- * a {@link ListView} with id 'drawerList'.
- */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class DrawerActivity extends ToolbarActivity {
 
-    private static final String TAG = "ActionBarActivity";
+    private static final String TAG = "DrawerActivity";
 
-    private Toolbar mToolbar;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
-
-    private boolean mToolbarInitialized;
 
     private int mItemToOpenWhenDrawerCloses = -1;
 
@@ -73,8 +57,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                 }
 
                 Bundle extras = ActivityOptions.makeCustomAnimation(
-                        BaseActivity.this, R.anim.fade_in, R.anim.fade_out).toBundle();
-                startActivity(new Intent(BaseActivity.this, activityClass), extras);
+                        DrawerActivity.this, R.anim.fade_in, R.anim.fade_out).toBundle();
+                startActivity(new Intent(DrawerActivity.this, activityClass), extras);
                 finish();
             }
         }
@@ -104,15 +88,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                     updateDrawerToggle();
                 }
             };
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (!mToolbarInitialized)
-            throw new IllegalStateException("You must run super.initializeToolbar at " +
-                    "the end of your onCreate method");
-
-    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -183,42 +158,25 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void setTitle(CharSequence title) {
-        super.setTitle(title);
-        mToolbar.setTitle(title);
-    }
-
-    @Override
-    public void setTitle(int titleId) {
-        super.setTitle(titleId);
-        mToolbar.setTitle(titleId);
-    }
-
     protected void initializeToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (mToolbar == null)
-            throw new IllegalStateException("Layout is required to include a Toolbar with id " +
-                    "'toolbar'");
-
-        mToolbar.inflateMenu(R.menu.main);
+        super.initializeToolbar();
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        if (mDrawerLayout != null) {
-            // Create an ActionBarDrawerToggle that will handle opening/closing of the drawer:
-            mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                    mToolbar, R.string.open_content_drawer, R.string.close_content_drawer);
-            mDrawerLayout.setDrawerListener(mDrawerListener);
+        // Create an ActionBarDrawerToggle that will handle opening/closing of the drawer:
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                getToolbar(), R.string.open_content_drawer, R.string.close_content_drawer);
+        mDrawerLayout.setDrawerListener(mDrawerListener);
             /*todo mDrawerLayout.setStatusBarBackgroundColor(
                     ResourceHelper.getThemeColor(this, R.attr.colorPrimary, android.R.color.black));*/
-            populateDrawerItems();
-            setSupportActionBar(mToolbar);
-            updateDrawerToggle();
-        } else
-            setSupportActionBar(mToolbar);
+        populateDrawerItems();
+        updateDrawerToggle();
 
-
-        mToolbarInitialized = true;
+        mDrawerLayout.findViewById(R.id.drawer_header).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DrawerActivity.this, AuthActivity.class));
+            }
+        });
     }
 
     private void populateDrawerItems() {

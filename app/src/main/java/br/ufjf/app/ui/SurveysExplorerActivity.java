@@ -13,7 +13,7 @@ import br.ufjf.dcc.pesquisa.R;
 /**
  * Created by Jorge Augusto da Silva Moreira on 20/05/2015.
  */
-public class SurveysExplorerActivity extends BaseActivity {
+public class SurveysExplorerActivity extends DrawerActivity {
 
     private static final String TAG_FRAG = "main";
 

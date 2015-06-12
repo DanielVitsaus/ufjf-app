@@ -7,4 +7,5 @@
     android:layout_gravity="start"
     android:background="@android:color/white"
     android:elevation="16dp"
+    app:headerLayout="@layout/include_drawer_header"
     app:menu="@menu/drawer" />

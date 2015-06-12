@@ -20,7 +20,9 @@
         <activity
             android:name="br.ufjf.app.ui.SurveysExplorerActivity" />
         <activity
-            android:name="br.ufjf.app.ui.SurveyActivity" />
+        android:name="br.ufjf.app.ui.SurveyActivity" />
+        <activity
+            android:name="br.ufjf.app.ui.AuthActivity" />
     </application>
 
 </manifest>
