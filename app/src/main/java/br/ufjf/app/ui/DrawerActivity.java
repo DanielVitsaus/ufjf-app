@@ -27,12 +27,16 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
+import br.ufjf.app.model.Student;
+import br.ufjf.app.util.AuthHelper;
 import br.ufjf.dcc.pesquisa.R;
 
 public abstract class DrawerActivity extends ToolbarActivity {
 
     private static final String TAG = "DrawerActivity";
+    private static final int REQ_CODE_LOGIN = 468;
 
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
@@ -158,6 +162,17 @@ public abstract class DrawerActivity extends ToolbarActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQ_CODE_LOGIN && resultCode == RESULT_OK) {
+            TextView nameView = (TextView) mDrawerLayout.findViewById(R.id.drawer_name);
+            TextView emailView = (TextView) mDrawerLayout.findViewById(R.id.drawer_email);
+
+            nameView.setText(data.getStringExtra("name"));
+            emailView.setText(data.getStringExtra("email"));
+        } else super.onActivityResult(requestCode, resultCode, data);
+    }
+
     protected void initializeToolbar() {
         super.initializeToolbar();
 
@@ -166,17 +181,10 @@ public abstract class DrawerActivity extends ToolbarActivity {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 getToolbar(), R.string.open_content_drawer, R.string.close_content_drawer);
         mDrawerLayout.setDrawerListener(mDrawerListener);
-            /*todo mDrawerLayout.setStatusBarBackgroundColor(
-                    ResourceHelper.getThemeColor(this, R.attr.colorPrimary, android.R.color.black));*/
+        mDrawerLayout.setStatusBarBackgroundColor(
+                getResources().getColor(R.color.primary));
         populateDrawerItems();
         updateDrawerToggle();
-
-        mDrawerLayout.findViewById(R.id.drawer_header).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(DrawerActivity.this, AuthActivity.class));
-            }
-        });
     }
 
     private void populateDrawerItems() {
@@ -196,6 +204,27 @@ public abstract class DrawerActivity extends ToolbarActivity {
                 return true;
             }
         });
+
+        View drawerHeader = mDrawerLayout.findViewById(R.id.drawer_header);
+        drawerHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(DrawerActivity.this, AuthActivity.class), REQ_CODE_LOGIN);
+            }
+        });
+
+        TextView nameView = (TextView) drawerHeader.findViewById(R.id.drawer_name);
+        TextView emailView = (TextView) drawerHeader.findViewById(R.id.drawer_email);
+
+        try {
+            Student loggedStudent = AuthHelper.getStudent(this);
+
+            nameView.setText(loggedStudent.getName());
+            emailView.setText(loggedStudent.getEmail());
+        } catch (AuthHelper.StudentNotLoggedIn studentNotLoggedIn) {
+            nameView.setText("Estudante,");
+            emailView.setText("Toque aqui para entrar.");
+        }
     }
 
     protected void updateDrawerToggle() {

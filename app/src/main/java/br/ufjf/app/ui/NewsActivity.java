@@ -21,8 +21,7 @@ public class NewsActivity extends DrawerActivity implements NewsAdapter.OnArticl
         initializeToolbar();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, new NewsFragment())
-                .addToBackStack(null)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit();
     }
 
@@ -32,7 +31,7 @@ public class NewsActivity extends DrawerActivity implements NewsAdapter.OnArticl
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, fragment)
                 .addToBackStack(null)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit();
     }
 }

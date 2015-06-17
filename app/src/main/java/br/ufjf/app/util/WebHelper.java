@@ -52,20 +52,20 @@ public class WebHelper {
         }
     }
 
-    public static Student requestRegistration(Context context, String email, String password) throws JSONException, IOException {
-        URL url = new URL(STUDENTS_URL + "/register");
+    public static Student requestSignIn(Context context, String email, String password) throws JSONException, IOException {
+        URL url = new URL(STUDENTS_URL + "/login");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("PUT");
+        connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setRequestProperty("Accept", "application/json");
         connection.setDoInput(true);
 
-        JSONObject data = new JSONObject();
-        data.put(ServerDB.Student.EMAIL, email);
-        data.put(ServerDB.Student.PASSWORD, password);
+        JSONObject input = new JSONObject();
+        input.put(ServerDB.Student.EMAIL, email);
+        input.put(ServerDB.Student.PASSWORD, password);
 
         OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
-        wr.write(data.toString());
+        wr.write(input.toString());
         wr.flush();
 
         connection.connect();
@@ -78,41 +78,53 @@ public class WebHelper {
         while ((line = reader.readLine()) != null)
             sb.append(line).append("\n");
 
-        Student student = new Student(new JSONObject(sb.toString()));
-        AuthHelper.registerLogin(context, student);
-        return student;
+        JSONObject data = new JSONObject(sb.toString());
+        if (data.getBoolean("success")) {
+            Student student = new Student(data.getJSONObject("student"));
+            AuthHelper.registerLogin(context, student);
+            return student;
+        } else
+            return null;
     }
 
     public static Survey getSurvey(String id) throws JSONException, IOException {
         URL url = new URL(SURVEYS_URL + "/" + id);
         BufferedReader reader = new BufferedReader(new InputStreamReader(
                 url.openStream(), "UTF-8"));
-        StringBuilder buffer = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         int read;
         char[] chars = new char[1024];
         while ((read = reader.read(chars)) != -1)
-            buffer.append(chars, 0, read);
+            sb.append(chars, 0, read);
 
-        return new Survey(new JSONObject(buffer.toString()).getJSONObject("survey"));
+        JSONObject data = new JSONObject(sb.toString());
+        if (data.getBoolean("success"))
+            return new Survey(data.getJSONObject("survey"));
+        else
+            return null;
     }
 
     public static Survey[] getSurveys() throws JSONException, IOException {
         URL url = new URL(SURVEYS_URL);
         BufferedReader reader = new BufferedReader(new InputStreamReader(
                 url.openStream(), "UTF-8"));
-        StringBuilder buffer = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         int read;
         char[] chars = new char[1024];
         while ((read = reader.read(chars)) != -1)
-            buffer.append(chars, 0, read);
+            sb.append(chars, 0, read);
 
-        JSONArray jsonArray = new JSONObject(buffer.toString()).getJSONArray("surveys");
-        int length = jsonArray.length();
-        Survey[] surveys = new Survey[length];
-        for (int i = 0; i < length; i++)
-            surveys[i] = new Survey(jsonArray.getJSONObject(i));
+        JSONObject data = new JSONObject(sb.toString());
+        if (data.getBoolean("success")) {
+            JSONArray jsonArray = data.getJSONArray("surveys");
+            int length = jsonArray.length();
+            Survey[] surveys = new Survey[length];
+            for (int i = 0; i < length; i++)
+                surveys[i] = new Survey(jsonArray.getJSONObject(i));
 
-        return surveys;
+            return surveys;
+        } else
+            return null;
     }
 
 }

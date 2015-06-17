@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ui.AuthActivity">
 
     <include layout="@layout/toolbar" />
 
@@ -14,9 +16,10 @@
         android:layout_marginTop="@dimen/margin_view">
 
         <EditText
+            android:id="@+id/auth_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="E-mail"
+            android:hint="@string/email"
             android:inputType="textEmailAddress" />
     </android.support.design.widget.TextInputLayout>
 
@@ -27,10 +30,19 @@
         android:paddingRight="@dimen/margin_screen">
 
         <EditText
+            android:id="@+id/auth_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword" />
     </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_view"
+        android:text="@string/sign_in"
+        android:onClick="signIn"/>
 
 </LinearLayout>

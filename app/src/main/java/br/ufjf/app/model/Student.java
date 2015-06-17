@@ -20,7 +20,7 @@ public class Student {
     public Student(JSONObject data) throws JSONException {
         name = data.getString(ServerDB.Student.NAME);
         email = data.getString(ServerDB.Student.EMAIL);
-        course = data.getString(ServerDB.Student.COURSE);
+        course = null; //todo data.getString(ServerDB.Student.COURSE);
     }
 
     public String getName() {

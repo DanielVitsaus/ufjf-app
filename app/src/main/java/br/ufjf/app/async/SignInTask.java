@@ -13,12 +13,12 @@ import br.ufjf.app.util.WebHelper;
 /**
  * Created by Jorge Augusto da Silva Moreira on 20/05/2015.
  */
-public class RegistrationTask extends AsyncTask<String, Void, Student> {
+public class SignInTask extends AsyncTask<String, Void, Student> {
 
     private final Callback mCallback;
     private final Context mContext;
 
-    public RegistrationTask(Context context, Callback callback) {
+    public SignInTask(Context context, Callback callback) {
         mCallback = callback;
         mContext = context;
     }
@@ -26,7 +26,7 @@ public class RegistrationTask extends AsyncTask<String, Void, Student> {
     @Override
     protected Student doInBackground(String... credentials) {
         try {
-            return WebHelper.requestRegistration(mContext, credentials[0], credentials[1]);
+            return WebHelper.requestSignIn(mContext, credentials[0], credentials[1]);
         } catch (JSONException | IOException e) {
             e.printStackTrace();
             return null;

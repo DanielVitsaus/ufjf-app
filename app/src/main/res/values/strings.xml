@@ -9,5 +9,10 @@
     <string name="question_scale_label">Resposta: %d</string>
     <string name="open_content_drawer">Abrir menu de navegação</string>
     <string name="close_content_drawer">Fechar menu de navegação</string>
+    <string name="sign_in">Entrar</string>
+    <string name="email">E-mail</string>
+    <string name="password">Senha</string>
+    <string name="wrong_credentials">E-mail ou senha incorretos</string>
+    <string name="success_signin">Sucesso</string>
 
 </resources>

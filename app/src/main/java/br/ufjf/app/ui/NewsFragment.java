@@ -68,7 +68,8 @@ public class NewsFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            recyclerView.setAdapter(new NewsAdapter(feed.getArticles(), mListener));
+            if (feed != null)
+                recyclerView.setAdapter(new NewsAdapter(feed.getArticles(), mListener));
         }
     }
 }
