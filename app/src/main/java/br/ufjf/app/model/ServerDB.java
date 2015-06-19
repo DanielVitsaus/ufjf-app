@@ -5,7 +5,7 @@ package br.ufjf.app.model;
  */
 public class ServerDB {
     public interface QuestionType {
-        int SIMPLE = 0;
+        int TEXT = 0;
         int CHOICE = 1;
         int SCALE = 2;
     }
@@ -19,10 +19,22 @@ public class ServerDB {
     }
 
     public interface Student {
+        String ID = "_id";
         String NAME = "name";
         String EMAIL = "email";
         String PASSWORD = "password";
         String COURSE = "course";
+        String SURVEY_ANSWERS = "survey_answers";
+
+        public interface SurveyAnswer {
+            String SURVEY = "survey";
+            String ANSWERS = "answers";
+
+            public interface Answer {
+                String TYPE = "type";
+                String ANSWER = "answer";
+            }
+        }
     }
 
     public interface Survey {

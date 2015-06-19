@@ -42,13 +42,14 @@ public abstract class DrawerActivity extends ToolbarActivity {
     private DrawerLayout mDrawerLayout;
 
     private int mItemToOpenWhenDrawerCloses = -1;
+    private int mOpennedItem = -1;
 
     private DrawerLayout.DrawerListener mDrawerListener = new DrawerLayout.DrawerListener() {
         @Override
         public void onDrawerClosed(View drawerView) {
             if (mDrawerToggle != null) mDrawerToggle.onDrawerClosed(drawerView);
             int position = mItemToOpenWhenDrawerCloses;
-            if (position >= 0) {
+            if (position >= 0 && mOpennedItem != mItemToOpenWhenDrawerCloses) {
 
                 Class activityClass = null;
                 switch (position) {
@@ -59,6 +60,8 @@ public abstract class DrawerActivity extends ToolbarActivity {
                         activityClass = SurveysExplorerActivity.class;
                         break;
                 }
+
+                mOpennedItem = position;
 
                 Bundle extras = ActivityOptions.makeCustomAnimation(
                         DrawerActivity.this, R.anim.fade_in, R.anim.fade_out).toBundle();
@@ -164,12 +167,16 @@ public abstract class DrawerActivity extends ToolbarActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQ_CODE_LOGIN && resultCode == RESULT_OK) {
-            TextView nameView = (TextView) mDrawerLayout.findViewById(R.id.drawer_name);
-            TextView emailView = (TextView) mDrawerLayout.findViewById(R.id.drawer_email);
+        if (requestCode == REQ_CODE_LOGIN) {
+            if (resultCode == RESULT_OK) {
+                TextView nameView = (TextView) mDrawerLayout.findViewById(R.id.drawer_name);
+                TextView courseView = (TextView) mDrawerLayout.findViewById(R.id.drawer_course);
 
-            nameView.setText(data.getStringExtra("name"));
-            emailView.setText(data.getStringExtra("email"));
+                nameView.setText(data.getStringExtra("name"));
+                courseView.setText(data.getStringExtra("course"));
+            } else {
+                finish();
+            }
         } else super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -195,12 +202,16 @@ public abstract class DrawerActivity extends ToolbarActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.drawer_news:
                         mItemToOpenWhenDrawerCloses = 0;
+                        mDrawerLayout.closeDrawers();
                         break;
                     case R.id.drawer_surveys:
                         mItemToOpenWhenDrawerCloses = 1;
+                        mDrawerLayout.closeDrawers();
                         break;
+                    case R.id.drawer_logout:
+                        AuthHelper.registerLogout(DrawerActivity.this);
+                        startActivityForResult(new Intent(DrawerActivity.this, AuthActivity.class), REQ_CODE_LOGIN);
                 }
-                mDrawerLayout.closeDrawers();
                 return true;
             }
         });
@@ -209,21 +220,19 @@ public abstract class DrawerActivity extends ToolbarActivity {
         drawerHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(DrawerActivity.this, AuthActivity.class), REQ_CODE_LOGIN);
+
             }
         });
 
         TextView nameView = (TextView) drawerHeader.findViewById(R.id.drawer_name);
-        TextView emailView = (TextView) drawerHeader.findViewById(R.id.drawer_email);
+        TextView courseView = (TextView) drawerHeader.findViewById(R.id.drawer_course);
 
         try {
             Student loggedStudent = AuthHelper.getStudent(this);
-
             nameView.setText(loggedStudent.getName());
-            emailView.setText(loggedStudent.getEmail());
+            courseView.setText(loggedStudent.getCourse());
         } catch (AuthHelper.StudentNotLoggedIn studentNotLoggedIn) {
-            nameView.setText("Estudante,");
-            emailView.setText("Toque aqui para entrar.");
+            startActivityForResult(new Intent(DrawerActivity.this, AuthActivity.class), REQ_CODE_LOGIN);
         }
     }
 

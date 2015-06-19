@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import br.ufjf.app.model.survey.Answer;
 import br.ufjf.app.model.survey.Question;
+import br.ufjf.app.model.survey.TextAnswer;
 import br.ufjf.app.model.survey.TextQuestion;
 import br.ufjf.dcc.pesquisa.R;
 
@@ -16,6 +18,7 @@ import br.ufjf.dcc.pesquisa.R;
  */
 public class TextQuestionFragment extends QuestionFragment {
     private TextQuestion mQuestion;
+    private TextAnswer mAnswer;
     private EditText mAnswerEditText;
 
     public static TextQuestionFragment newInstance(int questionIndex) {
@@ -64,11 +67,17 @@ public class TextQuestionFragment extends QuestionFragment {
     }
 
     @Override
-    protected void reportAnswer() {
-        ((Listener) mListener).registerAnswer(mAnswerEditText.getText().toString(), getQuestionIndex());
+    protected Answer getAnswer() {
+        String text = mAnswerEditText.getText().toString();
+        if (mAnswer == null)
+            mAnswer = new TextAnswer(text);
+        else
+            mAnswer.setAnswer(text);
+        return mAnswer;
     }
 
-    public interface Listener extends QuestionFragment.Listener {
-        void registerAnswer(String answer, int questionIndex);
+    @Override
+    protected void updateUI(Answer answer) {
+        mAnswerEditText.setText(((TextAnswer) answer).getAnswer());
     }
 }

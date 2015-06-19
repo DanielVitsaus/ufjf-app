@@ -16,7 +16,7 @@
         android:textColor="@color/primary_text_default_material_dark" />
 
     <TextView
-        android:id="@+id/drawer_email"
+        android:id="@+id/drawer_course"
         style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

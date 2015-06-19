@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import br.ufjf.app.model.survey.Answer;
 import br.ufjf.app.model.survey.Question;
 import br.ufjf.dcc.pesquisa.R;
 
@@ -23,7 +24,7 @@ public abstract class QuestionFragment extends Fragment {
     protected Listener mListener;
     private int mQuestionIndex;
 
-    public QuestionFragment(){
+    public QuestionFragment() {
         mQuestionIndex = -1;
     }
 
@@ -69,9 +70,17 @@ public abstract class QuestionFragment extends Fragment {
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        reportAnswer();
+    public void onResume() {
+        super.onResume();
+        Answer answer = mListener.getAnswer(mQuestionIndex);
+        if (answer != null)
+            updateUI(answer);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mListener.registerAnswer(mQuestionIndex, getAnswer());
     }
 
     @Override
@@ -90,9 +99,15 @@ public abstract class QuestionFragment extends Fragment {
 
     protected abstract Question getQuestion();
 
-    protected abstract void reportAnswer();
+    protected abstract Answer getAnswer();
+
+    protected abstract void updateUI(Answer answer);
 
     public interface Listener {
         Question getQuestion(int index);
+
+        Answer getAnswer(int index);
+
+        void registerAnswer(int questionIndex, Answer answer);
     }
 }

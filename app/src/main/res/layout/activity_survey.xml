@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tools:LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.MainActivity">
 
-    <include layout="@layout/toolbar" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/survey_pager"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar" />
 
     <View
         android:id="@+id/drawer_stroke"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_above="@+id/survey_bar"
         android:background="@color/gray_stroke" />
 
     <LinearLayout
+        android:id="@+id/survey_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/touchable">
+        android:layout_height="@dimen/touchable"
+        android:layout_alignParentBottom="true">
 
         <TextView
             android:id="@+id/survey_previous"
@@ -31,7 +36,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="previous"
-            android:text="ANTERIOR"/>
+            android:text="ANTERIOR" />
 
         <TextView
             android:id="@+id/survey_next"
@@ -40,7 +45,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="next"
-            android:text="PRÓXIMA"/>
+            android:text="PRÓXIMA" />
     </LinearLayout>
 
-</tools:LinearLayout>
+</RelativeLayout>

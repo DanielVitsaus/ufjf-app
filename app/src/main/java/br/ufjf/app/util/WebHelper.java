@@ -23,11 +23,12 @@ import javax.xml.parsers.SAXParserFactory;
 import br.ufjf.app.model.ServerDB;
 import br.ufjf.app.model.Student;
 import br.ufjf.app.model.survey.Survey;
+import br.ufjf.app.model.survey.SurveyAnswer;
 
 public class WebHelper {
-    private static final String BASE_URL = "http://200.131.219.208:4712";
-    private static final String STUDENTS_URL = BASE_URL + "/students";
-    private static final String SURVEYS_URL = BASE_URL + "/surveys";
+    private static final String BASE_URL = "http://200.131.219.208:4712/";
+    private static final String STUDENTS_URL = BASE_URL + "students/";
+    private static final String SURVEYS_URL = BASE_URL + "surveys/";
 
     public static FeedHandler readFeed(String url) throws IOException, SAXException, ParserConfigurationException {
         InputStream inputXml = null;
@@ -53,7 +54,7 @@ public class WebHelper {
     }
 
     public static Student requestSignIn(Context context, String email, String password) throws JSONException, IOException {
-        URL url = new URL(STUDENTS_URL + "/login");
+        URL url = new URL(STUDENTS_URL + "login");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-Type", "application/json");
@@ -88,7 +89,7 @@ public class WebHelper {
     }
 
     public static Survey getSurvey(String id) throws JSONException, IOException {
-        URL url = new URL(SURVEYS_URL + "/" + id);
+        URL url = new URL(SURVEYS_URL + id);
         BufferedReader reader = new BufferedReader(new InputStreamReader(
                 url.openStream(), "UTF-8"));
         StringBuilder sb = new StringBuilder();
@@ -127,4 +128,28 @@ public class WebHelper {
             return null;
     }
 
+    public static boolean sendAnswer(String studentId, SurveyAnswer answer) throws JSONException, IOException {
+        URL url = new URL(STUDENTS_URL + studentId + "/answers");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Accept", "application/json");
+        connection.setDoInput(true);
+
+        OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
+        wr.write(answer.toJSON().toString());
+        wr.flush();
+
+        connection.connect();
+
+        InputStream inputStream = connection.getInputStream();
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null)
+            sb.append(line).append("\n");
+
+        return new JSONObject(sb.toString()).getBoolean("success");
+    }
 }

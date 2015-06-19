@@ -4,26 +4,29 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.Toast;
 
 import br.ufjf.app.async.GetSurveyTask;
+import br.ufjf.app.async.SubmitAnswerTask;
+import br.ufjf.app.model.survey.Answer;
 import br.ufjf.app.model.survey.Question;
 import br.ufjf.app.model.survey.Survey;
+import br.ufjf.app.model.survey.SurveyAnswer;
 import br.ufjf.app.ui.adapter.SurveyAdapter;
-import br.ufjf.app.ui.question.ChoiceQuestionFragment;
-import br.ufjf.app.ui.question.ScaleQuestionFragment;
-import br.ufjf.app.ui.question.TextQuestionFragment;
+import br.ufjf.app.ui.question.QuestionFragment;
+import br.ufjf.app.util.AuthHelper;
 import br.ufjf.dcc.pesquisa.R;
 
 /**
  * Created by Jorge Augusto da Silva Moreira on 20/05/2015.
  */
-public class SurveyActivity extends AppCompatActivity implements ChoiceQuestionFragment.Listener, ScaleQuestionFragment.Listener, TextQuestionFragment.Listener{
+public class SurveyActivity extends AppCompatActivity implements QuestionFragment.Listener, SurveySubmitFragment.Listener {
     public static final String ARG_SURVEY = "survey";
 
     private ViewPager mViewPager;
     private SurveyAdapter mAdapter;
+    private SurveyAnswer mSurveyAnswer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,8 @@ public class SurveyActivity extends AppCompatActivity implements ChoiceQuestionF
                         }
                     });
 
+                    mSurveyAnswer = new SurveyAnswer(survey.getId(), survey.getQuestions().length);
+
                     mAdapter = new SurveyAdapter(getSupportFragmentManager(), survey.getQuestions());
                     mViewPager.setAdapter(mAdapter);
                 }
@@ -60,26 +65,47 @@ public class SurveyActivity extends AppCompatActivity implements ChoiceQuestionF
         return mAdapter.getQuestion(index);
     }
 
-    public void previous(View view){
+    @Override
+    public Answer getAnswer(int index) {
+        return mSurveyAnswer.getAnswers()[index];
+    }
+
+    public void previous(View view) {
         mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1);
     }
 
-    public void next(View view){
+    public void next(View view) {
         mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
     }
 
     @Override
-    public void registerAnswer(int answer, int questionIndex) {
-
+    public void registerAnswer(int questionIndex, Answer answer) {
+        mSurveyAnswer.getAnswers()[questionIndex] = answer;
     }
 
     @Override
-    public void registerAnswer(String answer, int questionIndex) {
-
+    public boolean isReadyToSubmit() {
+        for (Answer answer : mSurveyAnswer.getAnswers())
+            if (answer == null)
+                return false;
+        return true;
     }
 
     @Override
-    public void registerAnswer(SparseBooleanArray choices, int questionIndex) {
-
+    public void submitAnswers() {
+        try {
+            new SubmitAnswerTask(AuthHelper.getStudent(this).getId(), new SubmitAnswerTask.Callback() {
+                @Override
+                public void onFinish(boolean success) {
+                    if (success) {
+                        Toast.makeText(SurveyActivity.this, R.string.answer_sent, Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else
+                        Toast.makeText(SurveyActivity.this, R.string.answer_not_sent, Toast.LENGTH_LONG).show();
+                }
+            }).execute(mSurveyAnswer);
+        } catch (AuthHelper.StudentNotLoggedIn studentNotLoggedIn) {
+            studentNotLoggedIn.printStackTrace();
+        }
     }
 }

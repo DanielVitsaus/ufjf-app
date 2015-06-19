@@ -31,7 +31,7 @@ public class Survey {
             for (int i = 0; i < length; i++) {
                 JSONObject questionJson = questionsArray.getJSONObject(i);
                 switch (questionJson.getInt(ServerDB.Survey.Question.TYPE)) {
-                    case ServerDB.QuestionType.SIMPLE:
+                    case ServerDB.QuestionType.TEXT:
                         questions[i] = new TextQuestion(questionJson);
                         break;
                     case ServerDB.QuestionType.CHOICE:

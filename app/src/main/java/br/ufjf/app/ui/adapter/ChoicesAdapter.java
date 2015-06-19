@@ -1,7 +1,6 @@
 package br.ufjf.app.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,21 +13,21 @@ import br.ufjf.dcc.pesquisa.R;
  */
 public class ChoicesAdapter extends RecyclerView.Adapter<ChoicesAdapter.ChoiceHolder> {
 
-    private static final int TYPE_SELECTED = 0;
-    private static final int TYPE_UNSELECTED = 1;
     private final boolean mSingleChoice;
     private final String[] mOptions;
-    private int mSelectedOption;
-    private SparseBooleanArray mSelected;
+    private final OnSelectionChangedListener mListener;
+    private boolean[] mSelected;
 
-    public ChoicesAdapter(boolean singleChoice, String[] options) {
+    public ChoicesAdapter(boolean singleChoice, String[] options, OnSelectionChangedListener listener) {
         mSingleChoice = singleChoice;
         mOptions = options;
-        mSelected = new SparseBooleanArray();
+        mListener = listener;
+        mSelected = new boolean[mOptions.length];
     }
 
-    public SparseBooleanArray getSelected() {
-        return mSelected;
+    public void notifySelectionChanged(boolean[] selected) {
+        mSelected = selected;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -48,24 +47,17 @@ public class ChoicesAdapter extends RecyclerView.Adapter<ChoicesAdapter.ChoiceHo
     }
 
     @Override
-    public int getItemViewType(int position) {
-        if (mSingleChoice)
-            return mSelectedOption == position ? TYPE_SELECTED : TYPE_UNSELECTED;
-        else return -1;
-    }
-
-    @Override
     public void onBindViewHolder(ChoiceHolder holder, int position) {
         holder.choice.setText(mOptions[position]);
-        holder.position = position;
+        holder.choice.setChecked(mSelected[position]);
+    }
 
-        if (mSingleChoice && getItemViewType(position) == TYPE_UNSELECTED)
-            holder.choice.setChecked(false);
+    public interface OnSelectionChangedListener {
+        void onSelectionChanged(boolean[] selected);
     }
 
     protected class ChoiceHolder extends RecyclerView.ViewHolder {
         CompoundButton choice;
-        int position;
 
         public ChoiceHolder(View itemView) {
             super(itemView);
@@ -74,17 +66,8 @@ public class ChoicesAdapter extends RecyclerView.Adapter<ChoicesAdapter.ChoiceHo
             choice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                    mSelected.put(getAdapterPosition(), checked);
-                    if (checked)
-                        if (mSingleChoice) {
-                            int oldSelectedOption = mSelectedOption;
-                            mSelectedOption = position;
-                            try {
-                                notifyItemChanged(oldSelectedOption);
-                            } catch (IllegalStateException ignored) {
-
-                            }
-                        }
+                    mSelected[getAdapterPosition()] = checked;
+                    mListener.onSelectionChanged(mSelected);
                 }
             });
         }

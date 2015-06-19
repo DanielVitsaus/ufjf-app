@@ -8,8 +8,10 @@ import br.ufjf.app.model.survey.ChoiceQuestion;
 import br.ufjf.app.model.survey.Question;
 import br.ufjf.app.model.survey.ScaleQuestion;
 import br.ufjf.app.model.survey.TextQuestion;
-import br.ufjf.app.ui.question.ChoiceQuestionFragment;
+import br.ufjf.app.ui.SurveySubmitFragment;
+import br.ufjf.app.ui.question.MultiChoiceQuestionFragment;
 import br.ufjf.app.ui.question.ScaleQuestionFragment;
+import br.ufjf.app.ui.question.SingleChoiceQuestionFragment;
 import br.ufjf.app.ui.question.TextQuestionFragment;
 
 /**
@@ -26,20 +28,25 @@ public class SurveyAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Question question = mQuestions[position];
+        if (position >= mQuestions.length)
+            return new SurveySubmitFragment();
+        else {
+            Question question = mQuestions[position];
 
-        if (question instanceof TextQuestion)
-            return TextQuestionFragment.newInstance(position);
-        else if (question instanceof ScaleQuestion)
-            return ScaleQuestionFragment.newInstance(position);
-        else if (question instanceof ChoiceQuestion)
-            return ChoiceQuestionFragment.newInstance(position);
-        else return null;
+            if (question instanceof TextQuestion)
+                return TextQuestionFragment.newInstance(position);
+            else if (question instanceof ScaleQuestion)
+                return ScaleQuestionFragment.newInstance(position);
+            else if (((ChoiceQuestion) question).isSingleChoice())
+                return SingleChoiceQuestionFragment.newInstance(position);
+            else
+                return MultiChoiceQuestionFragment.newInstance(position);
+        }
     }
 
     @Override
     public int getCount() {
-        return mQuestions.length;
+        return mQuestions.length + 1;
     }
 
     public Question getQuestion(int position) {

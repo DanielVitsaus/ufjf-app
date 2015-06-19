@@ -9,5 +9,7 @@
             android:id="@+id/drawer_surveys"
             android:icon="@drawable/ic_assignment_grey600_24dp"
             android:title="@string/surveys" />
+        <item android:id="@+id/drawer_logout"
+            android:title="@string/logout"/>
     </group>
 </menu>

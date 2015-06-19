@@ -71,7 +71,7 @@ public class SurveysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     header = "Departamento";
                     break;
                 default:
-                    header = "Público";
+                    header = "PÃºblico";
             }
             ((TextView) holder.itemView).setText(header);
         }

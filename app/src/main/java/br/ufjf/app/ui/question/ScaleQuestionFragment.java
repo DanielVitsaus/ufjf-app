@@ -5,12 +5,15 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
+import br.ufjf.app.model.survey.Answer;
 import br.ufjf.app.model.survey.Question;
 import br.ufjf.app.model.survey.ScaleQuestion;
+import br.ufjf.app.model.survey.ValueAnswer;
 import br.ufjf.dcc.pesquisa.R;
 
 /**
@@ -18,6 +21,7 @@ import br.ufjf.dcc.pesquisa.R;
  */
 public class ScaleQuestionFragment extends QuestionFragment {
     private ScaleQuestion mQuestion;
+    private ValueAnswer mAnswer;
     private Spinner mSpinner;
 
     public static ScaleQuestionFragment newInstance(int questionIndex) {
@@ -38,6 +42,20 @@ public class ScaleQuestionFragment extends QuestionFragment {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         mSpinner = (Spinner) view.findViewById(R.id.question_scale);
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (mAnswer == null)
+                    mAnswer = new ValueAnswer(i);
+                else
+                    mAnswer.setAnswer(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         Integer[] values = new Integer[mQuestion.getMax() - mQuestion.getMin()];
         for (int i = 0; i < values.length; i++)
@@ -60,11 +78,12 @@ public class ScaleQuestionFragment extends QuestionFragment {
     }
 
     @Override
-    protected void reportAnswer() {
-        ((Listener) mListener).registerAnswer(mSpinner.getSelectedItemPosition(), getQuestionIndex());
+    protected Answer getAnswer() {
+        return mAnswer;
     }
 
-    public interface Listener extends QuestionFragment.Listener {
-        void registerAnswer(int answer, int questionIndex);
+    @Override
+    protected void updateUI(Answer answer) {
+        mSpinner.setSelection(((ValueAnswer) answer).getAnswer());
     }
 }

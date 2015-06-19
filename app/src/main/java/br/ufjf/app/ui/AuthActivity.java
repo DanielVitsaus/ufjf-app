@@ -35,7 +35,7 @@ public class AuthActivity extends ToolbarActivity {
             public void onFinish(Student student) {
                 if (student != null) {
                     Toast.makeText(AuthActivity.this, R.string.success_signin, Toast.LENGTH_SHORT).show();
-                    setResult(RESULT_OK, new Intent().putExtra("name", student.getName()).putExtra("email", student.getEmail()));
+                    setResult(RESULT_OK, new Intent().putExtra("name", student.getName()).putExtra("course", student.getCourse()));
                     finish();
                 } else {
                     Toast.makeText(AuthActivity.this, R.string.wrong_credentials, Toast.LENGTH_SHORT).show();

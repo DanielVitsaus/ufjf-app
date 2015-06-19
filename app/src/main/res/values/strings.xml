@@ -14,5 +14,11 @@
     <string name="password">Senha</string>
     <string name="wrong_credentials">E-mail ou senha incorretos</string>
     <string name="success_signin">Sucesso</string>
+    <string name="submit">Enviar</string>
+    <string name="all_questions_answered">Você respondeu a todas as perguntas.</string>
+    <string name="logout">Sair</string>
+    <string name="not_all_questions_answered">Você deixou perguntas em branco.</string>
+    <string name="answer_sent">Respostas enviadas</string>
+    <string name="answer_not_sent">Não foi possível enviar. Tente mais tarde.</string>
 
 </resources>
