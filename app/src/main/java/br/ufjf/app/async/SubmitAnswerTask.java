@@ -14,21 +14,19 @@ import br.ufjf.app.util.WebHelper;
  */
 public class SubmitAnswerTask extends AsyncTask<SurveyAnswer, Void, Boolean> {
 
-    private final String mStudentId;
     private final Callback mCallback;
 
-    public SubmitAnswerTask(String studentId, Callback callback) {
-        mStudentId = studentId;
+    public SubmitAnswerTask(Callback callback) {
         mCallback = callback;
     }
 
     @Override
     protected Boolean doInBackground(SurveyAnswer... answer) {
         try {
-            return WebHelper.sendAnswer(mStudentId, answer[0]);
+            return WebHelper.sendAnswer(answer[0]);
         } catch (JSONException | IOException e) {
             e.printStackTrace();
-            return null;
+            return false;
         }
     }
 

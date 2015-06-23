@@ -51,10 +51,14 @@ public class SurveyActivity extends AppCompatActivity implements QuestionFragmen
                         }
                     });
 
-                    mSurveyAnswer = new SurveyAnswer(survey.getId(), survey.getQuestions().length);
-
-                    mAdapter = new SurveyAdapter(getSupportFragmentManager(), survey.getQuestions());
-                    mViewPager.setAdapter(mAdapter);
+                    try {
+                        mSurveyAnswer = new SurveyAnswer(AuthHelper.getStudent(SurveyActivity.this).getId(), survey.getId(), survey.getQuestions().length);
+                        mAdapter = new SurveyAdapter(getSupportFragmentManager(), survey.getQuestions());
+                        mViewPager.setAdapter(mAdapter);
+                    } catch (AuthHelper.StudentNotLoggedIn studentNotLoggedIn) {
+                        //todo
+                        studentNotLoggedIn.printStackTrace();
+                    }
                 }
             }
         }).execute(getIntent().getStringExtra(ARG_SURVEY));
@@ -93,19 +97,15 @@ public class SurveyActivity extends AppCompatActivity implements QuestionFragmen
 
     @Override
     public void submitAnswers() {
-        try {
-            new SubmitAnswerTask(AuthHelper.getStudent(this).getId(), new SubmitAnswerTask.Callback() {
-                @Override
-                public void onFinish(boolean success) {
-                    if (success) {
-                        Toast.makeText(SurveyActivity.this, R.string.answer_sent, Toast.LENGTH_SHORT).show();
-                        finish();
-                    } else
-                        Toast.makeText(SurveyActivity.this, R.string.answer_not_sent, Toast.LENGTH_LONG).show();
-                }
-            }).execute(mSurveyAnswer);
-        } catch (AuthHelper.StudentNotLoggedIn studentNotLoggedIn) {
-            studentNotLoggedIn.printStackTrace();
-        }
+        new SubmitAnswerTask(new SubmitAnswerTask.Callback() {
+            @Override
+            public void onFinish(boolean success) {
+                if (success) {
+                    Toast.makeText(SurveyActivity.this, R.string.answer_sent, Toast.LENGTH_SHORT).show();
+                    finish();
+                } else
+                    Toast.makeText(SurveyActivity.this, R.string.answer_not_sent, Toast.LENGTH_LONG).show();
+            }
+        }).execute(mSurveyAnswer);
     }
 }

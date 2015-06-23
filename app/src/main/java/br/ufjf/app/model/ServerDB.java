@@ -25,16 +25,6 @@ public class ServerDB {
         String PASSWORD = "password";
         String COURSE = "course";
         String SURVEY_ANSWERS = "survey_answers";
-
-        public interface SurveyAnswer {
-            String SURVEY = "survey";
-            String ANSWERS = "answers";
-
-            public interface Answer {
-                String TYPE = "type";
-                String ANSWER = "answer";
-            }
-        }
     }
 
     public interface Survey {
@@ -60,6 +50,19 @@ public class ServerDB {
 
         interface Visibility {
             String TYPE = "type_";
+        }
+    }
+
+    public interface Answer {
+        String SURVEY = "survey";
+        String STUDENT = "student";
+        String ITEMS = "items";
+
+        public interface Item {
+            String TYPE = "type";
+            String TEXT = "text";
+            String VALUE = "value";
+            String CHOICES = "choices";
         }
     }
 }

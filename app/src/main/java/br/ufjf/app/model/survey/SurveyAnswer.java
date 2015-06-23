@@ -10,10 +10,12 @@ import br.ufjf.app.model.ServerDB;
  * Created by Jorge Augusto da Silva Moreira on 17/06/2015.
  */
 public class SurveyAnswer {
+    private String studentId;
     private String surveyId;
     private Answer[] answers;
 
-    public SurveyAnswer(String surveyId, int size) {
+    public SurveyAnswer(String studentId, String surveyId, int size) {
+        this.studentId = studentId;
         this.surveyId = surveyId;
         this.answers = new Answer[size];
     }
@@ -28,7 +30,8 @@ public class SurveyAnswer {
             array.put(answer.toJSON());
 
         return new JSONObject()
-                .put(ServerDB.Student.SurveyAnswer.SURVEY, surveyId)
-                .put(ServerDB.Student.SurveyAnswer.ANSWERS, array);
+                .put(ServerDB.Answer.STUDENT, studentId)
+                .put(ServerDB.Answer.SURVEY, surveyId)
+                .put(ServerDB.Answer.ITEMS, array);
     }
 }

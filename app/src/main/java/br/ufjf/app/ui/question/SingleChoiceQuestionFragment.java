@@ -45,9 +45,9 @@ public class SingleChoiceQuestionFragment extends QuestionFragment {
             public void onCheckedChanged(RadioGroup radioGroup, int id) {
                 //todo salvar posição, não id do View
                 if (mAnswer == null)
-                    mAnswer = new ValueAnswer(id);
+                    mAnswer = new ValueAnswer(id, false);
                 else
-                    mAnswer.setAnswer(id);
+                    mAnswer.setValue(id);
             }
         });
 
@@ -77,8 +77,9 @@ public class SingleChoiceQuestionFragment extends QuestionFragment {
 
     @Override
     protected void updateUI(Answer answer) {
-        int index = (((ValueAnswer) answer).getAnswer());
+        int index = (((ValueAnswer) answer).getValue());
         RadioButton radioButton = (RadioButton) mRadioGroup.getChildAt(index);
+        if(radioButton != null) //todo retirar if após corrigir indices
         radioButton.setChecked(true);
     }
 }

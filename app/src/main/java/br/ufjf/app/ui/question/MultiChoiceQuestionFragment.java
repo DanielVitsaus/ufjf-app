@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import br.ufjf.app.model.survey.Answer;
 import br.ufjf.app.model.survey.ChoiceQuestion;
-import br.ufjf.app.model.survey.MultiChoiceAnswer;
+import br.ufjf.app.model.survey.ChoicesAnswer;
 import br.ufjf.app.model.survey.Question;
 import br.ufjf.app.ui.adapter.ChoicesAdapter;
 import br.ufjf.dcc.pesquisa.R;
@@ -20,7 +20,7 @@ import br.ufjf.dcc.pesquisa.R;
  */
 public class MultiChoiceQuestionFragment extends QuestionFragment {
     private ChoiceQuestion mQuestion;
-    private MultiChoiceAnswer mAnswer;
+    private ChoicesAnswer mAnswer;
     private RecyclerView mRecyclerView;
     private ChoicesAdapter mAdapter;
 
@@ -52,9 +52,9 @@ public class MultiChoiceQuestionFragment extends QuestionFragment {
             @Override
             public void onSelectionChanged(boolean[] selected) {
                 if (mAnswer == null)
-                    mAnswer = new MultiChoiceAnswer(selected);
+                    mAnswer = new ChoicesAnswer(selected);
                 else
-                    mAnswer.setAnswer(selected);
+                    mAnswer.setChoices(selected);
             }
         });
 
@@ -80,6 +80,6 @@ public class MultiChoiceQuestionFragment extends QuestionFragment {
 
     @Override
     protected void updateUI(Answer answer) {
-        mAdapter.notifySelectionChanged(((MultiChoiceAnswer) answer).getAnswer());
+        mAdapter.notifySelectionChanged(((ChoicesAnswer) answer).getChoices());
     }
 }

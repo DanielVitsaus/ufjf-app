@@ -72,12 +72,12 @@ public class TextQuestionFragment extends QuestionFragment {
         if (mAnswer == null)
             mAnswer = new TextAnswer(text);
         else
-            mAnswer.setAnswer(text);
+            mAnswer.setText(text);
         return mAnswer;
     }
 
     @Override
     protected void updateUI(Answer answer) {
-        mAnswerEditText.setText(((TextAnswer) answer).getAnswer());
+        mAnswerEditText.setText(((TextAnswer) answer).getText());
     }
 }

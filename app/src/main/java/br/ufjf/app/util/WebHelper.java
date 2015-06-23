@@ -29,6 +29,7 @@ public class WebHelper {
     private static final String BASE_URL = "http://200.131.219.208:4712/";
     private static final String STUDENTS_URL = BASE_URL + "students/";
     private static final String SURVEYS_URL = BASE_URL + "surveys/";
+    private static final String ANSWERS_URL = BASE_URL + "answers/";
 
     public static FeedHandler readFeed(String url) throws IOException, SAXException, ParserConfigurationException {
         InputStream inputXml = null;
@@ -128,8 +129,8 @@ public class WebHelper {
             return null;
     }
 
-    public static boolean sendAnswer(String studentId, SurveyAnswer answer) throws JSONException, IOException {
-        URL url = new URL(STUDENTS_URL + studentId + "/answers");
+    public static boolean sendAnswer(SurveyAnswer answer) throws JSONException, IOException {
+        URL url = new URL(ANSWERS_URL);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-Type", "application/json");

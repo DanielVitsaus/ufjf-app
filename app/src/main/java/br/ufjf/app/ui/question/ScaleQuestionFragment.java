@@ -46,9 +46,9 @@ public class ScaleQuestionFragment extends QuestionFragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (mAnswer == null)
-                    mAnswer = new ValueAnswer(i);
+                    mAnswer = new ValueAnswer(i, true);
                 else
-                    mAnswer.setAnswer(i);
+                    mAnswer.setValue(i);
             }
 
             @Override
@@ -84,6 +84,6 @@ public class ScaleQuestionFragment extends QuestionFragment {
 
     @Override
     protected void updateUI(Answer answer) {
-        mSpinner.setSelection(((ValueAnswer) answer).getAnswer());
+        mSpinner.setSelection(((ValueAnswer) answer).getValue());
     }
 }

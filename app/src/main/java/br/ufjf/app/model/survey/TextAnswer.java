@@ -9,24 +9,24 @@ import br.ufjf.app.model.ServerDB;
  * Created by Jorge Augusto da Silva Moreira on 10/06/2015.
  */
 public class TextAnswer extends Answer {
-    private String answer;
+    private String text;
 
-    public TextAnswer(String answer) {
-        this.answer = answer;
+    public TextAnswer(String text) {
+        this.text = text;
     }
 
-    public String getAnswer() {
-        return answer;
+    public String getText() {
+        return text;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void setText(String text) {
+        this.text = text;
     }
 
     @Override
     public JSONObject toJSON() throws JSONException {
         return new JSONObject()
-                .put(ServerDB.Student.SurveyAnswer.Answer.TYPE, ServerDB.QuestionType.TEXT)
-                .put(ServerDB.Student.SurveyAnswer.Answer.ANSWER, answer);
+                .put(ServerDB.Answer.Item.TYPE, ServerDB.QuestionType.TEXT)
+                .put(ServerDB.Answer.Item.TEXT, text);
     }
 }

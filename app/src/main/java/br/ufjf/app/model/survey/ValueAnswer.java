@@ -9,24 +9,26 @@ import br.ufjf.app.model.ServerDB;
  * Created by Jorge Augusto da Silva Moreira on 10/06/2015.
  */
 public class ValueAnswer extends Answer {
-    private int answer;
+    private int value;
+    private boolean scale;
 
-    public ValueAnswer(int answer) {
-        this.answer = answer;
+    public ValueAnswer(int value, boolean scale) {
+        this.value = value;
+        this.scale = scale;
     }
 
-    public int getAnswer() {
-        return answer;
+    public int getValue() {
+        return value;
     }
 
-    public void setAnswer(int answer) {
-        this.answer = answer;
+    public void setValue(int value) {
+        this.value = value;
     }
 
     @Override
     public JSONObject toJSON() throws JSONException {
         return new JSONObject()
-                .put(ServerDB.Student.SurveyAnswer.Answer.TYPE, ServerDB.QuestionType.SCALE)
-                .put(ServerDB.Student.SurveyAnswer.Answer.ANSWER, answer);
+                .put(ServerDB.Answer.Item.TYPE, scale ? ServerDB.QuestionType.SCALE : ServerDB.QuestionType.CHOICE)
+                .put(ServerDB.Answer.Item.VALUE, value);
     }
 }

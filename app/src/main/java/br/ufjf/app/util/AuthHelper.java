@@ -32,7 +32,7 @@ public class AuthHelper {
 
     public static void registerLogin(Context context, Student student) {
         PreferenceManager.getDefaultSharedPreferences(context).edit()
-                .putString(PREF_ID, student.getEmail())
+                .putString(PREF_ID, student.getId())
                 .putString(PREF_EMAIL, student.getEmail())
                 .putString(PREF_NAME, student.getName())
                 .putString(PREF_COURSE, student.getCourse())
