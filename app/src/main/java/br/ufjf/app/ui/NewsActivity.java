@@ -12,12 +12,10 @@ import br.ufjf.dcc.pesquisa.R;
  */
 public class NewsActivity extends DrawerActivity implements NewsAdapter.OnArticleClickListener {
 
-    private static final String TAG_FRAG = "main";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_drawer);
         initializeToolbar();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, new NewsFragment())

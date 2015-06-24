@@ -47,7 +47,6 @@ public abstract class DrawerActivity extends ToolbarActivity {
     private DrawerLayout.DrawerListener mDrawerListener = new DrawerLayout.DrawerListener() {
         @Override
         public void onDrawerClosed(View drawerView) {
-            if (mDrawerToggle != null) mDrawerToggle.onDrawerClosed(drawerView);
             int position = mItemToOpenWhenDrawerCloses;
             if (position >= 0 && mOpennedItem != mItemToOpenWhenDrawerCloses) {
 
@@ -58,6 +57,9 @@ public abstract class DrawerActivity extends ToolbarActivity {
                         break;
                     case 1:
                         activityClass = SurveysExplorerActivity.class;
+                        break;
+                    case 2:
+                        activityClass = CalendarActivity.class;
                         break;
                 }
 
@@ -72,17 +74,16 @@ public abstract class DrawerActivity extends ToolbarActivity {
 
         @Override
         public void onDrawerStateChanged(int newState) {
-            if (mDrawerToggle != null) mDrawerToggle.onDrawerStateChanged(newState);
+
         }
 
         @Override
         public void onDrawerSlide(View drawerView, float slideOffset) {
-            if (mDrawerToggle != null) mDrawerToggle.onDrawerSlide(drawerView, slideOffset);
+
         }
 
         @Override
         public void onDrawerOpened(View drawerView) {
-            if (mDrawerToggle != null) mDrawerToggle.onDrawerOpened(drawerView);
             if (getSupportActionBar() != null) getSupportActionBar()
                     .setTitle(R.string.app_name);
         }
@@ -206,6 +207,10 @@ public abstract class DrawerActivity extends ToolbarActivity {
                         break;
                     case R.id.drawer_surveys:
                         mItemToOpenWhenDrawerCloses = 1;
+                        mDrawerLayout.closeDrawers();
+                        break;
+                    case R.id.drawer_calendar:
+                        mItemToOpenWhenDrawerCloses = 2;
                         mDrawerLayout.closeDrawers();
                         break;
                     case R.id.drawer_logout:

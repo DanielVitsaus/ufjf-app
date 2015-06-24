@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="DrawerText">
         <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">16sp</item>
@@ -11,5 +12,13 @@
         <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>
         <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="Toolbar">
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
 </resources>

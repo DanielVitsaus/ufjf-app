@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.ufjf.dcc.pesquisa" >
+    package="br.ufjf.dcc.pesquisa">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -8,9 +8,10 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
-            android:name="br.ufjf.app.ui.NewsActivity" >
+            android:name="br.ufjf.app.ui.NewsActivity"
+            android:label="@string/news">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,11 +19,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="br.ufjf.app.ui.SurveysExplorerActivity" />
+            android:name="br.ufjf.app.ui.SurveysExplorerActivity"
+            android:label="@string/surveys" />
+        <activity android:name="br.ufjf.app.ui.SurveyActivity" />
+        <activity android:name="br.ufjf.app.ui.AuthActivity" />
         <activity
-        android:name="br.ufjf.app.ui.SurveyActivity" />
-        <activity
-            android:name="br.ufjf.app.ui.AuthActivity" />
+            android:name="br.ufjf.app.ui.CalendarActivity"
+            android:label="@string/calendar" />
     </application>
 
 </manifest>
