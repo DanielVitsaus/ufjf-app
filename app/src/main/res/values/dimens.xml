@@ -5,4 +5,8 @@
     <dimen name="touchable">48dp</dimen>
 
     <dimen name="navigation_drawer_width">285dp</dimen>
+
+    <dimen name="keyline">72dp</dimen>
+
+    <dimen name="list_item_height">72dp</dimen>
 </resources>

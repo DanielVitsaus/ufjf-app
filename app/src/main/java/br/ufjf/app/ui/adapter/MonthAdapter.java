@@ -6,7 +6,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.Calendar;
+import java.util.List;
 
+import br.ufjf.app.model.Date;
 import br.ufjf.dcc.pesquisa.R;
 
 /**
@@ -16,8 +18,10 @@ public class MonthAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private final int DayOfWeek;
     private final int mDaysInMonth;
     private final int mToday;
+    private final List<Date> mDates;
 
-    public MonthAdapter(int month) {
+    public MonthAdapter(int month, List<Date> dates) {
+        mDates = dates;
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.MONTH, month);
 
@@ -45,16 +49,20 @@ public class MonthAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if (position + 1 >= DayOfWeek) {
             dayView.setText(position - DayOfWeek + 2 + "");
 
-            if (mToday > 0 && position - DayOfWeek + 2 == mToday)
-                dayView.setTextColor(dayView.getContext().getResources().getColor(R.color.primary));
+            /*todo if (mToday > 0 && position - DayOfWeek + 2 == mToday)
+                dayView.setTextColor(dayView.getContext().getResources().getColor(R.color.primary));*/
+            // todo melhorar
+            if (mDates != null)
+                for (Date date : mDates)
+                    if (date.getDay() == position - DayOfWeek + 2)
+                        dayView.setTextColor(dayView.getContext().getResources().getColor(R.color.primary));
         } else
             dayView.setText("");
-
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override

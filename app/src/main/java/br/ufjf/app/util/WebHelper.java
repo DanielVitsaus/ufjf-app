@@ -20,6 +20,7 @@ import java.net.URL;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 
+import br.ufjf.app.model.Calendar;
 import br.ufjf.app.model.ServerDB;
 import br.ufjf.app.model.Student;
 import br.ufjf.app.model.survey.Survey;
@@ -30,6 +31,7 @@ public class WebHelper {
     private static final String STUDENTS_URL = BASE_URL + "students/";
     private static final String SURVEYS_URL = BASE_URL + "surveys/";
     private static final String ANSWERS_URL = BASE_URL + "answers/";
+    private static final String DATES_URL = BASE_URL + "dates/";
 
     public static FeedHandler readFeed(String url) throws IOException, SAXException, ParserConfigurationException {
         InputStream inputXml = null;
@@ -152,5 +154,22 @@ public class WebHelper {
             sb.append(line).append("\n");
 
         return new JSONObject(sb.toString()).getBoolean("success");
+    }
+
+    public static Calendar getCalendar(int year) throws IOException, JSONException {
+        URL url = new URL(DATES_URL);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(
+                url.openStream(), "UTF-8"));
+        StringBuilder sb = new StringBuilder();
+        int read;
+        char[] chars = new char[1024];
+        while ((read = reader.read(chars)) != -1)
+            sb.append(chars, 0, read);
+
+        JSONObject data = new JSONObject(sb.toString());
+        if (data.getBoolean("success"))
+            return new Calendar(year, data.getJSONArray("dates"));
+        else
+            return null;
     }
 }

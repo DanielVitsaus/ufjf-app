@@ -65,4 +65,11 @@ public class ServerDB {
             String CHOICES = "choices";
         }
     }
+
+    public interface Date {
+        String MONTH = "month";
+        String DAY = "day";
+        String TITLE = "title";
+        String DESCRIPTION = "description";
+    }
 }

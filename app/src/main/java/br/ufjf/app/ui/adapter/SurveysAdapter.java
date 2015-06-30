@@ -44,7 +44,7 @@ public class SurveysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return new RecyclerView.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_header, parent, false)) {
             };
         else
-            return new SurveyHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_survey, parent, false));
+            return new SurveyHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_two_lines, parent, false));
     }
 
     @Override
@@ -103,13 +103,13 @@ public class SurveysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         public SurveyHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.survey_title);
-            description = (TextView) itemView.findViewById(R.id.survey_description);
+            title = (TextView) itemView.findViewById(R.id.title);
+            description = (TextView) itemView.findViewById(R.id.description);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onSurveyClick(mSurveys[getSurveyIndex(getPosition())]);
+                    mListener.onSurveyClick(mSurveys[getSurveyIndex(getAdapterPosition())]);
                 }
             });
         }
