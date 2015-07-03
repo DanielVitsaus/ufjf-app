@@ -29,8 +29,7 @@ public class Calendar {
             }
             datesInMonth.add(new Date(
                     date.getInt(ServerDB.Date.DAY),
-                    date.getString(ServerDB.Date.TITLE),
-                    date.getString(ServerDB.Date.DESCRIPTION)
+                    date.getString(ServerDB.Date.TITLE)
             ));
         }
     }

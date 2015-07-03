@@ -2,6 +2,9 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/margin_view"
+    android:paddingTop="@dimen/margin_view"
+    android:paddingBottom="@dimen/margin_view"
+    android:paddingRight="@dimen/margin_screen"
+    android:paddingLeft="@dimen/margin_screen"
     android:ellipsize="marquee"
     android:background="?selectableItemBackground"/>

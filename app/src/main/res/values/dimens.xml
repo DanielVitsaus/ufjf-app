@@ -1,6 +1,6 @@
 <resources>
     <dimen name="margin_screen">16dp</dimen>
-    <dimen name="margin_view">16dp</dimen>
+    <dimen name="margin_view">8dp</dimen>
 
     <dimen name="touchable">48dp</dimen>
 

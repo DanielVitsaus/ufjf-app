@@ -1,5 +1,6 @@
 package br.ufjf.app.ui.adapter;
 
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -23,17 +24,16 @@ public class MonthAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public MonthAdapter(int month, List<Date> dates) {
         mDates = dates;
         Calendar calendar = Calendar.getInstance();
+
+        if (calendar.get(Calendar.MONTH) == month)
+            mToday = calendar.get(Calendar.DAY_OF_MONTH);
+        else
+            mToday = 0;
+
         calendar.set(Calendar.MONTH, month);
 
         DayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         mDaysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-
-        Calendar now = Calendar.getInstance();
-        if (now.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)
-                && now.get(Calendar.YEAR) == calendar.get(Calendar.YEAR))
-            mToday = now.get(Calendar.DAY_OF_MONTH);
-        else
-            mToday = 0;
     }
 
     @Override
@@ -49,8 +49,10 @@ public class MonthAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if (position + 1 >= DayOfWeek) {
             dayView.setText(position - DayOfWeek + 2 + "");
 
-            /*todo if (mToday > 0 && position - DayOfWeek + 2 == mToday)
-                dayView.setTextColor(dayView.getContext().getResources().getColor(R.color.primary));*/
+            if (mToday > 0 && position - DayOfWeek + 2 == mToday)
+                dayView.setTypeface(null, Typeface.BOLD);
+            else
+                dayView.setTypeface(null, Typeface.NORMAL);
             // todo melhorar
             if (mDates != null)
                 for (Date date : mDates)

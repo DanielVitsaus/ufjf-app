@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.ufjf.app.async.GetCalendarTask;
@@ -37,7 +38,16 @@ public class CalendarActivity extends DrawerActivity implements CalendarMonthFra
                 if(calendar != null) {
                     mCalendar = calendar;
 
-                    mAdapter = new MonthsAdapter(getSupportFragmentManager());
+                    java.util.Calendar cal = java.util.Calendar.getInstance();
+                    List<String> monthNames = new ArrayList<>();
+                    for (int i = 0; i < 12; i++) {
+                        cal.set(java.util.Calendar.MONTH, i);
+                        monthNames.add(cal.getDisplayName(java.util.Calendar.MONTH, java.util.Calendar.LONG, getResources().getConfiguration().locale));
+                    }
+
+                    mAdapter = new MonthsAdapter(
+                            getSupportFragmentManager(),
+                            monthNames);
 
                     mViewPager = (ViewPager) findViewById(R.id.calendar_pager);
                     mViewPager.setAdapter(mAdapter);
@@ -48,7 +58,7 @@ public class CalendarActivity extends DrawerActivity implements CalendarMonthFra
                     LinearLayoutManager layoutManager = new LinearLayoutManager(CalendarActivity.this);
                     RecyclerView recyclerView = (RecyclerView) findViewById(R.id.dates_list);
                     recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.setAdapter(new DatesAdapter(calendar, new DatesAdapter.OnDateClickListener() {
+                    recyclerView.setAdapter(new DatesAdapter(calendar, monthNames, new DatesAdapter.OnDateClickListener() {
                         @Override
                         public void onDateSelected(Date date) {
 

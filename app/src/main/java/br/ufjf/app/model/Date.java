@@ -6,12 +6,10 @@ package br.ufjf.app.model;
 public class Date {
     private final int day;
     private final String title;
-    private final String description;
 
-    public Date(int day, String title, String description) {
+    public Date(int day, String title) {
         this.day = day;
         this.title = title;
-        this.description = description;
     }
 
     public int getDay() {
@@ -20,9 +18,5 @@ public class Date {
 
     public String getTitle() {
         return title;
-    }
-
-    public String getDescription() {
-        return description;
     }
 }

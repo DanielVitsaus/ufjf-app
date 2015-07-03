@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/list_item_height"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="?android:selectableItemBackground"
     android:gravity="center_vertical"
-    android:orientation="vertical"
+    android:minHeight="@dimen/list_item_height"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/margin_view"
     android:paddingLeft="@dimen/margin_screen"
-    android:paddingRight="@dimen/margin_screen">
+    android:paddingRight="@dimen/margin_screen"
+    android:paddingTop="@dimen/margin_view">
 
     <TextView
         android:id="@+id/day_number"
@@ -16,21 +19,13 @@
         android:background="@drawable/bg_circle"
         android:gravity="center"
         android:textColor="@android:color/white"
-        tools:text="25"/>
+        tools:text="25" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/keyline"
-        tools:text="Título da data"/>
+        android:layout_marginLeft="@dimen/margin_screen"
+        tools:text="Título da data" />
 
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/title"
-        android:layout_marginLeft="@dimen/keyline"
-        tools:text="Descrição da data"/>
-
-</RelativeLayout>
+</LinearLayout>

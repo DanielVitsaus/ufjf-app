@@ -4,10 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import br.ufjf.app.ui.CalendarMonthFragment;
 
@@ -17,15 +14,9 @@ import br.ufjf.app.ui.CalendarMonthFragment;
 public class MonthsAdapter extends FragmentPagerAdapter {
     private List<String> mMonthNames;
 
-    public MonthsAdapter(FragmentManager fragmentManager) {
+    public MonthsAdapter(FragmentManager fragmentManager, List<String> monthNames) {
         super(fragmentManager);
-
-        Calendar calendar = Calendar.getInstance();
-        mMonthNames = new ArrayList<>();
-        for (int i = 0; i < 12; i++) {
-            calendar.set(Calendar.MONTH, i);
-            mMonthNames.add(calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US));
-        }
+        mMonthNames = monthNames;
     }
 
     @Override

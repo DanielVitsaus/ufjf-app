@@ -70,6 +70,5 @@ public class ServerDB {
         String MONTH = "month";
         String DAY = "day";
         String TITLE = "title";
-        String DESCRIPTION = "description";
     }
 }

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import br.ufjf.app.model.Calendar;
@@ -31,19 +30,17 @@ public class DatesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         void onDateSelected(Date date);
     }
 
-    public DatesAdapter(Calendar calendar, OnDateClickListener listener) {
+    public DatesAdapter(Calendar calendar, List<String> monthNames, OnDateClickListener listener) {
         this.mListener = listener;
         mDates = new ArrayList<>();
         mHeadersPositions = new HashSet<>();
         mHeadersNames = new HashMap<>();
 
-        java.util.Calendar calendarAux = java.util.Calendar.getInstance();
         for (int i = 0; i < 12; i++) {
             List<Date> dates = calendar.getDatesByMonth(i);
             if (dates != null) {
-                calendarAux.set(java.util.Calendar.MONTH, i);
                 mHeadersPositions.add(mDates.size());
-                mHeadersNames.put(mDates.size(), calendarAux.getDisplayName(java.util.Calendar.MONTH, java.util.Calendar.LONG, Locale.US));
+                mHeadersNames.put(mDates.size(), monthNames.get(i));
                 mDates.addAll(dates);
             }
         }
@@ -71,7 +68,6 @@ public class DatesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             Date date = mDates.get(getDateIndex(position));
             itemHolder.numberView.setText(date.getDay() + "");
             itemHolder.titleView.setText(date.getTitle());
-            itemHolder.descriptionView.setText(date.getDescription());
         } else
             ((TextView) holder.itemView).setText(mHeadersNames.get(position));
     }
@@ -97,19 +93,18 @@ public class DatesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     protected class ItemHolder extends RecyclerView.ViewHolder {
-        TextView titleView, descriptionView, numberView;
+        TextView titleView, numberView;
 
         public ItemHolder(View itemView) {
             super(itemView);
 
             numberView = (TextView) itemView.findViewById(R.id.day_number);
             titleView = (TextView) itemView.findViewById(R.id.title);
-            descriptionView = (TextView) itemView.findViewById(R.id.description);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onDateSelected(mDates.get(getAdapterPosition()));
+                    mListener.onDateSelected(mDates.get(getDateIndex(getAdapterPosition())));
                 }
             });
         }
