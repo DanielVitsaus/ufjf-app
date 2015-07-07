@@ -30,8 +30,10 @@ public class CalendarActivity extends DrawerActivity implements CalendarMonthFra
     private static final int REQ_REMINDER_CODE = 15487;
 
     private ViewPager mViewPager;
-    private MonthsAdapter mAdapter;
+    private MonthsAdapter mMonthsAdapter;
     private AcademicCalendar mAcademicCalendar;
+    private RecyclerView recyclerView;
+    private DatesAdapter mDatesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,20 +55,17 @@ public class CalendarActivity extends DrawerActivity implements CalendarMonthFra
                         monthNames.add(cal.getDisplayName(java.util.Calendar.MONTH, java.util.Calendar.LONG, getResources().getConfiguration().locale));
                     }
 
-                    mAdapter = new MonthsAdapter(
+                    mMonthsAdapter = new MonthsAdapter(
                             getSupportFragmentManager(),
                             monthNames);
 
                     mViewPager = (ViewPager) findViewById(R.id.calendar_pager);
-                    mViewPager.setAdapter(mAdapter);
+                    mViewPager.setAdapter(mMonthsAdapter);
 
                     TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
                     tabLayout.setupWithViewPager(mViewPager);
 
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(CalendarActivity.this);
-                    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.dates_list);
-                    recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.setAdapter(new DatesAdapter(academicCalendar, monthNames, new DatesAdapter.OnDateClickListener() {
+                    mDatesAdapter = new DatesAdapter(academicCalendar, monthNames, new DatesAdapter.OnDateClickListener() {
                         @Override
                         public void onDateSelected(View overflowView, final Date date) {
                             final PopupMenu menu = new PopupMenu(CalendarActivity.this, overflowView);
@@ -75,15 +74,21 @@ public class CalendarActivity extends DrawerActivity implements CalendarMonthFra
                                 @Override
                                 public boolean onMenuItemClick(MenuItem menuItem) {
                                     if (menuItem.getItemId() == R.id.create_reminder) {
-                                        Calendar cal = Calendar.getInstance();
-                                        cal.set(Calendar.DAY_OF_MONTH, date.getDay());
-                                        cal.set(Calendar.MONTH, date.getMonth());
                                         Intent intent = new Intent(Intent.ACTION_EDIT)
                                                 .setData(CalendarContract.Events.CONTENT_URI)
                                                 .putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
-                                                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, cal.getTimeInMillis())
-                                                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, cal.getTimeInMillis())
                                                 .putExtra(CalendarContract.Events.TITLE, date.getTitle());
+
+                                        Calendar cal = Calendar.getInstance();
+                                        cal.set(Calendar.DAY_OF_MONTH, date.getDayStart());
+                                        cal.set(Calendar.MONTH, date.getMonth());
+
+                                        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, cal.getTimeInMillis());
+
+                                        if (date.getDayEnd() != -1)
+                                            cal.set(Calendar.DAY_OF_MONTH, date.getDayEnd());
+                                        intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, cal.getTimeInMillis());
+
                                         startActivityForResult(intent, REQ_REMINDER_CODE);
                                     }
                                     return true;
@@ -91,7 +96,12 @@ public class CalendarActivity extends DrawerActivity implements CalendarMonthFra
                             });
                             menu.show();
                         }
-                    }));
+                    });
+
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(CalendarActivity.this);
+                    recyclerView = (RecyclerView) findViewById(R.id.dates_list);
+                    recyclerView.setLayoutManager(layoutManager);
+                    recyclerView.setAdapter(mDatesAdapter);
                 } else {
                     //todo
                 }
@@ -104,5 +114,10 @@ public class CalendarActivity extends DrawerActivity implements CalendarMonthFra
         if (mAcademicCalendar == null)
             return null;
         return mAcademicCalendar.getDatesByMonth(month);
+    }
+
+    @Override
+    public void onDayClick(Date date) {
+        recyclerView.smoothScrollToPosition(mDatesAdapter.getDatePosition(date));
     }
 }

@@ -6,4 +6,5 @@
     android:layout_height="40dp"
     android:gravity="center"
     android:clickable="true"
-    android:background="?selectableItemBackgroundBorderless"/>
+    android:background="?selectableItemBackgroundBorderless"
+    android:textColor="@color/text_secondary"/>

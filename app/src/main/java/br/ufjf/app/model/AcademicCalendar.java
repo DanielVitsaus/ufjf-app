@@ -27,7 +27,8 @@ public class AcademicCalendar {
             if (!monthsPositions.containsKey(month))
                 monthsPositions.put(month, i);
             dates.add(new Date(
-                    date.getInt(ServerDB.Date.DAY),
+                    date.getInt(ServerDB.Date.DAY_START),
+                    date.has(ServerDB.Date.DAY_END) ? date.getInt(ServerDB.Date.DAY_END) : -1,
                     month,
                     date.getString(ServerDB.Date.TITLE)
             ));

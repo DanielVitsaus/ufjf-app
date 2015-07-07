@@ -68,7 +68,8 @@ public class ServerDB {
 
     public interface Date {
         String MONTH = "month";
-        String DAY = "day";
+        String DAY_START = "day_start";
+        String DAY_END = "day_end";
         String TITLE = "title";
     }
 }

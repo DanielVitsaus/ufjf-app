@@ -66,10 +66,26 @@ public class DatesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if (holder instanceof ItemHolder) {
             ItemHolder itemHolder = (ItemHolder) holder;
             Date date = mDates.get(getDateIndex(position));
-            itemHolder.numberView.setText(date.getDay() + "");
+            if (date.getDayEnd() != -1)
+                itemHolder.numberView.setText(itemHolder.numberView.getContext().getString(R.string.date_to_date, date.getDayStart(), date.getDayEnd()));
+            else
+                itemHolder.numberView.setText(date.getDayStart() + "");
             itemHolder.titleView.setText(date.getTitle());
         } else
             ((TextView) holder.itemView).setText(mHeadersNames.get(position));
+    }
+
+    public int getDatePosition(Date date) {
+        //todo melhorar (não iterar na lista toda)
+        for (int i = 0; i < mDates.size(); i++)
+            if (date.getDayStart() == mDates.get(i).getDayStart()) {
+                for (Integer headerPosition : mHeadersPositions)
+                    if (headerPosition > i)
+                        break;
+                    else i++;
+                return i;
+            }
+        return 0;
     }
 
     private int getDateIndex(int position) {

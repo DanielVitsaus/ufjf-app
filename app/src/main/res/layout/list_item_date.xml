@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:minHeight="@dimen/list_item_height"
     android:orientation="horizontal"
     android:paddingBottom="@dimen/margin_view"
     android:paddingTop="@dimen/margin_view">
@@ -12,8 +11,9 @@
     <TextView
         android:id="@+id/day_number"
         android:layout_width="@dimen/icon_size"
-        android:layout_height="@dimen/icon_size"
-        android:background="@drawable/bg_circle"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/icon_size"
+        android:background="@drawable/bg_date"
         android:gravity="center"
         android:layout_marginRight="@dimen/margin_screen"
         android:layout_marginLeft="@dimen/margin_screen"

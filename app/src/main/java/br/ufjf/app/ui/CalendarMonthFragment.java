@@ -56,7 +56,12 @@ public class CalendarMonthFragment extends Fragment {
         int month = getArguments().getInt(ARG_MONTH);
 
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 7));
-        mRecyclerView.setAdapter(new MonthAdapter(month, mListener.getDates(month)));
+        mRecyclerView.setAdapter(new MonthAdapter(month, mListener.getDates(month), new MonthAdapter.OnDayClickListener() {
+            @Override
+            public void onDayClick(Date date) {
+                mListener.onDayClick(date);
+            }
+        }));
     }
 
     @Override
@@ -67,5 +72,6 @@ public class CalendarMonthFragment extends Fragment {
 
     public interface Listener {
         List<Date> getDates(int month);
+        void onDayClick(Date date);
     }
 }
