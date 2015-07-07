@@ -9,4 +9,6 @@
     <dimen name="keyline">72dp</dimen>
 
     <dimen name="list_item_height">72dp</dimen>
+    <dimen name="icon_size">40dp</dimen>
+    <dimen name="icon_padding">12dp</dimen>
 </resources>

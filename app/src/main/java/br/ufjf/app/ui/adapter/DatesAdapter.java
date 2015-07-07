@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import br.ufjf.app.model.Calendar;
+import br.ufjf.app.model.AcademicCalendar;
 import br.ufjf.app.model.Date;
 import br.ufjf.dcc.pesquisa.R;
 
@@ -27,17 +27,17 @@ public class DatesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private final OnDateClickListener mListener;
 
     public interface OnDateClickListener {
-        void onDateSelected(Date date);
+        void onDateSelected(View overflowView, Date date);
     }
 
-    public DatesAdapter(Calendar calendar, List<String> monthNames, OnDateClickListener listener) {
+    public DatesAdapter(AcademicCalendar academicCalendar, List<String> monthNames, OnDateClickListener listener) {
         this.mListener = listener;
         mDates = new ArrayList<>();
         mHeadersPositions = new HashSet<>();
         mHeadersNames = new HashMap<>();
 
         for (int i = 0; i < 12; i++) {
-            List<Date> dates = calendar.getDatesByMonth(i);
+            List<Date> dates = academicCalendar.getDatesByMonth(i);
             if (dates != null) {
                 mHeadersPositions.add(mDates.size());
                 mHeadersNames.put(mDates.size(), monthNames.get(i));
@@ -95,16 +95,17 @@ public class DatesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     protected class ItemHolder extends RecyclerView.ViewHolder {
         TextView titleView, numberView;
 
-        public ItemHolder(View itemView) {
+        public ItemHolder(final View itemView) {
             super(itemView);
 
             numberView = (TextView) itemView.findViewById(R.id.day_number);
             titleView = (TextView) itemView.findViewById(R.id.title);
+            final View overflowView = itemView.findViewById(R.id.overflow);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            overflowView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onDateSelected(mDates.get(getDateIndex(getAdapterPosition())));
+                    mListener.onDateSelected(overflowView, mDates.get(getDateIndex(getAdapterPosition())));
                 }
             });
         }

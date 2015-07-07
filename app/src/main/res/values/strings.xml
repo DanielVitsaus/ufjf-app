@@ -21,5 +21,6 @@
     <string name="answer_sent">Respostas enviadas</string>
     <string name="answer_not_sent">Não foi possível enviar. Tente mais tarde.</string>
     <string name="calendar">Calendário</string>
+    <string name="create_reminder">Criar lembrete</string>
 
 </resources>

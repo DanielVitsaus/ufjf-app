@@ -6,13 +6,13 @@ import org.json.JSONException;
 
 import java.io.IOException;
 
-import br.ufjf.app.model.Calendar;
+import br.ufjf.app.model.AcademicCalendar;
 import br.ufjf.app.util.WebHelper;
 
 /**
  * Created by Jorge Augusto da Silva Moreira on 20/05/2015.
  */
-public class GetCalendarTask extends AsyncTask<Integer, Void, Calendar> {
+public class GetCalendarTask extends AsyncTask<Integer, Void, AcademicCalendar> {
 
     private final Callback mCallback;
 
@@ -21,7 +21,7 @@ public class GetCalendarTask extends AsyncTask<Integer, Void, Calendar> {
     }
 
     @Override
-    protected Calendar doInBackground(Integer... year) {
+    protected AcademicCalendar doInBackground(Integer... year) {
         try {
             return WebHelper.getCalendar(year[0]);
         } catch (JSONException | IOException e) {
@@ -31,11 +31,11 @@ public class GetCalendarTask extends AsyncTask<Integer, Void, Calendar> {
     }
 
     @Override
-    protected void onPostExecute(Calendar calendar) {
-        mCallback.onFinish(calendar);
+    protected void onPostExecute(AcademicCalendar academicCalendar) {
+        mCallback.onFinish(academicCalendar);
     }
 
     public interface Callback {
-        void onFinish(Calendar calendar);
+        void onFinish(AcademicCalendar academicCalendar);
     }
 }

@@ -5,10 +5,12 @@ package br.ufjf.app.model;
  */
 public class Date {
     private final int day;
+    private final int month;
     private final String title;
 
-    public Date(int day, String title) {
+    public Date(int day, int month, String title) {
         this.day = day;
+        this.month = month;
         this.title = title;
     }
 
@@ -18,5 +20,9 @@ public class Date {
 
     public String getTitle() {
         return title;
+    }
+
+    public int getMonth() {
+        return month;
     }
 }
