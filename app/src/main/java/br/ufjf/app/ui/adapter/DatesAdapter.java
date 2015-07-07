@@ -8,9 +8,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.TreeMap;
 
 import br.ufjf.app.model.AcademicCalendar;
 import br.ufjf.app.model.Date;
@@ -22,7 +22,7 @@ public class DatesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private static final int TYPE_DATE = 1;
 
     private final List<Date> mDates;
-    private final Set<Integer> mHeadersPositions;
+    private final Map<Integer, Integer> mHeadersPositions;
     private final HashMap<Integer, String> mHeadersNames;
     private final OnDateClickListener mListener;
 
@@ -33,14 +33,14 @@ public class DatesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public DatesAdapter(AcademicCalendar academicCalendar, List<String> monthNames, OnDateClickListener listener) {
         this.mListener = listener;
         mDates = new ArrayList<>();
-        mHeadersPositions = new HashSet<>();
+        mHeadersPositions = new TreeMap<>();
         mHeadersNames = new HashMap<>();
 
         for (int i = 0; i < 12; i++) {
             List<Date> dates = academicCalendar.getDatesByMonth(i);
             if (dates != null) {
-                mHeadersPositions.add(mDates.size());
-                mHeadersNames.put(mDates.size(), monthNames.get(i));
+                mHeadersPositions.put(mDates.size() + mHeadersNames.size(), i);
+                mHeadersNames.put(mDates.size() + mHeadersNames.size(), monthNames.get(i));
                 mDates.addAll(dates);
             }
         }
@@ -78,19 +78,28 @@ public class DatesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public int getDatePosition(Date date) {
         //todo melhorar (não iterar na lista toda)
         for (int i = 0; i < mDates.size(); i++)
-            if (date.getDayStart() == mDates.get(i).getDayStart()) {
-                for (Integer headerPosition : mHeadersPositions)
+            if (date.getDayStart() == mDates.get(i).getDayStart()
+                    && date.getMonth() == mDates.get(i).getMonth()) {
+                for (Integer headerPosition : mHeadersPositions.keySet()) {
                     if (headerPosition > i)
                         break;
-                    else i++;
+                    i++;
+                }
                 return i;
             }
-        return 0;
+        return -1;
+    }
+
+    public int getMonthPosition(int month) {
+        for (Integer headerPosition : mHeadersPositions.keySet())
+            if (mHeadersPositions.get(headerPosition) == month)
+                return headerPosition;
+        return -1;
     }
 
     private int getDateIndex(int position) {
         int index = position;
-        for (Integer headerPosition : mHeadersPositions)
+        for (Integer headerPosition : mHeadersPositions.keySet())
             if (headerPosition >= position)
                 break;
             else index--;
@@ -104,7 +113,7 @@ public class DatesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemViewType(int position) {
-        return mHeadersPositions.contains(position)
+        return mHeadersPositions.containsKey(position)
                 ? TYPE_HEADER : TYPE_DATE;
     }
 

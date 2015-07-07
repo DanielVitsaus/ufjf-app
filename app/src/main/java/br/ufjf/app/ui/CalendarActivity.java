@@ -61,6 +61,24 @@ public class CalendarActivity extends DrawerActivity implements CalendarMonthFra
 
                     mViewPager = (ViewPager) findViewById(R.id.calendar_pager);
                     mViewPager.setAdapter(mMonthsAdapter);
+                    mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                        @Override
+                        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                        }
+
+                        @Override
+                        public void onPageSelected(int position) {
+                            int monthPosition = mDatesAdapter.getMonthPosition(position);
+                            if (monthPosition >= 0)
+                                recyclerView.smoothScrollToPosition(monthPosition);
+                        }
+
+                        @Override
+                        public void onPageScrollStateChanged(int state) {
+
+                        }
+                    });
 
                     TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
                     tabLayout.setupWithViewPager(mViewPager);
