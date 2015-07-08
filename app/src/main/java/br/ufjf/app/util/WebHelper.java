@@ -34,11 +34,11 @@ public class WebHelper {
     private static final String DATES_URL = BASE_URL + "dates/";
 
     public static FeedHandler readFeed(String url) throws IOException, SAXException, ParserConfigurationException {
-        InputStream inputXml = null;
+        InputStream inputStream = null;
         try {
-            inputXml = new URL(url).openConnection().getInputStream();
+            inputStream = new URL(url).openConnection().getInputStream();
 
-            Reader reader = new InputStreamReader(inputXml, "UTF-8");
+            Reader reader = new InputStreamReader(inputStream, "UTF-8");
 
             InputSource is = new InputSource(reader);
             is.setEncoding("UTF-8");
@@ -48,12 +48,37 @@ public class WebHelper {
             return parser;
         } finally {
             try {
-                if (inputXml != null)
-                    inputXml.close();
+                if (inputStream != null)
+                    inputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static String getContent(String url){
+        InputStream inputStream = null;
+        try {
+            inputStream = new URL(url).openConnection().getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+            StringBuilder builder = new StringBuilder();
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                builder.append(line);
+            }
+            return builder.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (inputStream != null)
+                    inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
     public static Student requestSignIn(Context context, String email, String password) throws JSONException, IOException {

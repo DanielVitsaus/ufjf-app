@@ -121,7 +121,7 @@ public class CalendarActivity extends DrawerActivity implements CalendarMonthFra
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setAdapter(mDatesAdapter);
                 } else {
-                    //todo
+                    //todo mostrar mensagem de erro
                 }
             }
         }).execute(2015);

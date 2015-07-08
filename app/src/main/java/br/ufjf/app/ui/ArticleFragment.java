@@ -1,5 +1,6 @@
 package br.ufjf.app.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import br.ufjf.app.model.news.Article;
@@ -17,6 +19,11 @@ public class ArticleFragment extends Fragment {
     private static final String ARG_ARTICLE = "article";
 
     private Article article;
+    private OnFullArticleClickListener mListener;
+
+    public interface OnFullArticleClickListener {
+        void onFullArticleClick(String url);
+    }
 
     public static ArticleFragment newInstance(Article article){
         Bundle args = new Bundle();
@@ -26,6 +33,12 @@ public class ArticleFragment extends Fragment {
         articleFragment.setArguments(args);
 
         return articleFragment;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mListener = (OnFullArticleClickListener) activity;
     }
 
     @Override
@@ -40,10 +53,17 @@ public class ArticleFragment extends Fragment {
 
         TextView title = ((TextView) view.findViewById(R.id.title));
         TextView content = ((TextView) view.findViewById(R.id.content));
+        Button fullArticleButton = (Button) view.findViewById(R.id.full_article_button);
 
         title.setText(article.getTitle());
         content.setText(Html.fromHtml(article.getContent()));
         content.setMovementMethod(LinkMovementMethod.getInstance());
+        fullArticleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onFullArticleClick(article.getLink());
+            }
+        });
 
         return view;
     }

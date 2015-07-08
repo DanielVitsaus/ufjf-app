@@ -59,7 +59,7 @@ public class FeedHandler extends DefaultHandler {
             }
 
             if (currentElement().equalsIgnoreCase("description"))
-                articleAtual.setContent(value);
+                articleAtual.setContent(value.replaceAll("<img.*?/>", "")/*todo retiar o 'Leia mais' .replaceAll("<a .*?>Leia mais <span class=\"meta-nav\">&#8594;</span></a>", "")*/);
         }
 
         this.elementStack.pop();

@@ -16,11 +16,11 @@
 package br.ufjf.app.ui;
 
 import android.app.ActivityOptions;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -84,8 +84,6 @@ public abstract class DrawerActivity extends ToolbarActivity {
 
         @Override
         public void onDrawerOpened(View drawerView) {
-            if (getSupportActionBar() != null) getSupportActionBar()
-                    .setTitle(R.string.app_name);
         }
     };
 
@@ -112,7 +110,7 @@ public abstract class DrawerActivity extends ToolbarActivity {
         // Whenever the fragment back stack changes, we may need to update the
         // action bar toggle: only top level screens show the hamburger-like icon, inner
         // screens - either Activities or fragments - show the "Up" icon instead.
-        getFragmentManager().addOnBackStackChangedListener(mBackStackChangedListener);
+        getSupportFragmentManager().addOnBackStackChangedListener(mBackStackChangedListener);
     }
 
     @Override
@@ -126,7 +124,7 @@ public abstract class DrawerActivity extends ToolbarActivity {
     @Override
     public void onPause() {
         super.onPause();
-        getFragmentManager().removeOnBackStackChangedListener(mBackStackChangedListener);
+        getSupportFragmentManager().removeOnBackStackChangedListener(mBackStackChangedListener);
     }
 
     @Override
@@ -157,7 +155,7 @@ public abstract class DrawerActivity extends ToolbarActivity {
             return;
         }
         // Otherwise, it may return to the previous fragment stack
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragmentManager.getBackStackEntryCount() > 0)
             fragmentManager.popBackStack();
         else
@@ -188,6 +186,12 @@ public abstract class DrawerActivity extends ToolbarActivity {
         // Create an ActionBarDrawerToggle that will handle opening/closing of the drawer:
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 getToolbar(), R.string.open_content_drawer, R.string.close_content_drawer);
+        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         mDrawerLayout.setDrawerListener(mDrawerListener);
         mDrawerLayout.setStatusBarBackgroundColor(
                 getResources().getColor(R.color.primary));
@@ -222,13 +226,6 @@ public abstract class DrawerActivity extends ToolbarActivity {
         });
 
         View drawerHeader = mDrawerLayout.findViewById(R.id.drawer_header);
-        drawerHeader.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
         TextView nameView = (TextView) drawerHeader.findViewById(R.id.drawer_name);
         TextView courseView = (TextView) drawerHeader.findViewById(R.id.drawer_course);
 
@@ -245,7 +242,7 @@ public abstract class DrawerActivity extends ToolbarActivity {
         if (mDrawerToggle == null)
             return;
 
-        boolean isRoot = getFragmentManager().getBackStackEntryCount() == 0;
+        boolean isRoot = getSupportFragmentManager().getBackStackEntryCount() == 0;
         mDrawerToggle.setDrawerIndicatorEnabled(isRoot);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(!isRoot);

@@ -1,7 +1,6 @@
 package br.ufjf.app.ui;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,27 +10,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.xml.sax.SAXException;
+import java.util.List;
 
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import br.ufjf.app.model.news.Feed;
+import br.ufjf.app.model.news.Article;
 import br.ufjf.app.ui.adapter.NewsAdapter;
-import br.ufjf.app.util.WebHelper;
 import br.ufjf.dcc.pesquisa.R;
 
 public class NewsFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private Feed feed;
-    private NewsAdapter.OnArticleClickListener mListener;
+    private Listener mListener;
+
+    public interface Listener extends NewsAdapter.OnArticleClickListener{
+        List<Article> getArticles();
+    }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mListener = (NewsAdapter.OnArticleClickListener) activity;
+        mListener = (Listener) activity;
     }
 
     @Override
@@ -46,30 +43,8 @@ public class NewsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        new FeedTask().execute();
-    }
-
-    private class FeedTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                feed = WebHelper.readFeed("http://www.ufjf.br/secom/rss").getFeed();
-            } catch (IOException | SAXException | ParserConfigurationException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            if (feed != null)
-                recyclerView.setAdapter(new NewsAdapter(feed.getArticles(), mListener));
-        }
+        recyclerView.setAdapter(new NewsAdapter(mListener.getArticles(), mListener));
     }
 }

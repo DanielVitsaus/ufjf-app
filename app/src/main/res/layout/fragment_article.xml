@@ -6,15 +6,28 @@
 
     <TextView
         android:id="@+id/title"
+        style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_view"
-        style="@style/TextAppearance.AppCompat.Title"/>
+        android:layout_marginBottom="@dimen/margin_view" />
 
-    <TextView
-        android:id="@+id/content"
+    <ScrollView
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/content"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
+    <Button
+        android:id="@+id/full_article_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/TextAppearance.AppCompat.Body1"/>
+        android:layout_gravity="center_horizontal"
+        android:text="@string/see_full_article" />
 
 </LinearLayout>

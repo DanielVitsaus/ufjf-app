@@ -58,7 +58,6 @@ public class ToolbarActivity extends AppCompatActivity {
             throw new IllegalStateException("Layout is required to include a Toolbar with id " +
                     "'toolbar'");
 
-        mToolbar.inflateMenu(R.menu.main);
         setSupportActionBar(mToolbar);
 
         mToolbarInitialized = true;

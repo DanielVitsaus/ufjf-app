@@ -6,21 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import br.ufjf.app.model.news.Article;
 import br.ufjf.dcc.pesquisa.R;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ItemHolder> {
 
-    private final ArrayList<Article> mArticles;
+    private final List<Article> mArticles;
     private final OnArticleClickListener mListener;
 
     public interface OnArticleClickListener {
         void onArticleSelected(Article article);
     }
 
-    public NewsAdapter(ArrayList<Article> articles, OnArticleClickListener listener){
+    public NewsAdapter(List<Article> articles, OnArticleClickListener listener){
         this.mArticles = articles;
         this.mListener = listener;
     }
