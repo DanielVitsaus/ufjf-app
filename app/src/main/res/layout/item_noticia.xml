@@ -2,6 +2,7 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:minHeight="@dimen/touchable"
     android:paddingTop="@dimen/margin_view"
     android:paddingBottom="@dimen/margin_view"
     android:paddingRight="@dimen/margin_screen"

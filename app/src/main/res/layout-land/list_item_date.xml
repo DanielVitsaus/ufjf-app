@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/margin_view"
+    android:paddingTop="@dimen/margin_view">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_screen"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/day_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginRight="@dimen/margin_screen"
+            android:background="@drawable/bg_date"
+            android:gravity="center"
+            android:minWidth="@dimen/icon_size"
+            android:textColor="@android:color/white"
+            tools:text="25" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Título da data" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/overflow"
+        android:layout_width="@dimen/touchable"
+        android:layout_height="@dimen/touchable"
+        android:layout_marginLeft="@dimen/margin_view"
+        android:layout_marginRight="@dimen/margin_view"
+        android:background="?selectableItemBackgroundBorderless"
+        android:padding="@dimen/icon_padding"
+        android:src="@drawable/ic_more_vert_white_24dp"
+        android:tint="@color/grey_icon" />
+
+
+</LinearLayout>
