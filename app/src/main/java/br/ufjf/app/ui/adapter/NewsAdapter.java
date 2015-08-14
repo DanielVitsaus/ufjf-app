@@ -34,7 +34,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ItemHolder> {
 
     @Override
     public void onBindViewHolder(ItemHolder holder, int position) {
-        ((TextView) holder.itemView).setText(mArticles.get(position).getTitle());
+        holder.titleView.setText(mArticles.get(position).getTitle());
     }
 
     @Override
@@ -43,9 +43,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ItemHolder> {
     }
 
     protected class ItemHolder extends RecyclerView.ViewHolder {
+        TextView titleView;
 
         public ItemHolder(View itemView) {
             super(itemView);
+            titleView = (TextView) itemView.findViewById(R.id.title);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

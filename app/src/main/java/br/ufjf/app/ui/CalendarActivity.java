@@ -52,7 +52,9 @@ public class CalendarActivity extends DrawerActivity implements CalendarMonthFra
                     List<String> monthNames = new ArrayList<>();
                     for (int i = 0; i < 12; i++) {
                         cal.set(java.util.Calendar.MONTH, i);
-                        monthNames.add(cal.getDisplayName(java.util.Calendar.MONTH, java.util.Calendar.LONG, getResources().getConfiguration().locale));
+                        String monthName = cal.getDisplayName(java.util.Calendar.MONTH, java.util.Calendar.LONG, getResources().getConfiguration().locale);
+                        monthName = Character.toUpperCase(monthName.charAt(0)) + monthName.substring(1);
+                        monthNames.add(monthName);
                     }
 
                     mMonthsAdapter = new MonthsAdapter(

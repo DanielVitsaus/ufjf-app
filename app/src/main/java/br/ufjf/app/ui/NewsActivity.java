@@ -23,6 +23,7 @@ import br.ufjf.dcc.pesquisa.R;
 public class NewsActivity extends DrawerActivity implements NewsFragment.Listener, ArticleFragment.OnFullArticleClickListener, Listener {
     private Feed mFeed;
     private FullArticleFragment mCurrentFullArticleFragment;
+    private AsyncTask<Void, Void, Void> mFeedTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,13 @@ public class NewsActivity extends DrawerActivity implements NewsFragment.Listene
         initializeToolbar();
         setTitle(R.string.news);
 
-        new FeedTask().execute();
+        mFeedTask = new FeedTask().execute();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mFeedTask.cancel(true);
     }
 
     @Override
@@ -52,7 +59,9 @@ public class NewsActivity extends DrawerActivity implements NewsFragment.Listene
 
     @Override
     public List<Article> getArticles() {
-        return mFeed.getArticles();
+        if (mFeed != null)
+            return mFeed.getArticles();
+        else return null;
     }
 
     @Override
@@ -80,7 +89,7 @@ public class NewsActivity extends DrawerActivity implements NewsFragment.Listene
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                mFeed = WebHelper.readFeed("http://www.ufjf.br/secom/rss").getFeed();
+                mFeed = WebHelper.readFeed("http://revistagalileu.globo.com/rss/ultimas/feed.xml").getFeed();
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
             }

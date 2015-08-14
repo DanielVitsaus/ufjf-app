@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?selectableItemBackground"
-    android:ellipsize="marquee"
-    android:gravity="center_vertical"
-    android:minHeight="@dimen/touchable"
-    android:paddingBottom="@dimen/margin_view"
-    android:paddingLeft="@dimen/margin_screen"
-    android:paddingRight="@dimen/margin_screen"
-    android:paddingTop="@dimen/margin_view" />
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:ellipsize="marquee"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/touchable"
+        android:paddingBottom="@dimen/margin_view"
+        android:paddingLeft="@dimen/margin_screen"
+        android:paddingRight="@dimen/margin_screen"
+        android:paddingTop="@dimen/margin_view" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_stroke" />
+</LinearLayout>
