@@ -29,41 +29,48 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import br.ufjf.app.model.Student;
-import br.ufjf.app.util.AuthHelper;
+import br.ufjf.app.model.Estudante;
+import br.ufjf.app.util.AutenticacaoHelper;
 import br.ufjf.dcc.pesquisa.R;
 
+/**
+ * Classe que todas as Activities com menu lateral devem extender.
+ *
+ * Baseada no exemplo do Google, Universal Music Player:
+ * https://github.com/googlesamples/android-UniversalMusicPlayer
+ */
 public abstract class DrawerActivity extends ToolbarActivity {
 
-    private static final String TAG = "DrawerActivity";
-    private static final int REQ_CODE_LOGIN = 468;
+    private static final int COD_REQ_LOGIN = 468;
 
-    private ActionBarDrawerToggle mDrawerToggle;
-    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle drawerToggle;
+    private DrawerLayout drawerLayout;
 
-    private int mItemToOpenWhenDrawerCloses = -1;
-    private int mOpennedItem = -1;
+    private int itemParaAbrirAoFecharDrawer = -1;
+    private int itemAberto = -1;
 
     private DrawerLayout.DrawerListener mDrawerListener = new DrawerLayout.DrawerListener() {
         @Override
         public void onDrawerClosed(View drawerView) {
-            int position = mItemToOpenWhenDrawerCloses;
-            if (position >= 0 && mOpennedItem != mItemToOpenWhenDrawerCloses) {
+            int position = itemParaAbrirAoFecharDrawer;
+            if (position >= 0 && itemAberto != itemParaAbrirAoFecharDrawer) {
+
+                // Decide qual Activity iniciar
 
                 Class activityClass = null;
                 switch (position) {
                     case 0:
-                        activityClass = NewsActivity.class;
+                        activityClass = NoticiasActivity.class;
                         break;
                     case 1:
-                        activityClass = SurveysExplorerActivity.class;
+                        activityClass = ListaQuestionariosActivity.class;
                         break;
                     case 2:
-                        activityClass = CalendarActivity.class;
+                        activityClass = CalendarioActivity.class;
                         break;
                 }
 
-                mOpennedItem = position;
+                itemAberto = position;
 
                 Bundle extras = ActivityOptions.makeCustomAnimation(
                         DrawerActivity.this, R.anim.fade_in, R.anim.fade_out).toBundle();
@@ -98,8 +105,8 @@ public abstract class DrawerActivity extends ToolbarActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        if (mDrawerToggle != null)
-            mDrawerToggle.syncState();
+        if (drawerToggle != null)
+            drawerToggle.syncState();
 
     }
 
@@ -116,8 +123,8 @@ public abstract class DrawerActivity extends ToolbarActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if (mDrawerToggle != null)
-            mDrawerToggle.onConfigurationChanged(newConfig);
+        if (drawerToggle != null)
+            drawerToggle.onConfigurationChanged(newConfig);
 
     }
 
@@ -136,10 +143,10 @@ public abstract class DrawerActivity extends ToolbarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle != null && mDrawerToggle.onOptionsItemSelected(item))
+        if (drawerToggle != null && drawerToggle.onOptionsItemSelected(item))
             return true;
 
-        // If not handled by drawerToggle, home needs to be handled by returning to previous
+        // If not handled by drawerToggle, home needs to be handled by returning to anterior
         if (item != null && item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
@@ -150,11 +157,11 @@ public abstract class DrawerActivity extends ToolbarActivity {
     @Override
     public void onBackPressed() {
         // If the drawer is open, back will close it
-        if (mDrawerLayout != null && mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mDrawerLayout.closeDrawers();
+        if (drawerLayout != null && drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawers();
             return;
         }
-        // Otherwise, it may return to the previous fragment stack
+        // Otherwise, it may return to the anterior fragment stack
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragmentManager.getBackStackEntryCount() > 0)
             fragmentManager.popBackStack();
@@ -166,10 +173,10 @@ public abstract class DrawerActivity extends ToolbarActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQ_CODE_LOGIN) {
+        if (requestCode == COD_REQ_LOGIN) {
             if (resultCode == RESULT_OK) {
-                TextView nameView = (TextView) mDrawerLayout.findViewById(R.id.drawer_name);
-                TextView courseView = (TextView) mDrawerLayout.findViewById(R.id.drawer_course);
+                TextView nameView = (TextView) drawerLayout.findViewById(R.id.drawer_name);
+                TextView courseView = (TextView) drawerLayout.findViewById(R.id.drawer_course);
 
                 nameView.setText(data.getStringExtra("name"));
                 courseView.setText(data.getStringExtra("course"));
@@ -179,78 +186,78 @@ public abstract class DrawerActivity extends ToolbarActivity {
         } else super.onActivityResult(requestCode, resultCode, data);
     }
 
-    protected void initializeToolbar() {
-        super.initializeToolbar();
+    protected void inicializarToolbar() {
+        super.inicializarToolbar();
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         // Create an ActionBarDrawerToggle that will handle opening/closing of the drawer:
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
                 getToolbar(), R.string.open_content_drawer, R.string.close_content_drawer);
-        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+        drawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
             }
         });
-        mDrawerLayout.setDrawerListener(mDrawerListener);
-        mDrawerLayout.setStatusBarBackgroundColor(
+        drawerLayout.setDrawerListener(mDrawerListener);
+        drawerLayout.setStatusBarBackgroundColor(
                 getResources().getColor(R.color.primary));
         populateDrawerItems();
         updateDrawerToggle();
     }
 
     private void populateDrawerItems() {
-        NavigationView navigationView = (NavigationView) mDrawerLayout.findViewById(R.id.drawer_list);
+        NavigationView navigationView = (NavigationView) drawerLayout.findViewById(R.id.drawer_list);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.drawer_news:
-                        mItemToOpenWhenDrawerCloses = 0;
-                        mDrawerLayout.closeDrawers();
+                        itemParaAbrirAoFecharDrawer = 0;
+                        drawerLayout.closeDrawers();
                         break;
                     case R.id.drawer_surveys:
-                        mItemToOpenWhenDrawerCloses = 1;
-                        mDrawerLayout.closeDrawers();
+                        itemParaAbrirAoFecharDrawer = 1;
+                        drawerLayout.closeDrawers();
                         break;
                     case R.id.drawer_calendar:
-                        mItemToOpenWhenDrawerCloses = 2;
-                        mDrawerLayout.closeDrawers();
+                        itemParaAbrirAoFecharDrawer = 2;
+                        drawerLayout.closeDrawers();
                         break;
                     case R.id.drawer_logout:
-                        AuthHelper.registerLogout(DrawerActivity.this);
-                        startActivityForResult(new Intent(DrawerActivity.this, AuthActivity.class), REQ_CODE_LOGIN);
+                        AutenticacaoHelper.registerLogout(DrawerActivity.this);
+                        startActivityForResult(new Intent(DrawerActivity.this, AutenticacaoActivity.class), COD_REQ_LOGIN);
                 }
                 return true;
             }
         });
 
-        View drawerHeader = mDrawerLayout.findViewById(R.id.drawer_header);
-        TextView nameView = (TextView) drawerHeader.findViewById(R.id.drawer_name);
-        TextView courseView = (TextView) drawerHeader.findViewById(R.id.drawer_course);
+        View drawerHeader = drawerLayout.findViewById(R.id.drawer_header);
+        TextView viewNome = (TextView) drawerHeader.findViewById(R.id.drawer_name);
+        TextView viewCurso = (TextView) drawerHeader.findViewById(R.id.drawer_course);
 
         try {
-            Student loggedStudent = AuthHelper.getStudent(this);
-            nameView.setText(loggedStudent.getName());
-            courseView.setText(loggedStudent.getCourse());
-        } catch (AuthHelper.StudentNotLoggedIn studentNotLoggedIn) {
-            startActivityForResult(new Intent(DrawerActivity.this, AuthActivity.class), REQ_CODE_LOGIN);
+            Estudante estudanteAutenticado = AutenticacaoHelper.getStudent(this);
+            viewNome.setText(estudanteAutenticado.getNome());
+            viewCurso.setText(estudanteAutenticado.getCurso());
+        } catch (AutenticacaoHelper.StudentNaoAutenticado studentNaoAutenticado) {
+            startActivityForResult(new Intent(DrawerActivity.this, AutenticacaoActivity.class), COD_REQ_LOGIN);
         }
     }
 
     protected void updateDrawerToggle() {
-        if (mDrawerToggle == null)
+        if (drawerToggle == null)
             return;
 
         boolean isRoot = getSupportFragmentManager().getBackStackEntryCount() == 0;
-        mDrawerToggle.setDrawerIndicatorEnabled(isRoot);
+        drawerToggle.setDrawerIndicatorEnabled(isRoot);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(!isRoot);
             getSupportActionBar().setDisplayHomeAsUpEnabled(!isRoot);
             getSupportActionBar().setHomeButtonEnabled(!isRoot);
         }
         if (isRoot)
-            mDrawerToggle.syncState();
+            drawerToggle.syncState();
 
     }
 }

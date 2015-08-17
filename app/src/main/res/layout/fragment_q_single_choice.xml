@@ -8,7 +8,7 @@
     <include layout="@layout/question_title" />
 
     <RadioGroup
-        android:id="@+id/choices"
+        android:id="@+id/opcoes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

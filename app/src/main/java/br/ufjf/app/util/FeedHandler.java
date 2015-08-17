@@ -7,15 +7,18 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import br.ufjf.app.model.news.Article;
-import br.ufjf.app.model.news.Feed;
+import br.ufjf.app.model.noticias.Artigo;
+import br.ufjf.app.model.noticias.Feed;
 
+/**
+ * Parser para um feed RSS
+ */
 public class FeedHandler extends DefaultHandler {
     private Stack<String> elementStack = new Stack<>();
     private StringBuilder stringBuilder;
 
     private Feed feed;
-    private Article articleAtual;
+    private Artigo artigoAtual;
 
     public void startElement(String uri, String localName, String qName,
                              Attributes attributes) throws SAXException {
@@ -24,7 +27,7 @@ public class FeedHandler extends DefaultHandler {
         stringBuilder = new StringBuilder();
 
         if (qName.equalsIgnoreCase("item")) {
-            articleAtual = new Article();
+            artigoAtual = new Artigo();
         } else if (qName.equalsIgnoreCase("channel")) {
             feed = new Feed();
         }
@@ -35,10 +38,10 @@ public class FeedHandler extends DefaultHandler {
         String value = stringBuilder.toString().trim();
 
         if (qName.equalsIgnoreCase("item")) {
-            if (feed.getArticles() == null)
-                feed.setArticles(new ArrayList<Article>());
-            feed.getArticles().add(articleAtual);
-            articleAtual = null;
+            if (feed.getArtigos() == null)
+                feed.setArtigos(new ArrayList<Artigo>());
+            feed.getArtigos().add(artigoAtual);
+            artigoAtual = null;
         } else if (currentElementParent() != null
                 && currentElementParent().equalsIgnoreCase("channel")) {
 
@@ -47,19 +50,19 @@ public class FeedHandler extends DefaultHandler {
 
             if (currentElement().equalsIgnoreCase("link"))
                 feed.setLink(value);
-        } else if (articleAtual != null) {
+        } else if (artigoAtual != null) {
             if (currentElement().equalsIgnoreCase("title"))
-                articleAtual.setTitle(value);
+                artigoAtual.setTitle(value);
 
             if (currentElement().equalsIgnoreCase("link"))
-                articleAtual.setLink(value);
+                artigoAtual.setLink(value);
 
             if (currentElement().equalsIgnoreCase("pubDate")) {
-                articleAtual.setDate(value);
+                artigoAtual.setDate(value);
             }
 
             if (currentElement().equalsIgnoreCase("description"))
-                articleAtual.setContent(value.replaceAll("<img.*?/>", "")/*todo retiar o 'Leia mais' .replaceAll("<a .*?>Leia mais <span class=\"meta-nav\">&#8594;</span></a>", "")*/);
+                artigoAtual.setContent(value.replaceAll("<img.*?/>", "")/*todo retiar o 'Leia mais' .replaceAll("<a .*?>Leia mais <span class=\"meta-nav\">&#8594;</span></a>", "")*/);
         }
 
         this.elementStack.pop();

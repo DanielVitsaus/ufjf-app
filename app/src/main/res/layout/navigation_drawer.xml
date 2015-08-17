@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_view"
                 style="@style/DrawerText"
-                android:text="@string/surveys" />
+                android:text="@string/questionarios" />
         </LinearLayout>
 
         <View

@@ -18,14 +18,14 @@
         android:layout_marginRight="@dimen/margin_screen"
         android:layout_marginLeft="@dimen/margin_screen"
         android:textColor="@android:color/white"
-        tools:text="25" />
+        tools:texto="25" />
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/titulo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        tools:text="Título da data" />
+        tools:texto="Título da data" />
 
     <ImageView
         android:id="@+id/overflow"

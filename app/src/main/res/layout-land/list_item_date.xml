@@ -24,13 +24,13 @@
             android:gravity="center"
             android:minWidth="@dimen/icon_size"
             android:textColor="@android:color/white"
-            tools:text="25" />
+            tools:texto="25" />
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/titulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Título da data" />
+            tools:texto="Título da data" />
     </LinearLayout>
 
     <ImageView

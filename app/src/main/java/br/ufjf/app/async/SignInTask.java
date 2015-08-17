@@ -7,26 +7,27 @@ import org.json.JSONException;
 
 import java.io.IOException;
 
-import br.ufjf.app.model.Student;
+import br.ufjf.app.model.Estudante;
 import br.ufjf.app.util.WebHelper;
 
 /**
+ * Efetua a autenticação de um estudante
  * Created by Jorge Augusto da Silva Moreira on 20/05/2015.
  */
-public class SignInTask extends AsyncTask<String, Void, Student> {
+public class SignInTask extends AsyncTask<String, Void, Estudante> {
 
-    private final Callback mCallback;
-    private final Context mContext;
+    private final Callback callback;
+    private final Context context;
 
     public SignInTask(Context context, Callback callback) {
-        mCallback = callback;
-        mContext = context;
+        this.callback = callback;
+        this.context = context;
     }
 
     @Override
-    protected Student doInBackground(String... credentials) {
+    protected Estudante doInBackground(String... credenciais) {
         try {
-            return WebHelper.requestSignIn(mContext, credentials[0], credentials[1]);
+            return WebHelper.entrar(context, credenciais[0], credenciais[1]);
         } catch (JSONException | IOException e) {
             e.printStackTrace();
             return null;
@@ -34,11 +35,11 @@ public class SignInTask extends AsyncTask<String, Void, Student> {
     }
 
     @Override
-    protected void onPostExecute(Student student) {
-        mCallback.onFinish(student);
+    protected void onPostExecute(Estudante estudante) {
+        callback.onFinish(estudante);
     }
 
     public interface Callback {
-        void onFinish(Student student);
+        void onFinish(Estudante estudante);
     }
 }

@@ -20,20 +20,23 @@ import java.net.URL;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 
-import br.ufjf.app.model.AcademicCalendar;
-import br.ufjf.app.model.ServerDB;
-import br.ufjf.app.model.Student;
-import br.ufjf.app.model.survey.Survey;
-import br.ufjf.app.model.survey.SurveyAnswer;
+import br.ufjf.app.model.CalendarioAcademico;
+import br.ufjf.app.model.DBRemoto;
+import br.ufjf.app.model.Estudante;
+import br.ufjf.app.model.questionario.Questionario;
+import br.ufjf.app.model.questionario.RespostaQuestionario;
 
+/**
+ * Intermediário para operações HTTP
+ */
 public class WebHelper {
-    private static final String BASE_URL = "http://200.131.219.208:4712/";
-    private static final String STUDENTS_URL = BASE_URL + "students/";
-    private static final String SURVEYS_URL = BASE_URL + "surveys/";
-    private static final String ANSWERS_URL = BASE_URL + "answers/";
-    private static final String DATES_URL = BASE_URL + "dates/";
+    private static final String URL_BASE_API = "http://200.131.219.208:4712/";
+    private static final String URL_ESTUDANTES = URL_BASE_API + "students/";
+    private static final String URL_QUESTIONARIOS = URL_BASE_API + "surveys/";
+    private static final String URL_RESPOSTAS = URL_BASE_API + "answers/";
+    private static final String URL_DATAS = URL_BASE_API + "dates/";
 
-    public static FeedHandler readFeed(String url) throws IOException, SAXException, ParserConfigurationException {
+    public static FeedHandler obterFeed(String url) throws IOException, SAXException, ParserConfigurationException {
         InputStream inputStream = null;
         try {
             inputStream = new URL(url).openConnection().getInputStream();
@@ -56,7 +59,7 @@ public class WebHelper {
         }
     }
 
-    public static String getContent(String url){
+    public static String obterConteudo(String url) {
         InputStream inputStream = null;
         try {
             inputStream = new URL(url).openConnection().getInputStream();
@@ -81,8 +84,8 @@ public class WebHelper {
         return null;
     }
 
-    public static Student requestSignIn(Context context, String email, String password) throws JSONException, IOException {
-        URL url = new URL(STUDENTS_URL + "login");
+    public static Estudante entrar(Context context, String email, String senha) throws JSONException, IOException {
+        URL url = new URL(URL_ESTUDANTES + "login");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-Type", "application/json");
@@ -90,8 +93,8 @@ public class WebHelper {
         connection.setDoInput(true);
 
         JSONObject input = new JSONObject();
-        input.put(ServerDB.Student.EMAIL, email);
-        input.put(ServerDB.Student.PASSWORD, password);
+        input.put(DBRemoto.Estudante.EMAIL, email);
+        input.put(DBRemoto.Estudante.SENHA, senha);
 
         OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
         wr.write(input.toString());
@@ -109,15 +112,15 @@ public class WebHelper {
 
         JSONObject data = new JSONObject(sb.toString());
         if (data.getBoolean("success")) {
-            Student student = new Student(data.getJSONObject("student"));
-            AuthHelper.registerLogin(context, student);
-            return student;
+            br.ufjf.app.model.Estudante estudante = new br.ufjf.app.model.Estudante(data.getJSONObject("estudante"));
+            AutenticacaoHelper.registerLogin(context, estudante);
+            return estudante;
         } else
             return null;
     }
 
-    public static Survey getSurvey(String id) throws JSONException, IOException {
-        URL url = new URL(SURVEYS_URL + id);
+    public static Questionario obterQuestionario(String id) throws JSONException, IOException {
+        URL url = new URL(URL_QUESTIONARIOS + id);
         BufferedReader reader = new BufferedReader(new InputStreamReader(
                 url.openStream(), "UTF-8"));
         StringBuilder sb = new StringBuilder();
@@ -128,13 +131,13 @@ public class WebHelper {
 
         JSONObject data = new JSONObject(sb.toString());
         if (data.getBoolean("success"))
-            return new Survey(data.getJSONObject("survey"));
+            return new Questionario(data.getJSONObject("survey"));
         else
             return null;
     }
 
-    public static Survey[] getSurveys() throws JSONException, IOException {
-        URL url = new URL(SURVEYS_URL);
+    public static Questionario[] obterQuestionarios() throws JSONException, IOException {
+        URL url = new URL(URL_QUESTIONARIOS);
         BufferedReader reader = new BufferedReader(new InputStreamReader(
                 url.openStream(), "UTF-8"));
         StringBuilder sb = new StringBuilder();
@@ -145,19 +148,19 @@ public class WebHelper {
 
         JSONObject data = new JSONObject(sb.toString());
         if (data.getBoolean("success")) {
-            JSONArray jsonArray = data.getJSONArray("surveys");
+            JSONArray jsonArray = data.getJSONArray("questionarios");
             int length = jsonArray.length();
-            Survey[] surveys = new Survey[length];
+            Questionario[] questionarios = new Questionario[length];
             for (int i = 0; i < length; i++)
-                surveys[i] = new Survey(jsonArray.getJSONObject(i));
+                questionarios[i] = new Questionario(jsonArray.getJSONObject(i));
 
-            return surveys;
+            return questionarios;
         } else
             return null;
     }
 
-    public static boolean sendAnswer(SurveyAnswer answer) throws JSONException, IOException {
-        URL url = new URL(ANSWERS_URL);
+    public static boolean enviarResposta(RespostaQuestionario resposta) throws JSONException, IOException {
+        URL url = new URL(URL_RESPOSTAS);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-Type", "application/json");
@@ -165,7 +168,7 @@ public class WebHelper {
         connection.setDoInput(true);
 
         OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
-        wr.write(answer.toJSON().toString());
+        wr.write(resposta.toJSON().toString());
         wr.flush();
 
         connection.connect();
@@ -181,8 +184,8 @@ public class WebHelper {
         return new JSONObject(sb.toString()).getBoolean("success");
     }
 
-    public static AcademicCalendar getCalendar(int year) throws IOException, JSONException {
-        URL url = new URL(DATES_URL);
+    public static CalendarioAcademico obterCalendario(int ano) throws IOException, JSONException {
+        URL url = new URL(URL_DATAS);
         BufferedReader reader = new BufferedReader(new InputStreamReader(
                 url.openStream(), "UTF-8"));
         StringBuilder sb = new StringBuilder();
@@ -193,7 +196,7 @@ public class WebHelper {
 
         JSONObject data = new JSONObject(sb.toString());
         if (data.getBoolean("success"))
-            return new AcademicCalendar(year, data.getJSONArray("dates"));
+            return new CalendarioAcademico(ano, data.getJSONArray("dates"));
         else
             return null;
     }

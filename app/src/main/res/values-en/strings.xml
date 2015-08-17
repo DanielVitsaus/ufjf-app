@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="all_questions_answered">You have answered to all questions.</string>
+    <string name="all_questions_answered">You have answered to all perguntas.</string>
     <string name="answer_hint">Answer</string>
     <string name="answer_not_sent">It wasn\'t possible to submit. Try again later.</string>
     <string name="answer_sent">Answers sent</string>
@@ -10,13 +10,13 @@
     <string name="logout">Logout</string>
     <string name="news">News</string>
     <string name="open_content_drawer">Open navigation menu</string>
-    <string name="not_all_questions_answered">You didn\'t answered to all questions.</string>
+    <string name="not_all_questions_answered">You didn\'t answered to all perguntas.</string>
     <string name="password">Password</string>
     <string name="question_scale_label">Answer: %d</string>
     <string name="settings">Preferences</string>
     <string name="sign_in">Login</string>
     <string name="submit">Submit</string>
     <string name="success_signin">Success</string>
-    <string name="surveys">Surveys</string>
+    <string name="questionarios">Surveys</string>
     <string name="wrong_credentials">Wrong credentials</string>
 </resources>

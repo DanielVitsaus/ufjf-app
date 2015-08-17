@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name="br.ufjf.app.ui.NewsActivity"
+            android:name="br.ufjf.app.ui.NoticiasActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,12 +21,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="br.ufjf.app.ui.SurveysExplorerActivity"
-            android:label="@string/surveys" />
-        <activity android:name="br.ufjf.app.ui.SurveyActivity" />
-        <activity android:name="br.ufjf.app.ui.AuthActivity" />
+            android:name="br.ufjf.app.ui.ListaQuestionariosActivity"
+            android:label="@string/questionarios" />
+        <activity android:name="br.ufjf.app.ui.QuestionarioActivity" />
+        <activity android:name="br.ufjf.app.ui.AutenticacaoActivity" />
         <activity
-            android:name="br.ufjf.app.ui.CalendarActivity"
+            android:name="br.ufjf.app.ui.CalendarioActivity"
             android:label="@string/calendar" />
     </application>
 

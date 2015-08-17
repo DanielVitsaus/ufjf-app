@@ -3,7 +3,7 @@
 
     <string name="app_name" translatable="false">UFJF</string>
     <string name="news">Notícias</string>
-    <string name="surveys">Pesquisas</string>
+    <string name="questionarios">Pesquisas</string>
     <string name="settings">Preferências</string>
     <string name="answer_hint">Resposta</string>
     <string name="question_scale_label">Resposta: %d</string>
@@ -25,6 +25,6 @@
     <string name="date_to_date" translatable="false">%1$d\na\n%2$d</string>
     <string name="see_full_article">Ver notícia completa</string>
     <string name="open_in_browser">Abrir no navegador</string>
-    <string name="loading_">Carregando...</string>
+    <string name="loading_">Carregando…</string>
 
 </resources>
