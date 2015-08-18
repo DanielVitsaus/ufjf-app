@@ -33,7 +33,7 @@ public class NoticiasAdapter extends RecyclerView.Adapter<NoticiasAdapter.ItemHo
 
     @Override
     public void onBindViewHolder(ItemHolder holder, int position) {
-        holder.titulo.setText(artigos.get(position).getTitle());
+        holder.titulo.setText(artigos.get(position).getTitulo());
     }
 
     @Override

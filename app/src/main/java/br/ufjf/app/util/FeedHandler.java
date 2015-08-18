@@ -52,17 +52,17 @@ public class FeedHandler extends DefaultHandler {
                 feed.setLink(value);
         } else if (artigoAtual != null) {
             if (currentElement().equalsIgnoreCase("title"))
-                artigoAtual.setTitle(value);
+                artigoAtual.setTitulo(value);
 
             if (currentElement().equalsIgnoreCase("link"))
                 artigoAtual.setLink(value);
 
             if (currentElement().equalsIgnoreCase("pubDate")) {
-                artigoAtual.setDate(value);
+                artigoAtual.setData(value);
             }
 
             if (currentElement().equalsIgnoreCase("description"))
-                artigoAtual.setContent(value.replaceAll("<img.*?/>", "")/*todo retiar o 'Leia mais' .replaceAll("<a .*?>Leia mais <span class=\"meta-nav\">&#8594;</span></a>", "")*/);
+                artigoAtual.setConteudo(value.replaceAll("<img.*?/>", "").replaceAll("Leia mais <span class=\"meta-nav\">&#8594;</span>", ""));
         }
 
         this.elementStack.pop();

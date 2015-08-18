@@ -67,7 +67,7 @@
         </LinearLayout>
 
         <View
-            android:id="@+id/drawer_stroke"
+            android:id="@+id/separador"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@id/drawer_surveys"
@@ -79,7 +79,7 @@
             android:id="@+id/drawer_settings"
             android:layout_width="match_parent"
             android:layout_height="@dimen/touchable"
-            android:layout_below="@id/drawer_stroke"
+            android:layout_below="@id/separador"
             android:paddingLeft="@dimen/margin_screen"
             style="@style/DrawerText"
             android:text="@string/settings"

@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.TextView;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,6 +29,7 @@ import br.ufjf.dcc.pesquisa.R;
 public class ArtigoCompletoFragment extends Fragment {
 
     private static final String ARG_URL = "url";
+    private static final String ARG_TITULO = "titulo";
 
     private WebView webView;
     private Listener listener;
@@ -37,9 +39,10 @@ public class ArtigoCompletoFragment extends Fragment {
      * @param url
      * @return
      */
-    public static ArtigoCompletoFragment obterNovo(String url) {
+    public static ArtigoCompletoFragment obterNovo(String url, String titulo) {
         Bundle args = new Bundle();
         args.putString(ARG_URL, url);
+        args.putString(ARG_TITULO, titulo);
 
         ArtigoCompletoFragment articleFragment = new ArtigoCompletoFragment();
         articleFragment.setArguments(args);
@@ -63,6 +66,7 @@ public class ArtigoCompletoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_art_completo, container, false);
         webView = ((WebView) view.findViewById(R.id.web_view));
+        ((TextView) view.findViewById(R.id.titulo)).setText(getArguments().getString(ARG_TITULO));
         return view;
     }
 

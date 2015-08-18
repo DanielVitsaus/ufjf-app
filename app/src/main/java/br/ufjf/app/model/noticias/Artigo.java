@@ -17,20 +17,20 @@ public class Artigo implements Parcelable {
             return new Artigo[size];
         }
     };
-    private String title;
+    private String titulo;
     private String link;
-    private String date;
-    private String content;
+    private String data;
+    private String conteudo;
 
     public Artigo() {
 
     }
 
     protected Artigo(Parcel in) {
-        this.title = in.readString();
+        this.titulo = in.readString();
         this.link = in.readString();
-        this.date = in.readString();
-        this.content = in.readString();
+        this.data = in.readString();
+        this.conteudo = in.readString();
     }
 
     @Override
@@ -40,18 +40,18 @@ public class Artigo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.title);
+        dest.writeString(this.titulo);
         dest.writeString(this.link);
-        dest.writeString(this.date);
-        dest.writeString(this.content);
+        dest.writeString(this.data);
+        dest.writeString(this.conteudo);
     }
 
-    public String getTitle() {
-        return title;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitulo(String title) {
+        this.titulo = title;
     }
 
     public String getLink() {
@@ -62,19 +62,19 @@ public class Artigo implements Parcelable {
         this.link = link;
     }
 
-    public String getDate() {
-        return date;
+    public String getData() {
+        return data;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setData(String data) {
+        this.data = data;
     }
 
-    public String getContent() {
-        return content;
+    public String getConteudo() {
+        return conteudo;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setConteudo(String conteudo) {
+        this.conteudo = conteudo;
     }
 }

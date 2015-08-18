@@ -55,13 +55,13 @@ public class ArtigoFragment extends Fragment {
         TextView content = ((TextView) view.findViewById(R.id.texto));
         Button fullArticleButton = (Button) view.findViewById(R.id.btn_art_compl);
 
-        title.setText(artigo.getTitle());
-        content.setText(Html.fromHtml(artigo.getContent()));
+        title.setText(artigo.getTitulo());
+        content.setText(Html.fromHtml(artigo.getConteudo()));
         content.setMovementMethod(LinkMovementMethod.getInstance());
         fullArticleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.abrirArtigoCompleto(artigo.getLink());
+                listener.abrirArtigoCompleto(artigo);
             }
         });
 
@@ -71,8 +71,8 @@ public class ArtigoFragment extends Fragment {
     public interface OnArtigoCompletoClickListener {
         /**
          * Solicita a abertura de uma notícia
-         * @param url endereço da notícia
+         * @param artigo artigo
          */
-        void abrirArtigoCompleto(String url);
+        void abrirArtigoCompleto(Artigo artigo);
     }
 }
