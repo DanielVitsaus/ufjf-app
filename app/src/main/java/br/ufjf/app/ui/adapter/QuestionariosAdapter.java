@@ -47,7 +47,7 @@ public class QuestionariosAdapter extends RecyclerView.Adapter<RecyclerView.View
             return new RecyclerView.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_header, parent, false)) {
             };
         else
-            return new QuestionarioHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_two_lines, parent, false));
+            return new QuestionarioHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_duas_linhas, parent, false));
     }
 
     @Override
@@ -110,8 +110,8 @@ public class QuestionariosAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         public QuestionarioHolder(View itemView) {
             super(itemView);
-            titulo = (TextView) itemView.findViewById(R.id.title);
-            descricao = (TextView) itemView.findViewById(R.id.description);
+            titulo = (TextView) itemView.findViewById(R.id.titulo);
+            descricao = (TextView) itemView.findViewById(R.id.descricao);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

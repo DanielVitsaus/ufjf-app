@@ -7,13 +7,13 @@
     android:padding="@dimen/margin_screen">
 
     <TextView
-        android:id="@+id/survey_submit_msg"
+        android:id="@+id/texto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_view" />
 
     <Button
-        android:id="@+id/survey_submit_btn"
+        android:id="@+id/enviar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/submit" />

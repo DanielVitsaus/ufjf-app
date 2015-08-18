@@ -35,9 +35,9 @@ public class OpcoesAdapter extends RecyclerView.Adapter<OpcoesAdapter.OpcaoHolde
     public OpcaoHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         int layout;
         if (escolhaUnica)
-            layout = R.layout.list_item_single_choice;
+            layout = R.layout.list_item_esc_unica;
         else
-            layout = R.layout.list_item_multiple_choice;
+            layout = R.layout.list_item_multi_esc;
 
         return new OpcaoHolder(LayoutInflater.from(parent.getContext()).inflate(layout, parent, false));
     }
@@ -62,7 +62,7 @@ public class OpcoesAdapter extends RecyclerView.Adapter<OpcoesAdapter.OpcaoHolde
 
         public OpcaoHolder(View itemView) {
             super(itemView);
-            opcao = (CompoundButton) itemView.findViewById(R.id.choice);
+            opcao = (CompoundButton) itemView.findViewById(R.id.escolha);
 
             opcao.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override

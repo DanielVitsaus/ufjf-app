@@ -2,6 +2,7 @@ package br.ufjf.app.ui.adapter;
 
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import br.ufjf.app.model.Data;
 import br.ufjf.dcc.pesquisa.R;
@@ -19,6 +21,9 @@ import br.ufjf.dcc.pesquisa.R;
  * Created by Jorge Augusto da Silva Moreira on 25/07/2014.
  */
 public class MesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static final String TAG = "MesAdapater";
+
     // Dia da semana correspondente ao primeiro dia do mês
     private final int diaSemana;
     // Quantidade de dias no mês
@@ -34,17 +39,26 @@ public class MesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.listener = listener;
 
         Calendar calendar = Calendar.getInstance();
+
+        // Caso seja o mês atual, armazena a posição do dia atual
         if (calendar.get(Calendar.MONTH) == month) {
-            diaSemana = calendar.get(Calendar.DAY_OF_WEEK);
             posicaoHoje = getPosicaoDoDia(calendar.get(Calendar.DAY_OF_MONTH));
         } else {
             calendar.set(Calendar.MONTH, month);
             posicaoHoje = -1;
-            diaSemana = calendar.get(Calendar.DAY_OF_WEEK);
         }
 
+        // Lê em que dia da semana o mês começa
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        diaSemana = calendar.get(Calendar.DAY_OF_WEEK);
+
+        Log.v(TAG, "Mês: " + (calendar.get(Calendar.MONTH) + 1) + "/" + calendar.get(Calendar.YEAR));
+        Log.v(TAG, "Dia da semana do primeiro dia: " + calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US));
+
+        // Total de dias
         diasNoMes = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 
+        // Datas a destacar, com suas respectivas posições
         this.datas = new HashMap<>();
         if (datas != null)
             for (Data data : datas)
@@ -53,7 +67,7 @@ public class MesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new RecyclerView.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_calendar_day, parent, false)){};
+        return new RecyclerView.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_dia, parent, false)){};
     }
 
     @Override

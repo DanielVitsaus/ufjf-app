@@ -1,13 +1,23 @@
 package br.ufjf.app.model;
 
+import com.google.api.client.util.Key;
+
 /**
  * Created by Jorge Augusto da Silva Moreira on 24/06/2015.
  */
 public class Data {
-    private final int diaInicio;
-    private final int diaTermino;
-    private final int mes;
-    private final String titulo;
+    @Key("day_start")
+    private int diaInicio;
+    @Key("day_end")
+    private int diaTermino;
+    @Key("month")
+    private int mes;
+    @Key("title")
+    private String titulo;
+
+    public Data(){
+
+    }
 
     public Data(int diaInicio, int diaTermino, int mes, String titulo) {
         this.diaInicio = diaInicio;
@@ -30,5 +40,9 @@ public class Data {
 
     public int getDiaTermino() {
         return diaTermino;
+    }
+
+    public void setMes(int mes) {
+        this.mes = mes;
     }
 }

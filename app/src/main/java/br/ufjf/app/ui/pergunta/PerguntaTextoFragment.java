@@ -39,7 +39,7 @@ public class PerguntaTextoFragment extends PerguntaFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        campoResposta = (EditText) view.findViewById(R.id.question_answer);
+        campoResposta = (EditText) view.findViewById(R.id.resposta);
         if (pergunta.isUmaLinha())
             campoResposta.setSingleLine();
         else {
@@ -59,7 +59,7 @@ public class PerguntaTextoFragment extends PerguntaFragment {
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.fragment_q_text;
+        return R.layout.fragment_q_texto;
     }
 
     @Override

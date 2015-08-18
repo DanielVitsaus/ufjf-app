@@ -42,7 +42,7 @@ public class EscalaFragment extends PerguntaFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        spinner = (Spinner) view.findViewById(R.id.question_scale);
+        spinner = (Spinner) view.findViewById(R.id.escala);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -70,7 +70,7 @@ public class EscalaFragment extends PerguntaFragment {
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.fragment_q_scale;
+        return R.layout.fragment_q_escala;
     }
 
     @Override

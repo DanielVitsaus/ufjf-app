@@ -65,7 +65,7 @@ public abstract class PerguntaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutRes(), container, false);
 
-        ((TextView) view.findViewById(R.id.question_title)).setText(getPergunta().getTitulo());
+        ((TextView) view.findViewById(R.id.titulo)).setText(getPergunta().getTitulo());
 
         return view;
     }

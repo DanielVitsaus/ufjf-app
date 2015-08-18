@@ -21,12 +21,12 @@ public class AutenticacaoActivity extends ToolbarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_auth);
+        setContentView(R.layout.activity_autenticacao);
         inicializarToolbar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        campoEmail = (EditText) findViewById(R.id.auth_email);
-        campoSenha = (EditText) findViewById(R.id.auth_password);
+        campoEmail = (EditText) findViewById(R.id.email);
+        campoSenha = (EditText) findViewById(R.id.senha);
     }
 
     public void entrar(final View view) {

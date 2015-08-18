@@ -61,7 +61,7 @@ public class ArtigoCompletoFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_full_article, container, false);
+        View view = inflater.inflate(R.layout.fragment_art_completo, container, false);
         webView = ((WebView) view.findViewById(R.id.web_view));
         return view;
     }

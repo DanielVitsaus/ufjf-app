@@ -2,6 +2,13 @@ package br.ufjf.app.util;
 
 import android.content.Context;
 
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestFactory;
+import com.google.api.client.http.HttpRequestInitializer;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.JsonObjectParser;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +32,7 @@ import br.ufjf.app.model.DBRemoto;
 import br.ufjf.app.model.Estudante;
 import br.ufjf.app.model.questionario.Questionario;
 import br.ufjf.app.model.questionario.RespostaQuestionario;
+import json.jackson2.JacksonFactory;
 
 /**
  * Intermediário para operações HTTP
@@ -112,7 +120,7 @@ public class WebHelper {
 
         JSONObject data = new JSONObject(sb.toString());
         if (data.getBoolean("success")) {
-            br.ufjf.app.model.Estudante estudante = new br.ufjf.app.model.Estudante(data.getJSONObject("estudante"));
+            br.ufjf.app.model.Estudante estudante = new br.ufjf.app.model.Estudante(data.getJSONObject("student"));
             AutenticacaoHelper.registerLogin(context, estudante);
             return estudante;
         } else
@@ -148,7 +156,7 @@ public class WebHelper {
 
         JSONObject data = new JSONObject(sb.toString());
         if (data.getBoolean("success")) {
-            JSONArray jsonArray = data.getJSONArray("questionarios");
+            JSONArray jsonArray = data.getJSONArray("surveys");
             int length = jsonArray.length();
             Questionario[] questionarios = new Questionario[length];
             for (int i = 0; i < length; i++)
@@ -185,19 +193,17 @@ public class WebHelper {
     }
 
     public static CalendarioAcademico obterCalendario(int ano) throws IOException, JSONException {
-        URL url = new URL(URL_DATAS);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(
-                url.openStream(), "UTF-8"));
-        StringBuilder sb = new StringBuilder();
-        int read;
-        char[] chars = new char[1024];
-        while ((read = reader.read(chars)) != -1)
-            sb.append(chars, 0, read);
+        HttpRequestFactory requestFactory = new NetHttpTransport().createRequestFactory(new HttpRequestInitializer() {
+            @Override
+            public void initialize(HttpRequest request) {
+                request.setParser(new JsonObjectParser(new JacksonFactory()));
+            }
+        });
 
-        JSONObject data = new JSONObject(sb.toString());
-        if (data.getBoolean("success"))
-            return new CalendarioAcademico(ano, data.getJSONArray("dates"));
-        else
-            return null;
+        GenericUrl url = new GenericUrl(URL_DATAS);
+        HttpRequest request = requestFactory.buildGetRequest(url);
+        CalendarioAcademico calendarioAcademico = request.execute().parseAs(CalendarioAcademico.class);
+        calendarioAcademico.prepararDatas();
+        return calendarioAcademico;
     }
 }

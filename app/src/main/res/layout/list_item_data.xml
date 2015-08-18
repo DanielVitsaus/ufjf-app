@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/margin_view">
 
     <TextView
-        android:id="@+id/day_number"
+        android:id="@+id/numero_dia"
         android:layout_width="@dimen/icon_size"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/icon_size"
@@ -28,7 +28,7 @@
         tools:texto="Título da data" />
 
     <ImageView
-        android:id="@+id/overflow"
+        android:id="@+id/menu"
         android:layout_width="@dimen/touchable"
         android:layout_height="@dimen/touchable"
         android:padding="@dimen/icon_padding"

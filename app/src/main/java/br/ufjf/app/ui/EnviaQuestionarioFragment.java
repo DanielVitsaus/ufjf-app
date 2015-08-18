@@ -30,10 +30,10 @@ public class EnviaQuestionarioFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_survey_submit, container, false);
+        View view = inflater.inflate(R.layout.fragment_enviar_quest, container, false);
 
-        viewMensagem = (TextView) view.findViewById(R.id.survey_submit_msg);
-        botaoEnviar = (Button) view.findViewById(R.id.survey_submit_btn);
+        viewMensagem = (TextView) view.findViewById(R.id.texto);
+        botaoEnviar = (Button) view.findViewById(R.id.enviar);
 
         botaoEnviar.setOnClickListener(new View.OnClickListener() {
             @Override

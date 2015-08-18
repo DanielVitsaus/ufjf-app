@@ -22,10 +22,10 @@ public class ListaQuestionariosActivity extends DrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_surveys_exp);
+        setContentView(R.layout.activity_quest_list);
         inicializarToolbar();
 
-        recyclerView = (RecyclerView) findViewById(R.id.list_surveys);
+        recyclerView = (RecyclerView) findViewById(R.id.lista);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 

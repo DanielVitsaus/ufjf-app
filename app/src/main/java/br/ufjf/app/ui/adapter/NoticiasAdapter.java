@@ -53,7 +53,7 @@ public class NoticiasAdapter extends RecyclerView.Adapter<NoticiasAdapter.ItemHo
 
         public ItemHolder(View itemView) {
             super(itemView);
-            titulo = (TextView) itemView.findViewById(R.id.title);
+            titulo = (TextView) itemView.findViewById(R.id.titulo);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

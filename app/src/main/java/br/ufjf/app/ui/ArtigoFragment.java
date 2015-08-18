@@ -49,11 +49,11 @@ public class ArtigoFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_article, container, false);
+        View view = inflater.inflate(R.layout.fragment_artigo, container, false);
 
-        TextView title = ((TextView) view.findViewById(R.id.title));
-        TextView content = ((TextView) view.findViewById(R.id.content));
-        Button fullArticleButton = (Button) view.findViewById(R.id.full_article_button);
+        TextView title = ((TextView) view.findViewById(R.id.titulo));
+        TextView content = ((TextView) view.findViewById(R.id.texto));
+        Button fullArticleButton = (Button) view.findViewById(R.id.btn_art_compl);
 
         title.setText(artigo.getTitle());
         content.setText(Html.fromHtml(artigo.getContent()));

@@ -11,7 +11,7 @@
         layout="@layout/toolbar" />
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/survey_pager"
+        android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar" />
@@ -20,17 +20,17 @@
         android:id="@+id/drawer_stroke"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_above="@+id/survey_bar"
+        android:layout_above="@+id/barra"
         android:background="@color/gray_stroke" />
 
     <LinearLayout
-        android:id="@+id/survey_bar"
+        android:id="@+id/barra"
         android:layout_width="match_parent"
         android:layout_height="@dimen/touchable"
         android:layout_alignParentBottom="true">
 
         <TextView
-            android:id="@+id/survey_previous"
+            android:id="@+id/anterior"
             style="@style/ButtonText"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -39,7 +39,7 @@
             android:text="ANTERIOR" />
 
         <TextView
-            android:id="@+id/survey_next"
+            android:id="@+id/proxima"
             style="@style/ButtonText"
             android:layout_width="0dp"
             android:layout_height="match_parent"

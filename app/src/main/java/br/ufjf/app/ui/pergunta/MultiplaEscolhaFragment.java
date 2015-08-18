@@ -66,7 +66,7 @@ public class MultiplaEscolhaFragment extends br.ufjf.app.ui.pergunta.PerguntaFra
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.fragment_q_multi_choice;
+        return R.layout.fragment_q_multi_esc;
     }
 
     @Override

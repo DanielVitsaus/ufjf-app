@@ -5,16 +5,16 @@
     android:orientation="vertical"
     android:padding="@dimen/margin_screen">
 
-    <include layout="@layout/question_title" />
+    <include layout="@layout/titulo_questao" />
 
     <TextView
-        android:id="@+id/question_label"
+        android:id="@+id/descricao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_view"/>
 
     <Spinner
-        android:id="@+id/question_scale"
+        android:id="@+id/escala"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

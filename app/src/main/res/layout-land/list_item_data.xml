@@ -15,7 +15,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/day_number"
+            android:id="@+id/numero_dia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -34,7 +34,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/overflow"
+        android:id="@+id/menu"
         android:layout_width="@dimen/touchable"
         android:layout_height="@dimen/touchable"
         android:layout_marginLeft="@dimen/margin_view"

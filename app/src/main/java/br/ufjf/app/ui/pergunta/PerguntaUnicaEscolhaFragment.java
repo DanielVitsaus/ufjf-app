@@ -62,7 +62,7 @@ public class PerguntaUnicaEscolhaFragment extends PerguntaFragment {
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.fragment_q_single_choice;
+        return R.layout.fragment_q_esc_unica;
     }
 
     @Override

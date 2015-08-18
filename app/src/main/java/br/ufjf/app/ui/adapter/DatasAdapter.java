@@ -57,7 +57,7 @@ public class DatasAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 };
             case TIPO_DATA:
                 return new ItemHolder(LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.list_item_date, parent, false));
+                        .inflate(R.layout.list_item_data, parent, false));
             default:
                 return null;
         }
@@ -68,7 +68,7 @@ public class DatasAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if (holder instanceof ItemHolder) {
             ItemHolder itemHolder = (ItemHolder) holder;
             Data data = datas.get(getDateIndex(position));
-            if (data.getDiaTermino() != -1)
+            if (data.getDiaTermino() > 0)
                 itemHolder.numero.setText(itemHolder.numero.getContext().getString(R.string.date_to_date, data.getDiaInicio(), data.getDiaTermino()));
             else
                 itemHolder.numero.setText(data.getDiaInicio() + "");
@@ -129,9 +129,9 @@ public class DatasAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         public ItemHolder(final View itemView) {
             super(itemView);
 
-            numero = (TextView) itemView.findViewById(R.id.day_number);
-            titulo = (TextView) itemView.findViewById(R.id.title);
-            final View menu = itemView.findViewById(R.id.overflow);
+            numero = (TextView) itemView.findViewById(R.id.numero_dia);
+            titulo = (TextView) itemView.findViewById(R.id.titulo);
+            final View menu = itemView.findViewById(R.id.menu);
 
             menu.setOnClickListener(new View.OnClickListener() {
                 @Override

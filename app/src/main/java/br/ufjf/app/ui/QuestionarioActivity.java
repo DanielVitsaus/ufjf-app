@@ -30,9 +30,9 @@ public class QuestionarioActivity extends AppCompatActivity implements PerguntaF
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_survey);
+        setContentView(R.layout.activity_quest);
 
-        viewPager = (ViewPager) findViewById(R.id.survey_pager);
+        viewPager = (ViewPager) findViewById(R.id.pager);
 
         // Carrega o questionário a partir do id passado via Intent
         new ObterQuestionarioTask(new ObterQuestionarioTask.Callback() {

@@ -40,7 +40,7 @@ public class CalendarioActivity extends DrawerActivity implements MesFragment.Li
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calendar);
+        setContentView(R.layout.activity_calendario);
 
         inicializarToolbar();
 
@@ -52,6 +52,8 @@ public class CalendarioActivity extends DrawerActivity implements MesFragment.Li
 
                     // Obtem os nomes dos meses
                     Calendar cal = java.util.Calendar.getInstance();
+                    int mesAtual = cal.get(Calendar.MONTH);
+
                     List<String> nomesMeses = new ArrayList<>();
                     for (int i = 0; i < 12; i++) {
                         cal.set(java.util.Calendar.MONTH, i);
@@ -73,9 +75,9 @@ public class CalendarioActivity extends DrawerActivity implements MesFragment.Li
                         @Override
                         public void onPageSelected(int position) {
                             // Rola a lista de datas até a primeira do mês atual
-                            int monthPosition = datasAdapter.getMonthPosition(position);
-                            if (monthPosition >= 0)
-                                recyclerView.smoothScrollToPosition(monthPosition);
+                            int posicaoMes = datasAdapter.getMonthPosition(position);
+                            if (posicaoMes >= 0)
+                                recyclerView.smoothScrollToPosition(posicaoMes);
                         }
 
                         @Override
@@ -129,6 +131,12 @@ public class CalendarioActivity extends DrawerActivity implements MesFragment.Li
                     recyclerView = (RecyclerView) findViewById(R.id.dates_list);
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setAdapter(datasAdapter);
+
+                    // Exibe o mês atual
+                    viewPager.setCurrentItem(mesAtual);
+                    int posicao = datasAdapter.getMonthPosition(mesAtual);
+                    if (posicao >= 0)
+                        recyclerView.scrollToPosition(posicao);
                 } else {
                     //todo mostrar mensagem de erro
                 }
