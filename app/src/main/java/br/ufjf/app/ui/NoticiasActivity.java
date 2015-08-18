@@ -69,9 +69,9 @@ public class NoticiasActivity extends DrawerActivity implements NoticiasFragment
     }
 
     @Override
-    public void abrirArtigoCompleto(String url) {
+    public void abrirArtigoCompleto(Artigo artigo) {
         // Mostra o fragmento com o texto completo
-        ArtigoCompletoFragment fragment = ArtigoCompletoFragment.obterNovo(url);
+        ArtigoCompletoFragment fragment = ArtigoCompletoFragment.obterNovo(artigo.getLink(), artigo.getTitulo());
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, fragment)
                 .addToBackStack(null)
@@ -94,7 +94,7 @@ public class NoticiasActivity extends DrawerActivity implements NoticiasFragment
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                feed = WebHelper.obterFeed("http://revistagalileu.globo.com/rss/ultimas/feed.xml").getFeed();
+                feed = WebHelper.obterFeed("http://www.ufjf.br/secom/feed/").getFeed();
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
             }
