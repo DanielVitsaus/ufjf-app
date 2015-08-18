@@ -26,5 +26,6 @@
     <string name="see_full_article">Ver notícia completa</string>
     <string name="open_in_browser">Abrir no navegador</string>
     <string name="loading_">Carregando…</string>
+    <string name="information">Informaçao</string>
 
 </resources>

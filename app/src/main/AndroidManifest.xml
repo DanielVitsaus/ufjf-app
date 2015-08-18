@@ -23,6 +23,9 @@
         <activity
             android:name="br.ufjf.app.ui.ListaQuestionariosActivity"
             android:label="@string/questionarios" />
+        <activity
+            android:name="br.ufjf.app.ui.InfoActivity"
+            android:label="@string/information" />
         <activity android:name="br.ufjf.app.ui.QuestionarioActivity" />
         <activity android:name="br.ufjf.app.ui.AutenticacaoActivity" />
         <activity

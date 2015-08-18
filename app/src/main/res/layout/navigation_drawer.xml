@@ -14,7 +14,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/drawer_news"
+            android:id="@+id/drawer_noticias"
             android:layout_width="match_parent"
             android:layout_height="@dimen/touchable"
             android:paddingLeft="@dimen/margin_screen"
@@ -40,13 +40,13 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/drawer_surveys"
+            android:id="@+id/drawer_questionarios"
             android:layout_width="match_parent"
             android:layout_height="@dimen/touchable"
             android:paddingLeft="@dimen/margin_screen"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_below="@id/drawer_news"
+            android:layout_below="@id/drawer_noticias"
             android:onClick="selectNavigationDrawerItem"
             android:background="?android:selectableItemBackground">
 
@@ -70,7 +70,7 @@
             android:id="@+id/separador"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/drawer_surveys"
+            android:layout_below="@id/drawer_questionarios"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:background="@color/gray_stroke" />

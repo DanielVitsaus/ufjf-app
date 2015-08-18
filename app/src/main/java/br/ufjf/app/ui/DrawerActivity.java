@@ -68,6 +68,9 @@ public abstract class DrawerActivity extends ToolbarActivity {
                     case 2:
                         activityClass = CalendarioActivity.class;
                         break;
+                    case 3:
+                        activityClass = InfoActivity.class;
+                        break;
                 }
 
                 itemAberto = position;
@@ -212,16 +215,20 @@ public abstract class DrawerActivity extends ToolbarActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
-                    case R.id.drawer_news:
+                    case R.id.drawer_noticias:
                         itemParaAbrirAoFecharDrawer = 0;
                         drawerLayout.closeDrawers();
                         break;
-                    case R.id.drawer_surveys:
+                    case R.id.drawer_questionarios:
                         itemParaAbrirAoFecharDrawer = 1;
                         drawerLayout.closeDrawers();
                         break;
-                    case R.id.drawer_calendar:
+                    case R.id.drawer_calendario:
                         itemParaAbrirAoFecharDrawer = 2;
+                        drawerLayout.closeDrawers();
+                        break;
+                    case R.id.drawer_info:
+                        itemParaAbrirAoFecharDrawer = 3;
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.drawer_logout:

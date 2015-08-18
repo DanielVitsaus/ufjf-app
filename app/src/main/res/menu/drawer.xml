@@ -2,17 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/drawer_news"
+            android:id="@+id/drawer_noticias"
             android:icon="@drawable/ic_assignment_grey600_24dp"
             android:title="@string/news" />
         <item
-            android:id="@+id/drawer_surveys"
+            android:id="@+id/drawer_questionarios"
             android:icon="@drawable/ic_assignment_grey600_24dp"
             android:title="@string/questionarios" />
         <item
-            android:id="@+id/drawer_calendar"
+            android:id="@+id/drawer_calendario"
             android:icon="@drawable/ic_assignment_grey600_24dp"
             android:title="@string/calendar" />
+        <item
+            android:id="@+id/drawer_info"
+            android:icon="@drawable/ic_assignment_grey600_24dp"
+            android:title="@string/information" />
         <item android:id="@+id/drawer_logout"
             android:title="@string/logout"/>
     </group>
