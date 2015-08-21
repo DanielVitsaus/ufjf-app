@@ -34,7 +34,7 @@ public class EscalaFragment extends PerguntaFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pergunta = (PerguntaEscala) listener.getPergunta(getQuestionIndex());
+        pergunta = (PerguntaEscala) listener.getPergunta(getIndicePergunta());
     }
 
     @Nullable

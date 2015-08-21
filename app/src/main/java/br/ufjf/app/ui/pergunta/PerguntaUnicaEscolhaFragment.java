@@ -31,7 +31,7 @@ public class PerguntaUnicaEscolhaFragment extends PerguntaFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pergunta = (PerguntaOpcao) listener.getPergunta(getQuestionIndex());
+        pergunta = (PerguntaOpcao) listener.getPergunta(getIndicePergunta());
     }
 
     @Nullable

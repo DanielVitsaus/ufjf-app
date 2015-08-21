@@ -31,7 +31,7 @@ public class PerguntaTextoFragment extends PerguntaFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pergunta = (PerguntaTexto) listener.getPergunta(getQuestionIndex());
+        pergunta = (PerguntaTexto) listener.getPergunta(getIndicePergunta());
     }
 
     @Nullable
