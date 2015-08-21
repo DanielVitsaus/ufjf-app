@@ -12,27 +12,36 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import br.ufjf.app.model.noticias.Artigo;
+import br.ufjf.app.model.noticias.Noticia;
 import br.ufjf.dcc.pesquisa.R;
 
 /**
  * Exibe o resumo de uma notícia
  */
-public class ArtigoFragment extends Fragment {
-    private static final String ARG_ARTIGO = "artigo";
+public class NoticiaFragment extends Fragment {
+    private static final String ARG_ARTIGO = "noticia";
 
-    private Artigo artigo;
+    /**
+     * Noticia exibida
+     */
+    private Noticia noticia;
+    /**
+     * Objeto responsavel por lidar com o botao de texto completo
+     */
     private OnArtigoCompletoClickListener listener;
 
-    /** Prepara um novo fragmento com o artigo informado **/
-    public static ArtigoFragment obterNovo(Artigo artigo) {
+    /**
+     * Prepara um novo fragmento
+     * @param noticia Noticia a ser exibida
+     **/
+    public static NoticiaFragment obterNovo(Noticia noticia) {
         Bundle args = new Bundle();
-        args.putParcelable(ARG_ARTIGO, artigo);
+        args.putParcelable(ARG_ARTIGO, noticia);
 
-        ArtigoFragment artigoFragment = new ArtigoFragment();
-        artigoFragment.setArguments(args);
+        NoticiaFragment noticiaFragment = new NoticiaFragment();
+        noticiaFragment.setArguments(args);
 
-        return artigoFragment;
+        return noticiaFragment;
     }
 
     @Override
@@ -44,7 +53,7 @@ public class ArtigoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        artigo = getArguments().getParcelable(ARG_ARTIGO);
+        noticia = getArguments().getParcelable(ARG_ARTIGO);
     }
 
     @Override
@@ -55,24 +64,27 @@ public class ArtigoFragment extends Fragment {
         TextView content = ((TextView) view.findViewById(R.id.texto));
         Button fullArticleButton = (Button) view.findViewById(R.id.btn_art_compl);
 
-        title.setText(artigo.getTitulo());
-        content.setText(Html.fromHtml(artigo.getConteudo()));
+        title.setText(noticia.getTitulo());
+        content.setText(Html.fromHtml(noticia.getConteudo()));
         content.setMovementMethod(LinkMovementMethod.getInstance());
         fullArticleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.abrirArtigoCompleto(artigo);
+                listener.abrirArtigoCompleto(noticia);
             }
         });
 
         return view;
     }
 
+    /**
+     * Objeto responsavel por lidar com os eventos de clique do botao para abrir o texto completo
+     */
     public interface OnArtigoCompletoClickListener {
         /**
-         * Solicita a abertura de uma notícia
-         * @param artigo artigo
+         * Solicita a abertura do texto completo de uma notícia
+         * @param noticia noticia
          */
-        void abrirArtigoCompleto(Artigo artigo);
+        void abrirArtigoCompleto(Noticia noticia);
     }
 }

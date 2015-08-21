@@ -11,6 +11,7 @@ import java.util.TreeSet;
 
 import br.ufjf.app.model.DBRemoto;
 import br.ufjf.app.model.questionario.Questionario;
+import br.ufjf.app.ui.OnItemSelecionadoListener;
 import br.ufjf.dcc.pesquisa.R;
 
 /**
@@ -27,9 +28,9 @@ public class QuestionariosAdapter extends RecyclerView.Adapter<RecyclerView.View
     // Posições que são cabeçalhos
     private final Set<Integer> posicoesQuestionarios;
 
-    private final OnQuestionarioClickListener listener;
+    private final OnItemSelecionadoListener<Questionario> listener;
 
-    public QuestionariosAdapter(Questionario[] questionarios, OnQuestionarioClickListener listener) {
+    public QuestionariosAdapter(Questionario[] questionarios, OnItemSelecionadoListener<Questionario> listener) {
         this.questionarios = questionarios;
         this.listener = listener;
 
@@ -80,6 +81,11 @@ public class QuestionariosAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
+    /**
+     * Converte a posicao no RecyclerView para o indice da lista
+     * @param position Posicao no RecyclerView
+     * @return Indice na lista
+     */
     private int getIndiceQuestionario(int position) {
         int indice = position;
         for (Integer posicaoCabecalho : posicoesQuestionarios)
@@ -101,10 +107,6 @@ public class QuestionariosAdapter extends RecyclerView.Adapter<RecyclerView.View
         return posicoesQuestionarios.contains(position) ? TIPO_CABECALHO : TIPO_QUESTIONARIO;
     }
 
-    public interface OnQuestionarioClickListener {
-        void onQuestionarioClick(Questionario questionario);
-    }
-
     protected class QuestionarioHolder extends RecyclerView.ViewHolder {
         TextView titulo, descricao;
 
@@ -116,7 +118,7 @@ public class QuestionariosAdapter extends RecyclerView.Adapter<RecyclerView.View
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    listener.onQuestionarioClick(questionarios[getIndiceQuestionario(getAdapterPosition())]);
+                    listener.onItemSelecionado(questionarios[getIndiceQuestionario(getAdapterPosition())]);
                 }
             });
         }

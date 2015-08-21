@@ -36,7 +36,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="anterior"
-            android:text="ANTERIOR" />
+            android:text="@string/anterior" />
 
         <TextView
             android:id="@+id/proxima"
@@ -45,7 +45,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="proxima"
-            android:text="PRÓXIMA" />
+            android:text="@string/proxima" />
     </LinearLayout>
 
 </RelativeLayout>

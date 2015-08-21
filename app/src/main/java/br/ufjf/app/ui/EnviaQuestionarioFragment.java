@@ -61,8 +61,15 @@ public class EnviaQuestionarioFragment extends Fragment {
      * Activity "pai" deve implementar
      */
     public interface Listener {
+        /**
+         * Verifica se o aluno ja pode enviar suas respostas
+         * @return
+         */
         boolean prontoParaEnviar();
 
+        /**
+         * Inicia o envio das respostas
+         */
         void enviarRespostas();
     }
 }

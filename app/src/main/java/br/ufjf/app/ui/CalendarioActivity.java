@@ -1,5 +1,6 @@
 package br.ufjf.app.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.CalendarContract;
@@ -29,6 +30,9 @@ import br.ufjf.dcc.pesquisa.R;
  */
 public class CalendarioActivity extends DrawerActivity implements MesFragment.Listener {
 
+    /**
+     * Codigo utilizado para interagir com a Activity do aplicativo externo de agenda/calendario
+     */
     private static final int COD_REQ_LEMBRETE = 15487;
 
     private ViewPager viewPager;
@@ -41,9 +45,26 @@ public class CalendarioActivity extends DrawerActivity implements MesFragment.Li
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendario);
-
         inicializarToolbar();
+        obterCalendario(-1);
+    }
 
+    /**
+     * Carrega as datas do calendario do ano desejado
+     * @param ano ano desejado. -1 para obter o ano atual
+     */
+    private void obterCalendario(int ano){
+        final Calendar cal = java.util.Calendar.getInstance();
+
+        if(ano == -1)
+            ano = cal.get(Calendar.YEAR);
+
+        // Exibe progresso
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        // Obtem as datas do calendario
         new ObterCalendarioTask(new ObterCalendarioTask.Callback() {
             @Override
             public void onFinish(CalendarioAcademico calendarioAcademico) {
@@ -51,12 +72,12 @@ public class CalendarioActivity extends DrawerActivity implements MesFragment.Li
                     CalendarioActivity.this.calendarioAcademico = calendarioAcademico;
 
                     // Obtem os nomes dos meses
-                    Calendar cal = java.util.Calendar.getInstance();
                     int mesAtual = cal.get(Calendar.MONTH);
 
                     List<String> nomesMeses = new ArrayList<>();
                     for (int i = 0; i < 12; i++) {
                         cal.set(java.util.Calendar.MONTH, i);
+                        // Primeira letra em maiuscula
                         String monthName = cal.getDisplayName(java.util.Calendar.MONTH, java.util.Calendar.LONG, getResources().getConfiguration().locale);
                         monthName = Character.toUpperCase(monthName.charAt(0)) + monthName.substring(1);
                         nomesMeses.add(monthName);
@@ -137,11 +158,13 @@ public class CalendarioActivity extends DrawerActivity implements MesFragment.Li
                     int posicao = datasAdapter.getMonthPosition(mesAtual);
                     if (posicao >= 0)
                         recyclerView.scrollToPosition(posicao);
+
+                    progressDialog.hide();
                 } else {
-                    //todo mostrar mensagem de erro
+                    //todo calendario nao carregado. mostrar mensagem de erro
                 }
             }
-        }).execute(2015);
+        }).execute(ano);
     }
 
     @Override

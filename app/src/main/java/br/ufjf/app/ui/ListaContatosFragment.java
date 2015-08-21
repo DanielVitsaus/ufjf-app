@@ -22,16 +22,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufjf.app.model.Contato;
-import br.ufjf.app.ui.adapter.ProReitoriaAdapter;
+import br.ufjf.app.ui.adapter.ContatosAdapter;
 import br.ufjf.dcc.pesquisa.R;
 
 /**
- * Exibe o resumo de uma notícia
+ * Exibe a lista de contatos
  */
 public class ListaContatosFragment extends Fragment {
 
     /**
-     * Exemplos
+     * Exemplos de teste
      **/
     private static final String PRO_REITORIAS = "[{" +
             "\"nome\":\"Pró-Reitoria de Recursos Humanos\"," +
@@ -62,15 +62,21 @@ public class ListaContatosFragment extends Fragment {
             "{\"nome\":\"Museu de Arte Murilo Mendes – MAMM\"}]";
 
     private RecyclerView recyclerView;
-    private List<Contato> reitorias;
+    private List<Contato> contatos;
 
     private static final String ARG_TIPO = "tipo";
 
+    // Tipos de contatos
     public static final int TIPO_PRO_REITORIAS = 0;
     public static final int TIPO_COORDENACOES = 1;
     public static final int TIPO_UNIDADES = 2;
     public static final int TIPO_OUTROS = 3;
 
+    /**
+     * Prepara uma nova instancia de ListaContatosFragment
+     * @param tipo Tipo de contatos a ser exibido. Deve ser TIPO_COORDENACOES, TIPO_COORDENACOES, TIPO_UNIDADES ou TIPO_OUTROS
+     * @return Um ListaContatosFragment para o tipo desejado de contatos
+     */
     public static ListaContatosFragment obterNovo(int tipo) {
         Bundle args = new Bundle();
         args.putInt(ARG_TIPO, tipo);
@@ -101,9 +107,9 @@ public class ListaContatosFragment extends Fragment {
                     break;
             }
 
-            reitorias = new ArrayList<>();
+            contatos = new ArrayList<>();
             for (int i = 0; i < json.length(); i++)
-                reitorias.add(new Contato(json.getJSONObject(i)));
+                contatos.add(new Contato(json.getJSONObject(i)));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -119,12 +125,18 @@ public class ListaContatosFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        // Configura a lista
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(new ProReitoriaAdapter(reitorias, new ProReitoriaAdapter.OnItemSelecionadoListener() {
+        recyclerView.setAdapter(new ContatosAdapter(contatos, new OnItemSelecionadoListener<Contato>() {
+            /**
+             * Exibe as informaçoes do contato
+             * @param contato COntato selecionado
+             */
             @Override
-            public void onArtigoSelecionado(Contato contato) {
+            public void onItemSelecionado(Contato contato) {
                 // Monta a lista de contatos da pro-reitoria selecionada
                 final String email = contato.getEmail();
                 final String[] telefones = contato.getTelefones();

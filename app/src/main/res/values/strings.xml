@@ -33,5 +33,7 @@
     <string name="coordenacoes">Coordenações</string>
     <string name="unidades">Unidades</string>
     <string name="outros">Outros</string>
+    <string name="proxima">Próxima</string>
+    <string name="anterior">Anterior</string>
 
 </resources>

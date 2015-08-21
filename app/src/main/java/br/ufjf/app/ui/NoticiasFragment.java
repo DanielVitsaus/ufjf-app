@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import br.ufjf.app.model.noticias.Artigo;
+import br.ufjf.app.model.noticias.Noticia;
 import br.ufjf.app.ui.adapter.NoticiasAdapter;
 import br.ufjf.dcc.pesquisa.R;
 
@@ -22,6 +22,9 @@ import br.ufjf.dcc.pesquisa.R;
 public class NoticiasFragment extends Fragment {
 
     private RecyclerView recyclerView;
+    /**
+     * Referencia a Activity pai
+     **/
     private Listener listener;
 
     @Override
@@ -33,24 +36,28 @@ public class NoticiasFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lista, container, false);
-
         recyclerView = (RecyclerView) view.findViewById(R.id.lista);
-
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        // Configura a lista
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new NoticiasAdapter(listener.getArtigos(), listener));
+        recyclerView.setAdapter(new NoticiasAdapter(listener.getNoticias(), listener));
     }
 
     /**
      * Interface que a Activity "pai" deve implementar para que o fragmento obtenho as notícias
      */
-    public interface Listener extends NoticiasAdapter.OnArtigoSelecionadoListener {
-        List<Artigo> getArtigos();
+    public interface Listener extends OnItemSelecionadoListener<Noticia> {
+        /**
+         * Obtem as noticias do feed
+         *
+         * @return lista de artigos
+         */
+        List<Noticia> getNoticias();
     }
 }

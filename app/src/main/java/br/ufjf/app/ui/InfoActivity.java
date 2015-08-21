@@ -4,12 +4,11 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
-import br.ufjf.app.ui.DrawerActivity;
 import br.ufjf.app.ui.adapter.InfoAdapter;
 import br.ufjf.dcc.pesquisa.R;
 
 /**
- * Exibe a lista de questionários disponìveis para o estudante responder
+ * Exibe as paginas de contatos
  * Created by Jorge Augusto da Silva Moreira on 20/05/2015.
  */
 public class InfoActivity extends DrawerActivity {

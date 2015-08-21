@@ -6,15 +6,15 @@ import android.os.Parcelable;
 /**
  * Created by Jorge Augusto da Silva Moreira on 30/01/2015.
  */
-public class Artigo implements Parcelable {
+public class Noticia implements Parcelable {
 
-    public static final Parcelable.Creator<Artigo> CREATOR = new Parcelable.Creator<Artigo>() {
-        public Artigo createFromParcel(Parcel in) {
-            return new Artigo(in);
+    public static final Parcelable.Creator<Noticia> CREATOR = new Parcelable.Creator<Noticia>() {
+        public Noticia createFromParcel(Parcel in) {
+            return new Noticia(in);
         }
 
-        public Artigo[] newArray(int size) {
-            return new Artigo[size];
+        public Noticia[] newArray(int size) {
+            return new Noticia[size];
         }
     };
     private String titulo;
@@ -22,11 +22,11 @@ public class Artigo implements Parcelable {
     private String data;
     private String conteudo;
 
-    public Artigo() {
+    public Noticia() {
 
     }
 
-    protected Artigo(Parcel in) {
+    protected Noticia(Parcel in) {
         this.titulo = in.readString();
         this.link = in.readString();
         this.data = in.readString();

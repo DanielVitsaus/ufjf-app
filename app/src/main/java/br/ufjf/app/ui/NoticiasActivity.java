@@ -12,7 +12,7 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import br.ufjf.app.model.noticias.Artigo;
+import br.ufjf.app.model.noticias.Noticia;
 import br.ufjf.app.model.noticias.Feed;
 import br.ufjf.app.ui.ArtigoCompletoFragment.Listener;
 import br.ufjf.app.util.WebHelper;
@@ -22,7 +22,7 @@ import br.ufjf.dcc.pesquisa.R;
  * Gerencia a navegação das notícias
  * Created by Jorge Augusto da Silva Moreira on 20/05/2015.
  */
-public class NoticiasActivity extends DrawerActivity implements NoticiasFragment.Listener, ArtigoFragment.OnArtigoCompletoClickListener, Listener {
+public class NoticiasActivity extends DrawerActivity implements NoticiasFragment.Listener, NoticiaFragment.OnArtigoCompletoClickListener, Listener {
     private static final String TAG = "NoticiasActivity";
     private Feed feed;
     // Caso != null indica se o texto completo de uma noticia esta sendo exibido
@@ -42,6 +42,7 @@ public class NoticiasActivity extends DrawerActivity implements NoticiasFragment
     public void onResume() {
         super.onResume();
         Log.v(TAG, "onResume");
+        // Inicia o carregamento do feed
         if (feedTask == null || feedTask.isCancelled())
             feedTask = new FeedTask().execute();
     }
@@ -50,6 +51,7 @@ public class NoticiasActivity extends DrawerActivity implements NoticiasFragment
     public void onPause() {
         super.onPause();
         Log.v(TAG, "onPause");
+        // Cancela o carregamento do feed
         if (feedTask != null)
             feedTask.cancel(true);
     }
@@ -58,15 +60,16 @@ public class NoticiasActivity extends DrawerActivity implements NoticiasFragment
     protected void onStop() {
         super.onStop();
         Log.v(TAG, "onStop");
+        // Cancela o carregamento do feed
         if (feedTask != null)
             feedTask.cancel(true);
     }
 
     @Override
-    public void onArtigoSelecionado(Artigo artigo) {
-        // ABre oresumo da noticia
+    public void onItemSelecionado(Noticia noticia) {
+        // Abre oresumo da noticia
         Log.v(TAG, "Abrindo noticia");
-        ArtigoFragment fragment = ArtigoFragment.obterNovo(artigo);
+        NoticiaFragment fragment = NoticiaFragment.obterNovo(noticia);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, fragment)
                 .addToBackStack(null)
@@ -81,17 +84,17 @@ public class NoticiasActivity extends DrawerActivity implements NoticiasFragment
     }
 
     @Override
-    public List<Artigo> getArtigos() {
+    public List<Noticia> getNoticias() {
         if (feed != null)
-            return feed.getArtigos();
+            return feed.getNoticias();
         else return null;
     }
 
     @Override
-    public void abrirArtigoCompleto(Artigo artigo) {
+    public void abrirArtigoCompleto(Noticia noticia) {
         // Mostra o fragmento com o texto completo
         Log.v(TAG, "Abrindo texto completo");
-        ArtigoCompletoFragment fragment = ArtigoCompletoFragment.obterNovo(artigo.getLink(), artigo.getTitulo());
+        ArtigoCompletoFragment fragment = ArtigoCompletoFragment.obterNovo(noticia.getLink(), noticia.getTitulo());
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, fragment)
                 .addToBackStack(null)
@@ -115,8 +118,8 @@ public class NoticiasActivity extends DrawerActivity implements NoticiasFragment
         protected Void doInBackground(Void... params) {
             Log.v(TAG, "Iniciando leitura do feed");
             try {
-                // todo substituir pelo feed da UFJF
-                feed = WebHelper.obterFeed("http://revistagalileu.globo.com/rss/ultimas/feed.xml").getFeed();
+                // todo substituir pelo feed da Secom que nao esta disponivel fora da rede da UFJF
+                feed = WebHelper.obterFeed("http://revistagalileu.globo.com/rss/ultimas/feed.xml");
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
             }
