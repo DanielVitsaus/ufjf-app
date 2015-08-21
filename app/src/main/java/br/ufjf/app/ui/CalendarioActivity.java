@@ -64,7 +64,7 @@ public class CalendarioActivity extends DrawerActivity implements MesFragment.Li
 
                     // Configura o ViewPager
                     mesesAdapter = new MesesAdapter(getSupportFragmentManager(), nomesMeses);
-                    viewPager = (ViewPager) findViewById(R.id.calendar_pager);
+                    viewPager = (ViewPager) findViewById(R.id.pager);
                     viewPager.setAdapter(mesesAdapter);
                     viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                         @Override
@@ -87,7 +87,7 @@ public class CalendarioActivity extends DrawerActivity implements MesFragment.Li
                     });
 
                     // Adiciona as abas
-                    TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+                    TabLayout tabLayout = (TabLayout) findViewById(R.id.abas);
                     tabLayout.setupWithViewPager(viewPager);
 
                     // Configura o adapter para a lista de datas
@@ -128,7 +128,7 @@ public class CalendarioActivity extends DrawerActivity implements MesFragment.Li
 
                     // Configura a lista de datas
                     LinearLayoutManager layoutManager = new LinearLayoutManager(CalendarioActivity.this);
-                    recyclerView = (RecyclerView) findViewById(R.id.dates_list);
+                    recyclerView = (RecyclerView) findViewById(R.id.lista);
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setAdapter(datasAdapter);
 

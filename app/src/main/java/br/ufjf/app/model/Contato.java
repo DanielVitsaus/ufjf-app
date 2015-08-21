@@ -1,4 +1,4 @@
-package br.ufjf.app.model.info;
+package br.ufjf.app.model;
 
 import com.google.api.client.util.Key;
 
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by cgco on 18/08/15.
  */
-public class ProReitoria {
+public class Contato {
 
     @Key
     private String nome;
@@ -20,24 +20,33 @@ public class ProReitoria {
     @Key
     private String[] telefones;
     @Key
-    private List<ProReitoria> adjuntas;
+    private List<Contato> adjuntas;
 
-    public ProReitoria(){
+    public Contato() {
 
     }
 
-    public ProReitoria(JSONObject json) throws JSONException {
+    public Contato(JSONObject json) throws JSONException {
         this.nome = json.getString("nome");
-        this.email = json.getString("email");
 
-        JSONArray array = json.getJSONArray("telefones");
-        this.telefones = new String[array.length()];
-        for(int i = 0; i < array.length(); i++){
-            this.telefones[i] = array.getString(i);
+        try {
+            this.email = json.getString("email");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            JSONArray array = json.getJSONArray("telefones");
+            this.telefones = new String[array.length()];
+            for (int i = 0; i < array.length(); i++) {
+                this.telefones[i] = array.getString(i);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
-    public ProReitoria(String nome, String email, String[] telefones) {
+    public Contato(String nome, String email, String[] telefones) {
         this.nome = nome;
         this.email = email;
         this.telefones = telefones;
@@ -67,11 +76,11 @@ public class ProReitoria {
         this.telefones = telefones;
     }
 
-    public List<ProReitoria> getAdjuntas() {
+    public List<Contato> getAdjuntas() {
         return adjuntas;
     }
 
-    public void setAdjuntas(List<ProReitoria> adjuntas) {
+    public void setAdjuntas(List<Contato> adjuntas) {
         this.adjuntas = adjuntas;
     }
 }

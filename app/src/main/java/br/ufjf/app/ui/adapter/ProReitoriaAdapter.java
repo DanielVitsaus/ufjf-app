@@ -8,18 +8,18 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import br.ufjf.app.model.info.ProReitoria;
+import br.ufjf.app.model.Contato;
 import br.ufjf.dcc.pesquisa.R;
 
 /**
  * Created by cgco on 18/08/15.
  */
 public class ProReitoriaAdapter  extends RecyclerView.Adapter<ProReitoriaAdapter.ItemHolder> {
-    private final List<ProReitoria> proReitorias;
+    private final List<Contato> contatos;
     private final OnItemSelecionadoListener listener;
 
-    public ProReitoriaAdapter(List<ProReitoria> proReitorias, OnItemSelecionadoListener listener) {
-        this.proReitorias = proReitorias;
+    public ProReitoriaAdapter(List<Contato> contatos, OnItemSelecionadoListener listener) {
+        this.contatos = contatos;
         this.listener = listener;
     }
 
@@ -32,19 +32,19 @@ public class ProReitoriaAdapter  extends RecyclerView.Adapter<ProReitoriaAdapter
 
     @Override
     public void onBindViewHolder(ItemHolder holder, int position) {
-        holder.titulo.setText(proReitorias.get(position).getNome());
+        holder.titulo.setText(contatos.get(position).getNome());
     }
 
     @Override
     public int getItemCount() {
-        return proReitorias.size();
+        return contatos.size();
     }
 
     /**
      * Responde aos cliques da lista
      */
     public interface OnItemSelecionadoListener {
-        void onArtigoSelecionado(ProReitoria proReitoria);
+        void onArtigoSelecionado(Contato contato);
     }
 
     protected class ItemHolder extends RecyclerView.ViewHolder {
@@ -56,7 +56,7 @@ public class ProReitoriaAdapter  extends RecyclerView.Adapter<ProReitoriaAdapter
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onArtigoSelecionado(proReitorias.get(getAdapterPosition()));
+                    listener.onArtigoSelecionado(contatos.get(getAdapterPosition()));
                 }
             });
         }

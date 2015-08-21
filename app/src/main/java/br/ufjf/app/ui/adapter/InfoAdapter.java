@@ -4,34 +4,32 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import java.util.List;
-
-import br.ufjf.app.ui.MesFragment;
+import br.ufjf.app.ui.ListaContatosFragment;
 
 /**
  * Adapter para o ViewPager de meses (calendário)
  * Created by Jorge Augusto da Silva Moreira on 20/05/2015.
  */
-public class MesesAdapter extends FragmentPagerAdapter {
-    private List<String> nomesMeses;
+public class InfoAdapter extends FragmentPagerAdapter {
+    private String[] titulos;
 
-    public MesesAdapter(FragmentManager fragmentManager, List<String> nomesMeses) {
+    public InfoAdapter(FragmentManager fragmentManager, String[] titulos) {
         super(fragmentManager);
-        this.nomesMeses = nomesMeses;
+        this.titulos = titulos;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return MesFragment.obterNovo(position);
+        return ListaContatosFragment.obterNovo(position);
     }
 
     @Override
     public int getCount() {
-        return 12;
+        return 4;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return nomesMeses.get(position);
+        return titulos[position];
     }
 }

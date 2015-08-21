@@ -11,4 +11,5 @@
     <dimen name="list_item_height">72dp</dimen>
     <dimen name="icon_size">40dp</dimen>
     <dimen name="icon_padding">12dp</dimen>
+    <dimen name="elevacao_toolbar">4dp</dimen>
 </resources>
