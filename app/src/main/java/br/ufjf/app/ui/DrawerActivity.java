@@ -29,7 +29,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import br.ufjf.app.model.Estudante;
+import br.ufjf.app.model.Aluno;
 import br.ufjf.app.util.AutenticacaoHelper;
 import br.ufjf.dcc.pesquisa.R;
 
@@ -232,7 +232,7 @@ public abstract class DrawerActivity extends ToolbarActivity {
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.drawer_logout:
-                        AutenticacaoHelper.registerLogout(DrawerActivity.this);
+                        AutenticacaoHelper.registrarLogout(DrawerActivity.this);
                         startActivityForResult(new Intent(DrawerActivity.this, AutenticacaoActivity.class), COD_REQ_LOGIN);
                 }
                 return true;
@@ -244,10 +244,10 @@ public abstract class DrawerActivity extends ToolbarActivity {
         TextView viewCurso = (TextView) drawerHeader.findViewById(R.id.drawer_course);
 
         try {
-            Estudante estudanteAutenticado = AutenticacaoHelper.getStudent(this);
-            viewNome.setText(estudanteAutenticado.getNome());
-            viewCurso.setText(estudanteAutenticado.getCurso());
-        } catch (AutenticacaoHelper.StudentNaoAutenticado studentNaoAutenticado) {
+            Aluno alunoAutenticado = AutenticacaoHelper.obterAluno(this);
+            viewNome.setText(alunoAutenticado.getNome());
+            viewCurso.setText(alunoAutenticado.getCurso());
+        } catch (AutenticacaoHelper.AlunoNaoAutenticado alunoNaoAutenticado) {
             startActivityForResult(new Intent(DrawerActivity.this, AutenticacaoActivity.class), COD_REQ_LOGIN);
         }
     }

@@ -24,6 +24,9 @@ public class MesFragment extends Fragment {
     private static final String ARG_MES = "mes";
 
     private RecyclerView recyclerView;
+    /**
+     * Referencia a Activity pai
+     */
     private Listener listener;
 
     /**
@@ -49,9 +52,7 @@ public class MesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mes, container, false);
-
         recyclerView = (RecyclerView) view;
-
         return view;
     }
 
@@ -61,6 +62,7 @@ public class MesFragment extends Fragment {
 
         int month = getArguments().getInt(ARG_MES);
 
+        // Configura a grade para o mes
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 7));
         recyclerView.setAdapter(new MesAdapter(month, listener.getDatas(month), new MesAdapter.OnDiaClickListener() {
             @Override
@@ -80,8 +82,17 @@ public class MesFragment extends Fragment {
      * Interface que a Activity "pai" deve implementar
      */
     public interface Listener {
+        /**
+         * Obtem as datas importantes de um mes
+         * @param month indice do mes desejado. Iniciando em 0 como Janeiro
+         * @return lista de datas do mes
+         */
         List<Data> getDatas(int month);
 
+        /**
+         * Chamado apos a selecao de uma data
+         * @param data data que foi clicada
+         */
         void onDiaClick(Data data);
     }
 }

@@ -26,9 +26,8 @@ public class ToolbarActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (!toolbarInicializada)
-            throw new IllegalStateException("Você deve chamar super.inicializarToolbar no " +
+            throw new IllegalStateException("Você deve chamar super.inicializarToolbar() no " +
                     "final de onCreate");
-
     }
 
     @Override
@@ -53,6 +52,9 @@ public class ToolbarActivity extends AppCompatActivity {
         toolbar.setTitle(titleId);
     }
 
+    /**
+     * Deve ser chamado no onCreate da subclasse apos definir o layout
+     */
     protected void inicializarToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar == null)

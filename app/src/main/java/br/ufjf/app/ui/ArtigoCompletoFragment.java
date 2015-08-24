@@ -36,7 +36,9 @@ public class ArtigoCompletoFragment extends Fragment {
 
     /**
      * Prepara um novo fragmento para a url informada
-     * @param url
+     *
+     * @param url    Endereço da pagina da noticia
+     * @param titulo Titulo da noticia
      * @return
      */
     public static ArtigoCompletoFragment obterNovo(String url, String titulo) {
@@ -78,7 +80,7 @@ public class ArtigoCompletoFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.open_in_browser) {
-            // ABre a página no navegador
+            // Abre a página no navegador
             getActivity().startActivity(
                     new Intent(Intent.ACTION_VIEW, Uri.parse(webView.getUrl())));
             return true;
@@ -110,19 +112,29 @@ public class ArtigoCompletoFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         String url = getArguments().getString(ARG_URL);
-        new ArticleParserTask().execute(url);
+        new LeitorNoticiaTask().execute(url);
     }
 
     /**
      * Activity "pai" deve implementar
      */
     public interface Listener {
+        /**
+         * Chamado quando o ArtigoCompletoFragment e iniciado
+         * @param fragment ArtigoCompletoFragment atual
+         */
         void onArtigoCompletoFragmentStart(ArtigoCompletoFragment fragment);
 
+        /**
+         * Chamado quando o ArtigoCompletoFragment e parado
+         */
         void onArtigoCompletoFragmentStop();
     }
 
-    private class ArticleParserTask extends AsyncTask<String, Void, String> {
+    /**
+     * Efetua o carregamento assincrono do texto de uma noticia
+     */
+    private class LeitorNoticiaTask extends AsyncTask<String, Void, String> {
         private String url;
         private ProgressDialog progressDialog;
 
@@ -145,7 +157,6 @@ public class ArtigoCompletoFragment extends Fragment {
 
             if (html != null) {
                 // Extrai texto principal
-
                 String contentRegex = "<div class=\"entry-content\">(.*?)<\\/div><!-- .entry-content -->";
                 String sociableRegex = "<!-- Start Sociable -->(.*?)<!-- End Sociable -->";
                 Pattern p = Pattern.compile(contentRegex, Pattern.MULTILINE);

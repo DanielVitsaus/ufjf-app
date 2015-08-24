@@ -26,6 +26,14 @@
     <string name="see_full_article">Ver notícia completa</string>
     <string name="open_in_browser">Abrir no navegador</string>
     <string name="loading_">Carregando…</string>
-    <string name="information">Informaçao</string>
+    <string name="information">Informações</string>
+    <string name="enviar_email_">Enviar e-mail…</string>
+    <string name="sem_app_email">Não há um app de e-mails instalado.</string>
+    <string name="pro_reitorias">Pró-Reitorias</string>
+    <string name="coordenacoes">Coordenações</string>
+    <string name="unidades">Unidades</string>
+    <string name="outros">Outros</string>
+    <string name="proxima">Próxima</string>
+    <string name="anterior">Anterior</string>
 
 </resources>

@@ -29,7 +29,8 @@ import javax.xml.parsers.SAXParserFactory;
 
 import br.ufjf.app.model.CalendarioAcademico;
 import br.ufjf.app.model.DBRemoto;
-import br.ufjf.app.model.Estudante;
+import br.ufjf.app.model.Aluno;
+import br.ufjf.app.model.noticias.Feed;
 import br.ufjf.app.model.questionario.Questionario;
 import br.ufjf.app.model.questionario.RespostaQuestionario;
 import json.jackson2.JacksonFactory;
@@ -38,13 +39,23 @@ import json.jackson2.JacksonFactory;
  * Intermediário para operações HTTP
  */
 public class WebHelper {
+
+    //api.ufjf.br/siga/v1
     private static final String URL_BASE_API = "http://200.131.219.208:4712/";
     private static final String URL_ESTUDANTES = URL_BASE_API + "students/";
     private static final String URL_QUESTIONARIOS = URL_BASE_API + "surveys/";
     private static final String URL_RESPOSTAS = URL_BASE_API + "answers/";
     private static final String URL_DATAS = URL_BASE_API + "dates/";
 
-    public static FeedHandler obterFeed(String url) throws IOException, SAXException, ParserConfigurationException {
+    /**
+     * Carrega um feed
+     * @param url Endereço do feed
+     * @return O Feed correspondente
+     * @throws IOException
+     * @throws SAXException
+     * @throws ParserConfigurationException
+     */
+    public static Feed obterFeed(String url) throws IOException, SAXException, ParserConfigurationException {
         InputStream inputStream = null;
         try {
             inputStream = new URL(url).openConnection().getInputStream();
@@ -56,7 +67,7 @@ public class WebHelper {
 
             FeedHandler parser = new FeedHandler();
             SAXParserFactory.newInstance().newSAXParser().parse(is, parser);
-            return parser;
+            return parser.getFeed();
         } finally {
             try {
                 if (inputStream != null)
@@ -67,6 +78,11 @@ public class WebHelper {
         }
     }
 
+    /**
+     * Obtem o texto HTML de uma pagina
+     * @param url Endereço da pagina
+     * @return
+     */
     public static String obterConteudo(String url) {
         InputStream inputStream = null;
         try {
@@ -92,7 +108,16 @@ public class WebHelper {
         return null;
     }
 
-    public static Estudante entrar(Context context, String email, String senha) throws JSONException, IOException {
+    /**
+     * Inicia autenticacao do usuario
+     * @param context
+     * @param email
+     * @param senha
+     * @return
+     * @throws JSONException
+     * @throws IOException
+     */
+    public static Aluno entrar(Context context, String email, String senha) throws JSONException, IOException {
         URL url = new URL(URL_ESTUDANTES + "login");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
@@ -120,13 +145,20 @@ public class WebHelper {
 
         JSONObject data = new JSONObject(sb.toString());
         if (data.getBoolean("success")) {
-            br.ufjf.app.model.Estudante estudante = new br.ufjf.app.model.Estudante(data.getJSONObject("student"));
-            AutenticacaoHelper.registerLogin(context, estudante);
-            return estudante;
+            Aluno aluno = new Aluno(data.getJSONObject("student"));
+            AutenticacaoHelper.registrarLogin(context, aluno);
+            return aluno;
         } else
             return null;
     }
 
+    /**
+     * Obtem um questionario
+     * @param id Identificador
+     * @return
+     * @throws JSONException
+     * @throws IOException
+     */
     public static Questionario obterQuestionario(String id) throws JSONException, IOException {
         URL url = new URL(URL_QUESTIONARIOS + id);
         BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -144,6 +176,12 @@ public class WebHelper {
             return null;
     }
 
+    /**
+     * Obtem uma lista de questionarios. Eles sao filtrados no servidor de acordo com as informacoes do aluno
+     * @return Lista de questionarios
+     * @throws JSONException
+     * @throws IOException
+     */
     public static Questionario[] obterQuestionarios() throws JSONException, IOException {
         URL url = new URL(URL_QUESTIONARIOS);
         BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -167,6 +205,13 @@ public class WebHelper {
             return null;
     }
 
+    /**
+     * Envia as respostas de um Questionario
+     * @param resposta Conjunto de respostas
+     * @return
+     * @throws JSONException
+     * @throws IOException
+     */
     public static boolean enviarResposta(RespostaQuestionario resposta) throws JSONException, IOException {
         URL url = new URL(URL_RESPOSTAS);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -192,6 +237,13 @@ public class WebHelper {
         return new JSONObject(sb.toString()).getBoolean("success");
     }
 
+    /**
+     * Obtem as datas importantes de um ano
+     * @param ano Ano desejado
+     * @return
+     * @throws IOException
+     * @throws JSONException
+     */
     public static CalendarioAcademico obterCalendario(int ano) throws IOException, JSONException {
         HttpRequestFactory requestFactory = new NetHttpTransport().createRequestFactory(new HttpRequestInitializer() {
             @Override

@@ -18,7 +18,8 @@ import br.ufjf.app.util.AutenticacaoHelper;
 import br.ufjf.dcc.pesquisa.R;
 
 /**
- * Created by Jorge Augusto da Silva Moreira on 20/05/2015.
+ * Exibe as perguntas de um questionario
+ * Created by Jorge Augusto da mustSilva Moreira on 20/05/2015.
  */
 public class QuestionarioActivity extends AppCompatActivity implements PerguntaFragment.Listener, EnviaQuestionarioFragment.Listener {
     public static final String ARG_QUESTIONARIO = "questionario";
@@ -52,12 +53,12 @@ public class QuestionarioActivity extends AppCompatActivity implements PerguntaF
                     });
 
                     try {
-                        respostaQuestionario = new RespostaQuestionario(AutenticacaoHelper.getStudent(QuestionarioActivity.this).getId(), questionario.getId(), questionario.getPerguntas().length);
+                        respostaQuestionario = new RespostaQuestionario(AutenticacaoHelper.obterAluno(QuestionarioActivity.this).getId(), questionario.getId(), questionario.getPerguntas().length);
                         adapter = new PerguntasAdapter(getSupportFragmentManager(), questionario.getPerguntas());
                         viewPager.setAdapter(adapter);
-                    } catch (AutenticacaoHelper.StudentNaoAutenticado studentNaoAutenticado) {
+                    } catch (AutenticacaoHelper.AlunoNaoAutenticado alunoNaoAutenticado) {
                         //todo se estudante não estiver logado, tratar aqui
-                        studentNaoAutenticado.printStackTrace();
+                        alunoNaoAutenticado.printStackTrace();
                     }
                 }
             }
@@ -74,10 +75,18 @@ public class QuestionarioActivity extends AppCompatActivity implements PerguntaF
         return respostaQuestionario.getRespostas()[indice];
     }
 
+    /**
+     * Navega ate a pergunta anterior
+     * @param view Botao
+     */
     public void anterior(View view) {
         viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
     }
 
+    /**
+     * Navega ate a proxima pergunta
+     * @param view Botao
+     */
     public void proxima(View view) {
         viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
     }

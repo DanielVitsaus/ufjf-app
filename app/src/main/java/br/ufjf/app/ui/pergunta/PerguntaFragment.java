@@ -47,7 +47,7 @@ public abstract class PerguntaFragment extends Fragment {
         try {
             listener = (Listener) activity;
         } catch (ClassCastException e) {
-            Log.v(TAG, "Activity must implement PerguntaFragment.Listener");
+            Log.v(TAG, "Activity deve implementar PerguntaFragment.Listener");
         }
     }
 
@@ -57,16 +57,14 @@ public abstract class PerguntaFragment extends Fragment {
         if (savedInstanceState != null)
             indicePergunta = savedInstanceState.getInt(ARG_QUESTION_INDEX);
         else
-            indicePergunta = getQuestionIndex();
+            indicePergunta = getIndicePergunta();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutRes(), container, false);
-
         ((TextView) view.findViewById(R.id.titulo)).setText(getPergunta().getTitulo());
-
         return view;
     }
 
@@ -90,18 +88,26 @@ public abstract class PerguntaFragment extends Fragment {
         listener = null;
     }
 
-    protected int getQuestionIndex() {
+    protected int getIndicePergunta() {
         if (indicePergunta == -1)
             indicePergunta = getArguments().getInt(ARG_QUESTION_INDEX);
         return indicePergunta;
     }
 
+    /**
+     * Obtem o id do layout a ser utilizado pela subclasse
+     * @return Id
+     */
     protected abstract int getLayoutRes();
 
     protected abstract Pergunta getPergunta();
 
     protected abstract Resposta getResposta();
 
+    /**
+     * Exibe a resposta salva no fragmento
+     * @param resposta Resposta salva
+     */
     protected abstract void atualizarUI(Resposta resposta);
 
     public interface Listener {
@@ -109,6 +115,11 @@ public abstract class PerguntaFragment extends Fragment {
 
         Resposta getResposta(int indice);
 
+        /**
+         * Salva a resposta de uma pergunta
+         * @param perguntaIndice Indice da pergunta
+         * @param resposta Resposta do aluno
+         */
         void registrarResposta(int perguntaIndice, Resposta resposta);
     }
 }

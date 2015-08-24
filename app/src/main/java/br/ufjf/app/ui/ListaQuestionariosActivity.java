@@ -16,8 +16,6 @@ import br.ufjf.dcc.pesquisa.R;
  */
 public class ListaQuestionariosActivity extends DrawerActivity {
 
-    private RecyclerView recyclerView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,19 +23,20 @@ public class ListaQuestionariosActivity extends DrawerActivity {
         setContentView(R.layout.activity_drawer_list);
         inicializarToolbar();
 
-        recyclerView = (RecyclerView) findViewById(R.id.lista);
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.lista);
 
+        // COnfigura a lista
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
+        // Carrega a lista de quesionarios
         new ObterQuestionariosTask(new ObterQuestionariosTask.Callback() {
             @Override
             public void onFinish(Questionario[] questionarios) {
-                recyclerView.setAdapter(new QuestionariosAdapter(questionarios, new QuestionariosAdapter.OnQuestionarioClickListener() {
+                recyclerView.setAdapter(new QuestionariosAdapter(questionarios, new OnItemSelecionadoListener<Questionario>() {
                     @Override
-                    public void onQuestionarioClick(Questionario questionario) {
+                    public void onItemSelecionado(Questionario questionario) {
                         startActivity(new Intent(ListaQuestionariosActivity.this, QuestionarioActivity.class)
                                 .putExtra(QuestionarioActivity.ARG_QUESTIONARIO, questionario.getId()));
                     }

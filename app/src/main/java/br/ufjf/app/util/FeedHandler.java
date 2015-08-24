@@ -7,7 +7,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import br.ufjf.app.model.noticias.Artigo;
+import br.ufjf.app.model.noticias.Noticia;
 import br.ufjf.app.model.noticias.Feed;
 
 /**
@@ -18,7 +18,7 @@ public class FeedHandler extends DefaultHandler {
     private StringBuilder stringBuilder;
 
     private Feed feed;
-    private Artigo artigoAtual;
+    private Noticia noticiaAtual;
 
     public void startElement(String uri, String localName, String qName,
                              Attributes attributes) throws SAXException {
@@ -27,7 +27,7 @@ public class FeedHandler extends DefaultHandler {
         stringBuilder = new StringBuilder();
 
         if (qName.equalsIgnoreCase("item")) {
-            artigoAtual = new Artigo();
+            noticiaAtual = new Noticia();
         } else if (qName.equalsIgnoreCase("channel")) {
             feed = new Feed();
         }
@@ -38,10 +38,10 @@ public class FeedHandler extends DefaultHandler {
         String value = stringBuilder.toString().trim();
 
         if (qName.equalsIgnoreCase("item")) {
-            if (feed.getArtigos() == null)
-                feed.setArtigos(new ArrayList<Artigo>());
-            feed.getArtigos().add(artigoAtual);
-            artigoAtual = null;
+            if (feed.getNoticias() == null)
+                feed.setNoticias(new ArrayList<Noticia>());
+            feed.getNoticias().add(noticiaAtual);
+            noticiaAtual = null;
         } else if (currentElementParent() != null
                 && currentElementParent().equalsIgnoreCase("channel")) {
 
@@ -50,19 +50,19 @@ public class FeedHandler extends DefaultHandler {
 
             if (currentElement().equalsIgnoreCase("link"))
                 feed.setLink(value);
-        } else if (artigoAtual != null) {
+        } else if (noticiaAtual != null) {
             if (currentElement().equalsIgnoreCase("title"))
-                artigoAtual.setTitulo(value);
+                noticiaAtual.setTitulo(value);
 
             if (currentElement().equalsIgnoreCase("link"))
-                artigoAtual.setLink(value);
+                noticiaAtual.setLink(value);
 
             if (currentElement().equalsIgnoreCase("pubDate")) {
-                artigoAtual.setData(value);
+                noticiaAtual.setData(value);
             }
 
             if (currentElement().equalsIgnoreCase("description"))
-                artigoAtual.setConteudo(value.replaceAll("<img.*?/>", "").replaceAll("Leia mais <span class=\"meta-nav\">&#8594;</span>", ""));
+                noticiaAtual.setConteudo(value.replaceAll("<img.*?/>", "").replaceAll("Leia mais <span class=\"meta-nav\">&#8594;</span>", ""));
         }
 
         this.elementStack.pop();

@@ -8,7 +8,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import br.ufjf.app.model.noticias.Artigo;
+import br.ufjf.app.model.noticias.Noticia;
+import br.ufjf.app.ui.OnItemSelecionadoListener;
 import br.ufjf.dcc.pesquisa.R;
 
 /**
@@ -16,11 +17,11 @@ import br.ufjf.dcc.pesquisa.R;
  */
 public class NoticiasAdapter extends RecyclerView.Adapter<NoticiasAdapter.ItemHolder> {
 
-    private final List<Artigo> artigos;
-    private final OnArtigoSelecionadoListener listener;
+    private final List<Noticia> noticias;
+    private final OnItemSelecionadoListener<Noticia> listener;
 
-    public NoticiasAdapter(List<Artigo> artigos, OnArtigoSelecionadoListener listener) {
-        this.artigos = artigos;
+    public NoticiasAdapter(List<Noticia> noticias, OnItemSelecionadoListener<Noticia> listener) {
+        this.noticias = noticias;
         this.listener = listener;
     }
 
@@ -33,19 +34,12 @@ public class NoticiasAdapter extends RecyclerView.Adapter<NoticiasAdapter.ItemHo
 
     @Override
     public void onBindViewHolder(ItemHolder holder, int position) {
-        holder.titulo.setText(artigos.get(position).getTitulo());
+        holder.titulo.setText(noticias.get(position).getTitulo());
     }
 
     @Override
     public int getItemCount() {
-        return artigos.size();
-    }
-
-    /**
-     * Responde aos cliques da lista
-     */
-    public interface OnArtigoSelecionadoListener {
-        void onArtigoSelecionado(Artigo artigo);
+        return noticias.size();
     }
 
     protected class ItemHolder extends RecyclerView.ViewHolder {
@@ -57,7 +51,7 @@ public class NoticiasAdapter extends RecyclerView.Adapter<NoticiasAdapter.ItemHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onArtigoSelecionado(artigos.get(getAdapterPosition()));
+                    listener.onItemSelecionado(noticias.get(getAdapterPosition()));
                 }
             });
         }

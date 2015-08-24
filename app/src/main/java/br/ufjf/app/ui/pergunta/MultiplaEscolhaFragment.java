@@ -34,7 +34,7 @@ public class MultiplaEscolhaFragment extends br.ufjf.app.ui.pergunta.PerguntaFra
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pergunta = (PerguntaOpcao) listener.getPergunta(getQuestionIndex());
+        pergunta = (PerguntaOpcao) listener.getPergunta(getIndicePergunta());
     }
 
     @Nullable

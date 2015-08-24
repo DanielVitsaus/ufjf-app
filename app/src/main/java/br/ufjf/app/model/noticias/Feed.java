@@ -10,7 +10,7 @@ public class Feed {
 
     private String titulo;
     private String link;
-    private ArrayList<Artigo> artigos;
+    private ArrayList<Noticia> noticias;
 
     public String getTitulo() {
         return titulo;
@@ -28,11 +28,11 @@ public class Feed {
         this.link = link;
     }
 
-    public ArrayList<Artigo> getArtigos() {
-        return artigos;
+    public ArrayList<Noticia> getNoticias() {
+        return noticias;
     }
 
-    public void setArtigos(ArrayList<Artigo> artigos) {
-        this.artigos = artigos;
+    public void setNoticias(ArrayList<Noticia> noticias) {
+        this.noticias = noticias;
     }
 }

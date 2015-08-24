@@ -20,4 +20,8 @@
     <string name="questionarios">Surveys</string>
     <string name="wrong_credentials">Wrong credentials</string>
     <string name="information">Information</string>
+    <string name="enviar_email_">Send e-mail…</string>
+    <string name="sem_app_email">There are no email clients installed.</string>
+    <string name="proxima">Next</string>
+    <string name="anterior">Previous</string>
 </resources>

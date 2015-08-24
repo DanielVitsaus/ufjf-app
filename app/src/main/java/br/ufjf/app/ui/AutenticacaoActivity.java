@@ -7,7 +7,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import br.ufjf.app.async.SignInTask;
-import br.ufjf.app.model.Estudante;
+import br.ufjf.app.model.Aluno;
 import br.ufjf.dcc.pesquisa.R;
 
 /**
@@ -15,6 +15,7 @@ import br.ufjf.dcc.pesquisa.R;
  * Created by Jorge Augusto da Silva Moreira on 12/06/2015.
  */
 public class AutenticacaoActivity extends ToolbarActivity {
+    // Campos de texto
     private EditText campoEmail;
     private EditText campoSenha;
 
@@ -29,16 +30,22 @@ public class AutenticacaoActivity extends ToolbarActivity {
         campoSenha = (EditText) findViewById(R.id.senha);
     }
 
+    /**
+     * Tenta realizar a autenticacao
+     * @param view botao de login
+     */
     public void entrar(final View view) {
         view.setEnabled(false);
         new SignInTask(this, new SignInTask.Callback() {
             @Override
-            public void onFinish(Estudante estudante) {
-                if (estudante != null) {
+            public void onFinish(Aluno aluno) {
+                if (aluno != null) {
+                    // Autenticado com sucesso. Retorna a Activity anterior
                     Toast.makeText(AutenticacaoActivity.this, R.string.success_signin, Toast.LENGTH_SHORT).show();
-                    setResult(RESULT_OK, new Intent().putExtra("name", estudante.getNome()).putExtra("course", estudante.getCurso()));
+                    setResult(RESULT_OK, new Intent().putExtra("name", aluno.getNome()).putExtra("course", aluno.getCurso()));
                     finish();
                 } else {
+                    // Falha na autenticacao
                     Toast.makeText(AutenticacaoActivity.this, R.string.wrong_credentials, Toast.LENGTH_SHORT).show();
                     view.setEnabled(true);
                 }
